@@ -9,27 +9,27 @@ CREATE TABLE task (
     PRIMARY KEY (id_task)
 );
 
-INSERT INTO task (name, description, date, status, emergency_level)
-VALUES ('Faire une liste', CURDATE(), 'To Do', 5);
+INSERT INTO task (name, date, emergency_level)
+VALUES ('Faire une liste', CURDATE(), 5);
 
-INSERT INTO task (name, description, date, status, emergency_level)
+INSERT INTO task (name, date, emergency_level)
 VALUES ('Dépoussiérer ma guitare', CURDATE(), 2);
 
-INSERT INTO task (name, description, date, emergency_level)
+INSERT INTO task (name, date, emergency_level)
 VALUES ('Acheter médiators', CURDATE(), 2);
 
-INSERT INTO task (name, description, date, emergency_level)
+INSERT INTO task (name, date, emergency_level)
 VALUES ('Set List Concert', CURDATE(), 3);
 
-INSERT INTO task (name, description, date, emergency_level)
+INSERT INTO task (name, date, emergency_level)
 VALUES ('Manger une tourte au poulet', CURDATE(), 1);
 
-INSERT INTO task (name, description, date, emergency_level)
+INSERT INTO task (name, date, emergency_level)
 VALUES ('Colis Vinted', CURDATE(), 5);
 
-INSERT INTO task (name, description, date, emergency_level)
+INSERT INTO task (name, date, emergency_level)
 VALUES ('Apprendre contrebasse', CURDATE(), 1);
 
-INSERT INTO task (name, description, date, emergency_level)
+INSERT INTO task (name, date, emergency_level)
 VALUES ('Préparer voyage', CURDATE(), 2);
 

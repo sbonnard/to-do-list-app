@@ -1,1 +1,134 @@
-/*# sourceMappingURL=style.css.map */
+
+:root {
+  font-size: 16px;
+  --primary: #1B7F79;
+  --dark-primary: #0B645E;
+  --dark-primary80: rgba(11, 100, 94, 0.8);
+  --black: #000000;
+  --white: #F8F8F8;
+  --grey50: rgba(0, 0, 0, 0.5);
+}
+
+@font-face {
+  font-family: "jura";
+  src: url("../fonts/Jura-Regular.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "jura-bold";
+  src: url("../fonts/Jura-Bold.ttf") format("ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+/* RESET  */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+ul,
+ol,
+li {
+  list-style: none;
+}
+
+a:link,
+a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+body {
+  color: #000000;
+  background-color: #F8F8F8;
+  font-family: "jura";
+  font-size: 1rem;
+}
+
+/* Hamburger */
+
+@media screen and (max-width: 768px) {
+  .hamburger__link {
+    font-size: 1.25rem;
+  }
+
+  .hamburger__menu {
+    z-index: 1;
+    min-width: 100%;
+    min-height: 22.5rem;
+    position: fixed;
+    top: 5rem;
+    left: 0;
+    height: 0;
+    visibility: hidden;
+    opacity: 0;
+    text-align: center;
+    padding-top: 1.25rem;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .hamburger__menu.overlay {
+    visibility: visible;
+    opacity: 1;
+    background: var(--grey50);
+    line-height: 4;
+  }
+}
+
+@media screen and (min-width: 764px) {
+  .hamburger {
+    display: none;
+  }
+}
+
+/* HEADER  */
+
+.header {
+  display: flex;
+  padding: 0.5rem;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #1B7F79;
+}
+
+/* TITLES  */
+
+.ttl {
+  font-family: 'jura';
+  font-size: 2rem;
+  color: var(--dark-primary);
+}
+
+.ttl--bold {
+  font-family: 'jura-bold';
+}
+
+/* FORM  */
+
+.form {
+display: flex;
+flex-direction: column;
+}
+
+.form__input {
+  width: 13.75rem;
+}
+
+.form__label {
+
+}
+
+.form__submit {
+  content: url(../img/add-task.svg);
+  width: 2.25rem;
+}
