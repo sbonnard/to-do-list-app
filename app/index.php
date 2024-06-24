@@ -34,19 +34,21 @@
         </nav>
         </div>
     </header>
-    <main>
+
+    <main class="container">
         <h2 class="ttl ttl--bold">A FAIRE</h2>
         <form class="form" action="" method="post" aria-label="Formulaire d'ajout de tâches">
             <label class="form__label" for="task">Ajouter une tâche</label>
             <input class="form__input" type="text" placeholder="Faire un truc" required>
             <label class="form__label" for="task">Niveau d'urgence (1-5)</label>
-            <input class="form__input" type="text" placeholder="Faire un truc" required>
-            <input class="form__submit" type="submit" value="">
+            <input class="form__input" type="text" placeholder="1-5" required>
+            <input class="form__submit" type="submit" value="✙">
         </form>
     </main>
 
-    <script type="module" src="js/script.js"></script>
+    <footer class="footer">© 2024 | Jot It</footer>
 
+    <script type="module" src="js/script.js"></script>
 </body>
 
 </html>

@@ -6,22 +6,18 @@
   --dark-primary80: rgba(11, 100, 94, 0.8);
   --black: #000000;
   --white: #F8F8F8;
-  --grey50: rgba(0, 0, 0, 0.5);
+  --grey50: rgba(0, 0, 0, 0.05);
 }
 
 @font-face {
-  font-family: "jura";
-  src: url("../fonts/Jura-Regular.ttf") format("ttf");
-  font-weight: normal;
+  font-family: 'Jura';
   font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url(../fonts/jura.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-@font-face {
-  font-family: "jura-bold";
-  src: url("../fonts/Jura-Bold.ttf") format("ttf");
-  font-weight: bold;
-  font-style: normal;
-}
 /* RESET  */
 * {
   box-sizing: border-box;
@@ -48,10 +44,17 @@ button {
 }
 
 body {
-  color: #000000;
-  background-color: #F8F8F8;
+  color: var(--black);
+  background-color: var(--white);
   font-family: "jura";
   font-size: 1rem;
+}
+
+/* UTILS  */
+
+.container {
+  width: 100%;
+  margin: 1.25rem;
 }
 
 /* Hamburger */
@@ -66,7 +69,7 @@ body {
     min-width: 100%;
     min-height: 22.5rem;
     position: fixed;
-    top: 5rem;
+    top: 3.25rem;
     left: 0;
     height: 0;
     visibility: hidden;
@@ -77,9 +80,11 @@ body {
   }
 
   .hamburger__menu.overlay {
+    color: var(--white);
+    font-size: 2rem;
     visibility: visible;
     opacity: 1;
-    background: var(--grey50);
+    background: var(--dark-primary);
     line-height: 4;
   }
 }
@@ -110,7 +115,9 @@ body {
 }
 
 .ttl--bold {
-  font-family: 'jura-bold';
+  font-family: 'jura';
+  font-weight: bold;
+  padding: 1rem;
 }
 
 /* FORM  */
@@ -118,17 +125,36 @@ body {
 .form {
 display: flex;
 flex-direction: column;
+align-items: center;
+gap: 1rem;
 }
 
 .form__input {
   width: 13.75rem;
+  padding: 0.5rem;
+  border: 2px solid var(--primary);
+  background-color: var(--grey50);
 }
 
 .form__label {
-
 }
 
 .form__submit {
   content: url(../img/add-task.svg);
+  font-size: 1.5rem;
+  color: var(--white);
   width: 2.25rem;
+  aspect-ratio: 1/1;
+  background-color: var(--primary);
+  border-radius: .5rem;
+}
+
+/* FOOTER  */
+
+.footer {
+  display: flex;
+  justify-content: center;
+  color: var(--white);
+  background-color: var(--primary);
+  padding: 2rem;
 }
