@@ -33,3 +33,5 @@ VALUES ('Apprendre contrebasse', CURDATE(), 1);
 INSERT INTO task (name, date, emergency_level)
 VALUES ('Préparer voyage', CURDATE(), 2);
 
+SELECT name, date, emergency_level
+FROM task;

@@ -1,5 +1,18 @@
 <?php
 
+try {
+    $dbCo = new PDO(
+        'mysql:host=db;dbname=jotit_doit;charset=utf8',
+        'app-crud',
+        'dwwm2024'
+    );
+    $dbCo->setAttribute(
+        PDO::ATTR_DEFAULT_FETCH_MODE,
+        PDO::FETCH_ASSOC
+    );
+} catch (EXCEPTION $error) {
+    die('Échec de la connexion à la base de donnée.' . $error->getMessage());
+}
 ?>
 
 <!DOCTYPE html>
@@ -44,6 +57,25 @@
             <input class="form__input" type="text" placeholder="1-5" required>
             <input class="form__submit" type="submit" value="✙">
         </form>
+        <section>
+            <ul>
+                <?php
+                $query = $dbCo->query("SELECT name, date, emergency_level
+FROM task;");
+                $tasks = $query->fetchAll();
+
+                foreach ($tasks as $task) {
+                    echo '<li class="task">'
+                    . '<div class="task__content"><h3 class="ttl ttl--small">' . $task['name'] . '</h3>' 
+                    . '<button class="btn--minus">-</button></div>'
+                    . '<div class="task__content"><p>' . $task['date'] . '</p>' 
+                    . '<p>Niveau <span class="task__number">' . $task['emergency_level'] . '</span></p></div>
+                    .<button class="btn">C’est fait !</button></li>';
+                }
+                ?>
+            </ul>
+            <!-- <img src="./img/minus-btn.svg" alt="Bouton de suppression de tâche"> -->
+        </section>
     </main>
 
     <footer class="footer">© 2024 | Jot It</footer>

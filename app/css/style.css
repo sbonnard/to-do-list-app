@@ -1,4 +1,3 @@
-
 :root {
   font-size: 16px;
   --primary: #1B7F79;
@@ -53,7 +52,6 @@ body {
 /* UTILS  */
 
 .container {
-  width: 100%;
   margin: 1.25rem;
 }
 
@@ -120,13 +118,17 @@ body {
   padding: 1rem;
 }
 
+.ttl--small {
+  font-size: 1.5rem;
+}
+
 /* FORM  */
 
 .form {
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
 .form__input {
@@ -134,9 +136,6 @@ gap: 1rem;
   padding: 0.5rem;
   border: 2px solid var(--primary);
   background-color: var(--grey50);
-}
-
-.form__label {
 }
 
 .form__submit {
@@ -147,6 +146,53 @@ gap: 1rem;
   aspect-ratio: 1/1;
   background-color: var(--primary);
   border-radius: .5rem;
+}
+
+/* BUTTONS  */
+
+.btn {
+  font-family: 'jura';
+  font-weight: bold;
+  background-color: var(--primary);
+  color: var(--white);
+  border-radius: 0.75rem;
+  width: 8.625rem;
+  padding: 0.5rem;
+}
+
+.btn--minus {
+  content: '';
+  font-weight: bold;
+  color: white;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.25rem;
+  background-color: var(--primary);
+}
+
+/* TASK  */
+
+.task {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid var(--primary);
+  padding: 0.5rem;
+  border-radius: 1.25rem;
+  margin: 1.25rem 0;
+  gap: 0.75rem;
+}
+
+.task__number {
+  font-weight: bold;
+  color: var(--dark-primary);
+}
+
+.task__content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0 0.5rem;
 }
 
 /* FOOTER  */
