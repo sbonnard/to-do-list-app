@@ -1,4 +1,5 @@
 <?php
+
 // CONNECTION 
 try {
     $dbCo = new PDO(
