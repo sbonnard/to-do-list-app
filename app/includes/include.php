@@ -52,26 +52,72 @@ VALUES (:name, CURDATE(), :emergency_level);");
 
 
 // GET TASKS FROM DATABASE 
-$queryGetTasks = $dbCo->query("SELECT id_task, name, date, emergency_level FROM task;");
-$tasks = $queryGetTasks->fetchAll();
+// $queryGetTasks = $dbCo->query("SELECT id_task, status, name, date, emergency_level FROM task WHERE status = 'TO DO';");
+// $tasks = $queryGetTasks->fetchAll();
 
-function generateTask (array $taskarray) {
+function generateTask(array $taskarray)
+{
     $allTasks = '';
     foreach ($taskarray as $task) {
-       $allTasks .=  '<li class="task">'
+        var_dump($task['id_task']);
+        $allTasks .=  '<li class="task">'
             . '<div class="task__content"><button>'
             . '<img class="btn--pen" src="./img/pen-btn.svg" alt="Bouton de modification du nom d\'une tâche">'
             . '</button><h3 class="ttl ttl--small">'
             . $task['name'] . '</h3>'
-            . '<button class="btn--minus">-</button></div>'
+            . '<a href="?id='
+            . $task['id_task'] 
+            . '" class="btn--minus">-</a></div>'
             . '<div class="task__content"><p>'
             . $task['date']
             . '</p>'
             . '<p>Niveau <span class="task__number">'
             . $task['emergency_level']
-            . '</span></p></div><a href="?' 
-            . $task['id_task'] 
+            . '</span></p></div><a href="?id='
+            . $task['id_task']
             . '" class="btn">C’est fait !</a></li>';
     }
     return $allTasks;
 }
+
+// $queryUpdateTaskStatus = $dbCo->query("UPDATE task SET status = 'DONE' WHERE id_task = $_GET;");
+
+// $taskUpdate = $queryUpdateTaskStatus->fetchAll();
+
+/**
+ * Switch a task to done and delete it from the DOM and no the database.
+ *
+ * @param PDO $dbCo 
+ * @return void
+ */
+function endTask(PDO $dbCo)
+{
+    if (!empty($_GET)) {
+        $queryUpdateTaskStatus = $dbCo->prepare("UPDATE task SET status = 'DONE' WHERE id_task = :id;");
+
+        $taskUpdate = $queryUpdateTaskStatus->fetchAll();
+
+        $bindValues = [
+            'id' => htmlspecialchars($_GET['id']),
+        ];
+
+        $isUpdatetOk = $queryUpdateTaskStatus->execute($bindValues);
+    }
+    return $taskUpdate;
+}
+
+
+// function deleteTask(PDO $dbCo)
+// {
+//     if (isset($_GET)) {
+//         $queryDeleteTaskStatus = $dbCo->prepare("DELETE FROM task WHERE id_task = :id;");
+//         $taskDelete = $queryDeleteTaskStatus->fetchAll();
+
+//         $bindValues = [
+//             'id' => htmlspecialchars($_GET['id']),
+//         ];
+
+//         $isUpdatetOk = $queryDeleteTaskStatus->execute($bindValues);
+//     }
+//     return $taskDelete;
+// }

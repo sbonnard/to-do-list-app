@@ -38,3 +38,5 @@ FROM task;
 
 INSERT INTO task (name, date, emergency_level)
 VALUES ('name', CURDATE(), 1);
+
+UPDATE task SET status = 'DONE' WHERE id_task = $task['id_task'];

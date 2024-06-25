@@ -1,12 +1,22 @@
 <?php
-
 session_start();
 if (!isset($_SESSION['token'])) {
     $_SESSION['token'] = md5(uniqid(mt_rand(), true));
 }
 
+
 include "./includes/include.php";
 
+$queryGetTasks = $dbCo->query("SELECT id_task, status, name, date, emergency_level FROM task WHERE status = 'TO DO';");
+$tasks = $queryGetTasks->fetchAll();
+
+var_dump($_GET);
+
+if (!empty($_GET)) {
+    endTask($dbCo);
+}
+
+// deleteTask($dbCo);
 
 ?>
 
@@ -58,11 +68,7 @@ include "./includes/include.php";
             <ul>
                 <?php
                 // GET TASKS FROM DATABASE 
-                $queryGetTasks = $dbCo->query("SELECT id_task, name, date, emergency_level FROM task;");
-                $tasks = $queryGetTasks->fetchAll();
-
                 echo generateTask($tasks);
-
                 ?>
             </ul>
         </section>

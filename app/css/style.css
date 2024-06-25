@@ -33,7 +33,10 @@ li {
 a:link,
 a:visited {
   text-decoration: none;
-  color: inherit;
+}
+
+a {
+  color: var(--white);
 }
 
 button {
