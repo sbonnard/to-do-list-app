@@ -52,7 +52,7 @@ VALUES (:name, CURDATE(), :emergency_level);");
 
 
 // GET TASKS FROM DATABASE 
-$queryGetTasks = $dbCo->query("SELECT name, date, emergency_level FROM task;");
+$queryGetTasks = $dbCo->query("SELECT id_task, name, date, emergency_level FROM task;");
 $tasks = $queryGetTasks->fetchAll();
 
 function generateTask (array $taskarray) {
@@ -69,7 +69,9 @@ function generateTask (array $taskarray) {
             . '</p>'
             . '<p>Niveau <span class="task__number">'
             . $task['emergency_level']
-            . '</span></p></div><button class="btn">C’est fait !</button></li>';
+            . '</span></p></div><a href="?' 
+            . $task['id_task'] 
+            . '" class="btn">C’est fait !</a></li>';
     }
     return $allTasks;
 }

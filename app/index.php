@@ -58,7 +58,7 @@ include "./includes/include.php";
             <ul>
                 <?php
                 // GET TASKS FROM DATABASE 
-                $queryGetTasks = $dbCo->query("SELECT name, date, emergency_level FROM task;");
+                $queryGetTasks = $dbCo->query("SELECT id_task, name, date, emergency_level FROM task;");
                 $tasks = $queryGetTasks->fetchAll();
 
                 echo generateTask($tasks);

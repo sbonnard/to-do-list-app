@@ -158,6 +158,7 @@ body {
   border-radius: 0.75rem;
   width: 8.625rem;
   padding: 0.5rem;
+  text-align: center;
 }
 
 .btn--minus {
