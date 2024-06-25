@@ -1,18 +1,13 @@
 <?php
 
-try {
-    $dbCo = new PDO(
-        'mysql:host=db;dbname=jotit_doit;charset=utf8',
-        'app-crud',
-        'dwwm2024'
-    );
-    $dbCo->setAttribute(
-        PDO::ATTR_DEFAULT_FETCH_MODE,
-        PDO::FETCH_ASSOC
-    );
-} catch (EXCEPTION $error) {
-    die('Échec de la connexion à la base de donnée.' . $error->getMessage());
+session_start();
+if (!isset($_SESSION['token'])) {
+    $_SESSION['token'] = md5(uniqid(mt_rand(), true));
 }
+
+include "./includes/include.php";
+
+
 ?>
 
 <!DOCTYPE html>
@@ -36,11 +31,11 @@ try {
         </div>
 
         <nav class="hamburger__menu" id="menu" aria-label="Navigation principale du site">
-            <ul id="nav-list">
-                <li>
+            <ul id="nav-list" class="nav">
+                <li class="nav__itm nav__lnk--current">
                     <a href="index.html" class="nav__lnk" aria-current="page">Accueil</a>
                 </li>
-                <li class="nav__itm nav__lnk--current">
+                <li class="nav__itm">
                     <a href="done.html">Tâches terminées</a>
                 </li>
             </ul>
@@ -49,32 +44,27 @@ try {
     </header>
 
     <main class="container">
-        <h2 class="ttl ttl--bold">A FAIRE</h2>
-        <form class="form" action="" method="post" aria-label="Formulaire d'ajout de tâches">
-            <label class="form__label" for="task">Ajouter une tâche</label>
-            <input class="form__input" type="text" placeholder="Faire un truc" required>
-            <label class="form__label" for="task">Niveau d'urgence (1-5)</label>
-            <input class="form__input" type="text" placeholder="1-5" required>
-            <input class="form__submit" type="submit" value="✙">
-        </form>
-        <section>
+        <section aria-label="Mes tâches à faire" aria-labelledby="todo">
+
+            <h2 id="todo" class="ttl ttl--bold">A FAIRE</h2>
+            <form class="form" action="" method="post" aria-label="Formulaire d'ajout de tâches">
+                <label class="form__label" for="task">Ajouter une tâche</label>
+                <input class="form__input" name="name" type="text" placeholder="Faire un truc" required>
+                <label class="form__label" for="task">Niveau d'urgence (1-5)</label>
+                <input class="form__input" name="emergency_level" type="text" placeholder="1-5" required>
+                <input class="form__submit" type="submit" value="✙">
+                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+            </form>
             <ul>
                 <?php
-                $query = $dbCo->query("SELECT name, date, emergency_level
-FROM task;");
-                $tasks = $query->fetchAll();
+                // GET TASKS FROM DATABASE 
+                $queryGetTasks = $dbCo->query("SELECT name, date, emergency_level FROM task;");
+                $tasks = $queryGetTasks->fetchAll();
 
-                foreach ($tasks as $task) {
-                    echo '<li class="task">'
-                    . '<div class="task__content"><h3 class="ttl ttl--small">' . $task['name'] . '</h3>' 
-                    . '<button class="btn--minus">-</button></div>'
-                    . '<div class="task__content"><p>' . $task['date'] . '</p>' 
-                    . '<p>Niveau <span class="task__number">' . $task['emergency_level'] . '</span></p></div>
-                    .<button class="btn">C’est fait !</button></li>';
-                }
+                echo generateTask($tasks);
+
                 ?>
             </ul>
-            <!-- <img src="./img/minus-btn.svg" alt="Bouton de suppression de tâche"> -->
         </section>
     </main>
 

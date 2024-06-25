@@ -35,3 +35,6 @@ VALUES ('Préparer voyage', CURDATE(), 2);
 
 SELECT name, date, emergency_level
 FROM task;
+
+INSERT INTO task (name, date, emergency_level)
+VALUES ('name', CURDATE(), 1);

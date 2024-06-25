@@ -104,7 +104,7 @@ body {
   border-bottom: 2px solid #1B7F79;
 }
 
-/* TITLES  */
+/* TITLES */
 
 .ttl {
   font-family: 'jura';
@@ -168,6 +168,10 @@ body {
   height: 1rem;
   border-radius: 0.25rem;
   background-color: var(--primary);
+}
+
+.btn--pen {
+  margin-right: 1rem;
 }
 
 /* TASK  */
