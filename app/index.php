@@ -1,11 +1,11 @@
 <?php
 session_start();
-if (!isset($_SESSION['token'])) {
-    $_SESSION['token'] = md5(uniqid(mt_rand(), true));
-}
 
+include "./includes/_database.php";
+include "./includes/_include.php";
 
-include "./includes/include.php";
+generateToken();
+
 
 $queryGetTasks = $dbCo->query("SELECT id_task, status, name, date, emergency_level FROM task WHERE status = 'TO DO';");
 $tasks = $queryGetTasks->fetchAll();

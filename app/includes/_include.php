@@ -1,20 +1,5 @@
 <?php
 
-// CONNECTION 
-try {
-    $dbCo = new PDO(
-        'mysql:host=db;dbname=jotit_doit;charset=utf8',
-        'app-crud',
-        'dwwm2024'
-    );
-    $dbCo->setAttribute(
-        PDO::ATTR_DEFAULT_FETCH_MODE,
-        PDO::FETCH_ASSOC
-    );
-} catch (EXCEPTION $error) {
-    die('Échec de la connexion à la base de donnée.' . $error->getMessage());
-}
-
 // CREATE NEW TASKS 
 if (!empty($_POST)) {
     if (isset($_SERVER['HTTP_REFERER']) && str_contains($_SERVER['HTTP_REFERER'], 'http://localhost:8282')) {
@@ -50,6 +35,12 @@ VALUES (:name, CURDATE(), :emergency_level);");
     }
 }
 
+
+function generateToken(){
+    if (!isset($_SESSION['token'])) {
+        $_SESSION['token'] = md5(uniqid(mt_rand(), true));
+    }
+}
 
 // GET TASKS FROM DATABASE 
 // $queryGetTasks = $dbCo->query("SELECT id_task, status, name, date, emergency_level FROM task WHERE status = 'TO DO';");
@@ -92,7 +83,6 @@ function generateTask(array $taskarray)
  */
 function endTask(PDO $dbCo)
 {
-    if (!empty($_GET)) {
         $queryUpdateTaskStatus = $dbCo->prepare("UPDATE task SET status = 'DONE' WHERE id_task = :id;");
 
         $taskUpdate = $queryUpdateTaskStatus->fetchAll();
@@ -102,7 +92,6 @@ function endTask(PDO $dbCo)
         ];
 
         $isUpdatetOk = $queryUpdateTaskStatus->execute($bindValues);
-    }
     return $taskUpdate;
 }
 
