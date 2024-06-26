@@ -26,13 +26,13 @@ function generateToken()
 function preventFromCSRF()
 {
     if (!isset($_SERVER['HTTP_REFERER']) || !str_contains($_SERVER['HTTP_REFERER'], 'http://localhost:8282')) {
-        $_SESSION['error'] = "Erreur de HTTP_REFERER";
+        $_SESSION['error'] = "referer";
         header('Location: index.php');
         exit;
     }
 
     if (!isset($_SESSION['token']) || !isset($_POST['token']) || $_SESSION['token'] !== $_POST['token']) {
-        $_SESSION['error'] = "ERREUR CSRF";
+        $_SESSION['error'] = 'csrf';
         header('Location: index.php');
         exit;
     }

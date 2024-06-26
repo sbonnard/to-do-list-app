@@ -6,6 +6,7 @@
   --black: #000000;
   --white: #F8F8F8;
   --grey50: rgba(0, 0, 0, 0.05);
+  --error : #CA4F0A;
 }
 
 @font-face {
@@ -203,6 +204,20 @@ body {
   justify-content: space-between;
   width: 100%;
   margin: 0 0.5rem;
+}
+
+/* NOTIFS  */
+
+.notif {
+  font-weight: bold;
+}
+
+.notif--error {
+  color: var(--error);
+}
+
+.notif--success {
+  color: var(--dark-primary);
 }
 
 /* FOOTER  */

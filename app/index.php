@@ -4,14 +4,16 @@ session_start();
 require_once "./includes/_database.php";
 require_once "./includes/_functions.php";
 require_once "./includes/_include.php";
+require_once "./includes/_messages.php";
 
 generateToken();
-createNewTask($dbCo); 
+
+getMessageForNewTask($dbCo);
 
 $queryGetTasks = $dbCo->query("SELECT id_task, status, name, date, emergency_level FROM task WHERE status = 'TO DO';");
 $tasks = $queryGetTasks->fetchAll();
 
-var_dump($_GET);
+// var_dump($_GET);
 
 if (!empty($_GET)) {
     endTask($dbCo);
@@ -65,6 +67,10 @@ if (!empty($_GET)) {
                 <input class="form__input" name="emergency_level" type="text" placeholder="1-5" required>
                 <input class="form__submit" type="submit" value="✙">
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                <?php
+                getErrorMessage($errors);
+                getSuccessMessage($messages);
+                ?>
             </form>
             <ul>
                 <?php
