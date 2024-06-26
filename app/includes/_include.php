@@ -2,41 +2,52 @@
 
 // CREATE NEW TASKS 
 if (!empty($_POST)) {
-    if (isset($_SERVER['HTTP_REFERER']) && str_contains($_SERVER['HTTP_REFERER'], 'http://localhost:8282')) {
-        if (isset($_SESSION['token']) && isset($_POST['token']) && $_SESSION['token'] === $_POST['token']) {
-            if (
-                isset($_POST['name'])
-                && strlen($_POST['name']) > 0
-                && strlen($_POST['name']) < 50
-                && isset($_POST['emergency_level'])
-                && is_numeric($_POST['emergency_level'])
-                && $_POST['emergency_level'] > 0
-                && $_POST['emergency_level'] <= 5
-            ) {
-                $insert = $dbCo->prepare("INSERT INTO task (`name`, `date`, `emergency_level`)
-VALUES (:name, CURDATE(), :emergency_level);");
-
-                $bindValues = [
-                    'name' => htmlspecialchars($_POST['name']),
-                    'emergency_level' => round($_POST['emergency_level'])
-                ];
-
-                $isInsertOk = $insert->execute($bindValues);
-
-                $nb = $insert->rowCount();
-
-                $newRefProduct = $dbCo->lastInsertId();
-
-                var_dump($isInsertOk, $nb, $newRefProduct);
-            }
-        } else {
-            var_dump('Erreur de token');
-        }
+    if (!isset($_SERVER['HTTP_REFERER']) || !str_contains($_SERVER['HTTP_REFERER'], 'http://localhost:8282')) {
+        $_SESSION['error'] = "Erreur de HTTP_REFERER";
+        header('Location: index.php');
+        exit;
     }
+
+    if (!isset($_SESSION['token']) || !isset($_POST['token']) || $_SESSION['token'] !== $_POST['token']) {
+        $_SESSION['error'] = "ERREUR CSRF";
+        header('Location: index.php');
+        exit;
+    }
+
+    $errors = [];
+
+    if (
+        isset($_POST['name'])
+        && strlen($_POST['name']) > 0
+        && strlen($_POST['name']) < 50
+        && isset($_POST['emergency_level'])
+        && is_numeric($_POST['emergency_level'])
+        && $_POST['emergency_level'] > 0
+        && $_POST['emergency_level'] <= 5
+    ) {
+        $insert = $dbCo->prepare("INSERT INTO task (`name`, `date`, `emergency_level`) VALUES (:name, CURDATE(), :emergency_level);");
+
+        $bindValues = [
+            'name' => htmlspecialchars($_POST['name']),
+            'emergency_level' => round($_POST['emergency_level'])
+        ];
+
+        $isInsertOk = $insert->execute($bindValues);
+
+        $nb = $insert->rowCount();
+
+        $newRefProduct = $dbCo->lastInsertId();
+
+        // var_dump($isInsertOk, $nb, $newRefProduct);
+    }
+} else {
+    var_dump('Erreur de token');
 }
 
 
-function generateToken(){
+
+function generateToken()
+{
     if (!isset($_SESSION['token'])) {
         $_SESSION['token'] = md5(uniqid(mt_rand(), true));
     }
@@ -50,14 +61,14 @@ function generateTask(array $taskarray)
 {
     $allTasks = '';
     foreach ($taskarray as $task) {
-        var_dump($task['id_task']);
+        // var_dump($task['id_task']);
         $allTasks .=  '<li class="task">'
             . '<div class="task__content"><button>'
             . '<img class="btn--pen" src="./img/pen-btn.svg" alt="Bouton de modification du nom d\'une tâche">'
             . '</button><h3 class="ttl ttl--small">'
             . $task['name'] . '</h3>'
             . '<a href="?id='
-            . $task['id_task'] 
+            . $task['id_task']
             . '" class="btn--minus">-</a></div>'
             . '<div class="task__content"><p>'
             . $task['date']
@@ -83,15 +94,15 @@ function generateTask(array $taskarray)
  */
 function endTask(PDO $dbCo)
 {
-        $queryUpdateTaskStatus = $dbCo->prepare("UPDATE task SET status = 'DONE' WHERE id_task = :id;");
+    $queryUpdateTaskStatus = $dbCo->prepare("UPDATE task SET status = 'DONE' WHERE id_task = :id;");
 
-        $taskUpdate = $queryUpdateTaskStatus->fetchAll();
+    $taskUpdate = $queryUpdateTaskStatus->fetchAll();
 
-        $bindValues = [
-            'id' => htmlspecialchars($_GET['id']),
-        ];
+    $bindValues = [
+        'id' => htmlspecialchars($_GET['id']),
+    ];
 
-        $isUpdatetOk = $queryUpdateTaskStatus->execute($bindValues);
+    $isUpdatetOk = $queryUpdateTaskStatus->execute($bindValues);
     return $taskUpdate;
 }
 
