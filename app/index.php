@@ -2,10 +2,10 @@
 session_start();
 
 include "./includes/_database.php";
-include "./includes/_include.php";
+require_once "./includes/_functions.php";
+require_once "./includes/_include.php";
 
 generateToken();
-
 
 $queryGetTasks = $dbCo->query("SELECT id_task, status, name, date, emergency_level FROM task WHERE status = 'TO DO';");
 $tasks = $queryGetTasks->fetchAll();
