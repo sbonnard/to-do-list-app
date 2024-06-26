@@ -1,11 +1,12 @@
 <?php
 session_start();
 
-include "./includes/_database.php";
+require_once "./includes/_database.php";
 require_once "./includes/_functions.php";
 require_once "./includes/_include.php";
 
 generateToken();
+createNewTask($dbCo); 
 
 $queryGetTasks = $dbCo->query("SELECT id_task, status, name, date, emergency_level FROM task WHERE status = 'TO DO';");
 $tasks = $queryGetTasks->fetchAll();
@@ -43,10 +44,10 @@ if (!empty($_GET)) {
         <nav class="hamburger__menu" id="menu" aria-label="Navigation principale du site">
             <ul id="nav-list" class="nav">
                 <li class="nav__itm nav__lnk--current">
-                    <a href="index.html" class="nav__lnk" aria-current="page">Accueil</a>
+                    <a href="index.php" class="nav__lnk" aria-current="page">Accueil</a>
                 </li>
                 <li class="nav__itm">
-                    <a href="done.html">Tâches terminées</a>
+                    <a href="done.php">Tâches terminées</a>
                 </li>
             </ul>
         </nav>

@@ -165,7 +165,9 @@ body {
 }
 
 .btn--minus {
-  content: '';
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: bold;
   color: white;
   width: 1rem;

@@ -3,39 +3,61 @@
 include_once "_functions.php";
 
 // CREATE NEW TASKS 
-if (!empty($_POST)) {
+function createNewTask($dbCo)
+{
+    if (!empty($_POST)) {
 
-    preventFromCSRF();
+        preventFromCSRF();
 
-    $errors = [];
+        $errors = [];
 
+        if (!isset($_POST['name']) || strlen($_POST['name']) <= 0) {
+            $errors[] = '<p class="error">Merci d\'entrer un nom de tâche.</p>';
+        }
 
+        if (strlen($_POST['name']) > 50) {
+            $errors[] = '<p class="error">Merci d\'entrer un nom de tâche de 50 caractères maximum.</p>';
+        }
 
-    if (
-        isset($_POST['name'])
-        && strlen($_POST['name']) > 0
-        && strlen($_POST['name']) < 50
-        && isset($_POST['emergency_level'])
-        && is_numeric($_POST['emergency_level'])
-        && $_POST['emergency_level'] > 0
-        && $_POST['emergency_level'] <= 5
-    ) {
-        $insert = $dbCo->prepare("INSERT INTO task (`name`, `date`, `emergency_level`) VALUES (:name, CURDATE(), :emergency_level);");
+        if (!isset($_POST['emergency_level'])) {
+            $errors[] = '<p class="error">Merci d\'entrer un niveau de priorité.</p>';
+        }
 
-        $bindValues = [
-            'name' => htmlspecialchars($_POST['name']),
-            'emergency_level' => round($_POST['emergency_level'])
-        ];
+        if (!is_numeric($_POST['emergency_level'])) {
+            $errors[] = '<p class="error">La valeur de priorité doit être numérique.</p>;';
+        }
 
-        $isInsertOk = $insert->execute($bindValues);
+        if ($_POST['emergency_level'] <= 0) {
+            $errors[] = '<p class="error">La valeur de priorité doit être comprise entre 1 & 5.</p>;';
+        }
 
-        $nb = $insert->rowCount();
+        if ($_POST['emergency_level'] > 5) {
+            $errors[] = '<p class="error">La valeur de priorité doit être comprise entre 1 & 5.</p>;';
+        }
 
-        $newRefProduct = $dbCo->lastInsertId();
+        // var_dump($errors);
 
-        // var_dump($isInsertOk, $nb, $newRefProduct);
+        if (empty($errors)) {
+            $insert = $dbCo->prepare("INSERT INTO task (`name`, `date`, `emergency_level`) VALUES (:name, CURDATE(), :emergency_level);");
+
+            $bindValues = [
+                'name' => htmlspecialchars($_POST['name']),
+                'emergency_level' => round($_POST['emergency_level'])
+            ];
+
+            $isInsertOk = $insert->execute($bindValues);
+
+            $nb = $insert->rowCount();
+
+            $newRefProduct = $dbCo->lastInsertId();
+
+            // var_dump($isInsertOk, $nb, $newRefProduct);
+
+            return $isInsertOk;
+        }
     }
 }
+
 
 
 // GET TASKS FROM DATABASE 
