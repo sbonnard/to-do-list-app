@@ -46,6 +46,10 @@ button {
   cursor: pointer;
 }
 
+input[type = submit] {
+  border: none;
+}
+
 body {
   color: var(--black);
   background-color: var(--white);
@@ -114,6 +118,7 @@ body {
   font-family: 'jura';
   font-size: 2rem;
   color: var(--dark-primary);
+  max-width: 12rem;
 }
 
 .ttl--bold {
@@ -143,12 +148,13 @@ body {
 }
 
 .form__submit {
-  content: url(../img/add-task.svg);
+  background-image: url(../img/add-task.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
   font-size: 1.5rem;
   color: var(--white);
   width: 2.25rem;
   aspect-ratio: 1/1;
-  background-color: var(--primary);
   border-radius: .5rem;
 }
 
@@ -166,6 +172,9 @@ body {
 }
 
 .btn--minus {
+  background-image: url(../img/minus-btn.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -174,11 +183,18 @@ body {
   width: 1rem;
   height: 1rem;
   border-radius: 0.25rem;
-  background-color: var(--primary);
+  /* background-color: var(--primary); */
 }
 
 .btn--pen {
+  background-image: url(../img/pen-btn.svg);
+  background-repeat: no-repeat;
+  background-size:cover;  
   margin-right: 1rem;
+  width: 2.25rem;
+  max-width: 2rem;
+  max-height: 2rem;
+  aspect-ratio: 1/1;
 }
 
 /* TASK  */

@@ -11,7 +11,7 @@ generateToken();
 
 getMessageForNewTask($dbCo);
 
-$queryGetTasks = $dbCo->query("SELECT id_task, status, name, date, emergency_level FROM task WHERE status = 'TO DO';");
+$queryGetTasks = $dbCo->query("SELECT id_task, status, name, date, emergency_level FROM task WHERE status = 'TO DO' ORDER BY date DESC;");
 $tasks = $queryGetTasks->fetchAll();
 
 // var_dump($_GET);
@@ -67,7 +67,7 @@ if (!empty($_GET)) {
                 <input class="form__input" name="name" type="text" placeholder="Faire un truc" required>
                 <label class="form__label" for="task">Niveau d'urgence (1-5)</label>
                 <input class="form__input" name="emergency_level" type="text" placeholder="1-5" required>
-                <input class="form__submit" type="submit" value="✙">
+                <input class="form__submit" type="submit" value="">
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                 <?php
                 echo getErrorMessage($errors);

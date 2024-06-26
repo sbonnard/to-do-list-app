@@ -49,13 +49,14 @@ function generateTask(array $taskarray): string
     foreach ($taskarray as $task) {
         // var_dump($task['id_task']);
         $allTasks .=  '<li class="task">'
-            . '<div class="task__content"><button>'
-            . '<img class="btn--pen" src="./img/pen-btn.svg" alt="Bouton de modification du nom d\'une tâche">'
-            . '</button><h3 class="ttl ttl--small">'
+            . '<div class="task__content"><a class="btn--pen" href="./actions.php"'
+            . $task["id_task"]
+            . '">'
+            . '</a><h3 class="ttl ttl--small">'
             . $task['name'] . '</h3>'
             . '<a href="?id='
             . $task['id_task']
-            . '" class="btn--minus">-</a></div>'
+            . '" class="btn--minus"></a></div>'
             . '<div class="task__content"><p>'
             . $task['date']
             . '</p>'
@@ -151,7 +152,6 @@ function createNewTask($dbCo)
             $newRefProduct = $dbCo->lastInsertId();
 
             // var_dump($isInsertOk, $nb, $newRefProduct);
-            // redirectTo('index.php');
             return $isInsertOk;
         }
     }
