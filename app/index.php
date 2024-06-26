@@ -61,7 +61,7 @@ if (!empty($_GET)) {
     <main class="container">
         <section aria-label="Mes tâches à faire" aria-labelledby="todo">
 
-            <h2 id="todo" class="ttl ttl--bold">A FAIRE</h2>
+            <h2 id="todo" class="ttl ttl--bold">À FAIRE</h2>
             <form class="form" action="" method="post" aria-label="Formulaire d'ajout de tâches">
                 <label class="form__label" for="task">Ajouter une tâche</label>
                 <input class="form__input" name="name" type="text" placeholder="Faire un truc" required>

@@ -10,8 +10,7 @@ function getMessageForNewTask($dbCo)
 {
     if (createNewTask($dbCo)) {
         $_SESSION['msg'] = "insert_ok";
-        header('Location: index.php');
-        exit;
+        // var_dump($_SESSION['msg']);
     }
 }
 
@@ -31,9 +30,9 @@ $errors = [
 /**
  * Get error messages if the user fails to add a task.
  *
- * @return void
+ * @return string The error message.
  */
-function getErrorMessage(array $errors)
+function getErrorMessage(array $errors) :string
 {
     if (isset($_SESSION['error'])) {
         $e = ($_SESSION['error']);
@@ -46,12 +45,10 @@ function getErrorMessage(array $errors)
 /**
  * Get success messages if the user succeeds to add a task.
  *
- * @return void
+ * @return string The success message.
  */
-function getSuccessMessage(array $messages)
+function getSuccessMessage(array $messages) :string
 {
-
-
     if (isset($_SESSION['msg'])) {
         $m = ($_SESSION['msg']);
         unset($_SESSION['msg']);
