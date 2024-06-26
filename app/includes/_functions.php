@@ -23,18 +23,17 @@ function generateToken()
  *
  * @return void
  */
-function preventFromCSRF()
+function preventFromCSRF(string $redirectURL = 'index.php')
 {
-    if (!isset($_SERVER['HTTP_REFERER']) || !str_contains($_SERVER['HTTP_REFERER'], 'http://localhost:8282')) {
+    global $globalURL;
+    if (!isset($_SERVER['HTTP_REFERER']) || !str_contains($_SERVER['HTTP_REFERER'], $globalURL)) {
         $_SESSION['error'] = "referer";
-        header('Location: index.php');
-        exit;
+        redirectTo($redirectURL);
     }
 
-    if (!isset($_SESSION['token']) || !isset($_POST['token']) || $_SESSION['token'] !== $_POST['token']) {
+    if (!isset($_SESSION['token']) || !isset($_REQUEST['token']) || $_SESSION['token'] !== $_REQUEST['token']) {
         $_SESSION['error'] = 'csrf';
-        header('Location: index.php');
-        exit;
+        redirectTo($redirectURL);
     }
 }
 
@@ -88,7 +87,7 @@ function endTask(PDO $dbCo)
     ];
 
     $isUpdatetOk = $queryUpdateTaskStatus->execute($bindValues);
-    
+
     redirectTo('index.php');
 
     return $taskUpdate;
@@ -107,7 +106,7 @@ function createNewTask($dbCo)
 {
     if (!empty($_POST)) {
 
-        preventFromCSRF();
+        preventFromCSRF('index.php');
 
         $errors = [];
 

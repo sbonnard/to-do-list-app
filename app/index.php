@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+require_once "./includes/_config.php";
 require_once "./includes/_database.php";
 require_once "./includes/_functions.php";
 require_once "./includes/_include.php";
@@ -36,7 +37,7 @@ if (!empty($_GET)) {
 
 <body>
     <header class="header">
-        <img src="img/logo-jot-s.webp" alt="Logo Jot It">
+        <img class="header__logo" src="img/logo-jot-m.webp" alt="Logo Jot It">
         <h1 class="ttl">Jot It | Do it</h1>
         <div class="hamburger">
             <a href="#menu" id="hamburger-menu-icon">
