@@ -48,6 +48,7 @@ button {
 
 input[type = submit] {
   border: none;
+  font-size: 1rem;
 }
 
 body {
@@ -118,7 +119,6 @@ body {
   font-family: 'jura';
   font-size: 2rem;
   color: var(--dark-primary);
-  max-width: 12rem;
 }
 
 .ttl--bold {
@@ -138,6 +138,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  padding-top: 1rem;
 }
 
 .form__input {
@@ -190,7 +191,6 @@ body {
   background-image: url(../img/pen-btn.svg);
   background-repeat: no-repeat;
   background-size:cover;  
-  margin-right: 1rem;
   width: 2.25rem;
   max-width: 2rem;
   max-height: 2rem;
@@ -213,6 +213,10 @@ body {
 .task__number {
   font-weight: bold;
   color: var(--dark-primary);
+}
+
+.task__number-symbol {
+margin-right: 1rem;
 }
 
 .task__content {
@@ -244,4 +248,16 @@ body {
   color: var(--white);
   background-color: var(--primary);
   padding: 2rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1rem;
 }

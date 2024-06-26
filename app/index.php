@@ -65,7 +65,7 @@ if (!empty($_GET)) {
             <form class="form" action="" method="post" aria-label="Formulaire d'ajout de tâches">
                 <label class="form__label" for="task">Ajouter une tâche</label>
                 <input class="form__input" name="name" type="text" placeholder="Faire un truc" required>
-                <label class="form__label" for="task">Niveau d'urgence (1-5)</label>
+                <label class="form__label" for="emergency_level">Niveau d'urgence (1-5)</label>
                 <input class="form__input" name="emergency_level" type="text" placeholder="1-5" required>
                 <input class="form__submit" type="submit" value="">
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
@@ -73,6 +73,21 @@ if (!empty($_GET)) {
                 echo getErrorMessage($errors);
                 echo getSuccessMessage($messages);
                 ?>
+            </form>
+
+            <div class="form">
+                <button id="btn-modifier" class="btn--pen"></button>
+            </div>
+
+            <form id="form-modifier" class="form hidden" action="" method="post" aria-label="Formulaire de modification d'une tâche existante">
+                <label class="form__label" for="numbertask">Numéro de la tâche à modifier</label>
+                <input class="form__input" name="numbertask" type="text" placeholder="111" required>
+                <label class="form__label" for="task">Nouveau nom de la tâche</label>
+                <input class="form__input" name="name" type="text" placeholder="Faire un truc" required>
+                <label class="form__label" for="new_emergency_level">Niveau d'urgence (1-5)</label>
+                <input class="form__input" name="new_emergency_level" type="text" placeholder="1-5" required>
+                <input class="btn" type="submit" value="Modifier">
+                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
             </form>
             <ul>
                 <?php

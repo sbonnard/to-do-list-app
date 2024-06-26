@@ -49,10 +49,14 @@ function generateTask(array $taskarray): string
     foreach ($taskarray as $task) {
         // var_dump($task['id_task']);
         $allTasks .=  '<li class="task">'
-            . '<div class="task__content"><a class="btn--pen" href="./actions.php"'
+            . '<div class="task__content"><p class="task__number-symbol">N°<span class="task__number">'
             . $task["id_task"]
-            . '">'
-            . '</a><h3 class="ttl ttl--small">'
+            // <a id="'
+            // . $task["id_task"]
+            // . '" class="btn--pen" href="./actions.php"'
+            // . $task["id_task"]
+            // . '">'
+            . '</span><h3 class="ttl ttl--small">'
             . $task['name'] . '</h3>'
             . '<a href="?id='
             . $task['id_task']
