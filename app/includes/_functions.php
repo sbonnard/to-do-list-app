@@ -88,6 +88,9 @@ function endTask(PDO $dbCo)
     ];
 
     $isUpdatetOk = $queryUpdateTaskStatus->execute($bindValues);
+    
+    redirectTo('index.php');
+
     return $taskUpdate;
 }
 
@@ -149,8 +152,21 @@ function createNewTask($dbCo)
             $newRefProduct = $dbCo->lastInsertId();
 
             // var_dump($isInsertOk, $nb, $newRefProduct);
-
+            redirectTo('index.php');
             return $isInsertOk;
         }
     }
+}
+
+/**
+ * Redirect to the given URL.
+ *
+ * @param string $url
+ * @return void
+ */
+function redirectTo(string $url): void
+{
+    // var_dump('REDIRECT ' . $url);
+    header('Location: ' . $url);
+    exit;
 }
