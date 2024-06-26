@@ -15,6 +15,12 @@ function getMessageForNewTask($dbCo)
     }
 }
 
+
+$messages = [
+    'insert_ok' => 'Tâche ajoutée.',
+    'update_ok' => 'Tâche modifiée.'
+];
+
 $errors = [
     'csrf' => 'Votre session est invalide.',
     'referer' => 'D\'où venez vous ?',
@@ -22,35 +28,34 @@ $errors = [
     'update_ko' => 'Erreur lors de la modif d\'une tâche.'
 ];
 
-$messages = [
-    'insert_ok' => 'Tâche ajoutée.',
-    'update_ok' => 'Tâche modifiée.'
-];
-
 /**
  * Get error messages if the user fails to add a task.
  *
- * @param array $errors The array containing error messages.
  * @return void
  */
 function getErrorMessage(array $errors)
 {
     if (isset($_SESSION['error'])) {
-        echo '<p class="notif notif--error">' . $errors[$_SESSION['error']] . '</p>';
+        $e = ($_SESSION['error']);
         unset($_SESSION['error']);
+        return '<p class="notif notif--error">' . $errors[$e] . '</p>';
     }
+    return '';
 }
 
 /**
  * Get success messages if the user succeeds to add a task.
  *
- * @param array $errors The array containing success messages.
  * @return void
  */
 function getSuccessMessage(array $messages)
 {
+
+
     if (isset($_SESSION['msg'])) {
-        echo '<p class="notif notif--success">' . $messages[$_SESSION['msg']] . '</p>';
+        $m = ($_SESSION['msg']);
         unset($_SESSION['msg']);
+        return '<p class="notif notif--success">' . $messages[$m] . '</p>';
     }
+    return '';
 }

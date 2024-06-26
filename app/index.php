@@ -31,6 +31,7 @@ if (!empty($_GET)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To Do List</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -68,8 +69,8 @@ if (!empty($_GET)) {
                 <input class="form__submit" type="submit" value="✙">
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                 <?php
-                getErrorMessage($errors);
-                getSuccessMessage($messages);
+                echo getErrorMessage($errors);
+                echo getSuccessMessage($messages);
                 ?>
             </form>
             <ul>
