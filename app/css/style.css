@@ -131,6 +131,10 @@ body {
   border-bottom: 2px solid #1B7F79;
 }
 
+.header__separator {
+  color: var(--error);
+}
+
 /* TITLES */
 
 .ttl {
@@ -274,7 +278,7 @@ body {
 
 .task__number {
   font-weight: bold;
-  color: var(--dark-primary);
+  color: var(--error);
 }
 
 /* .task__number-symbol {

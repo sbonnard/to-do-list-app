@@ -39,7 +39,7 @@ if (!empty($_GET)) {
     <header class="header">
         <a href="#"><img class="header__logo" src="img/logo-jot-m.webp" alt="Logo Jot It"></a>
         <a href="#">
-            <h1 class="ttl">Jot It | Do it</h1>
+            <h1 class="ttl">Jot It <span class="header__separator">|</span> Do it</h1>
         </a>
         <div class="hamburger">
             <a href="#menu" id="hamburger-menu-icon">
