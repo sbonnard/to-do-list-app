@@ -64,11 +64,6 @@ function generateTask(array $taskarray): string
         $allTasks .=  '<li class="task">'
             . '<div class="task__content"><p class="task__number-symbol">N°<span class="task__number">'
             . $task["id_task"]
-            // <a id="'
-            // . $task["id_task"]
-            // . '" class="btn--pen" href="./actions.php"'
-            // . $task["id_task"]
-            // . '">'
             . '</span><h3 class="ttl ttl--small">'
             . $task['name'] . '</h3>'
             . '<a href="?id='

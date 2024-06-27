@@ -17,6 +17,19 @@ const formModifier = document.getElementById('form-modifier');
 btnPen.addEventListener('click', function(event){
     if(event){
         formModifier.classList.toggle("hidden");
+        formDelete.classList.add('hidden')
+    }
+})
+
+// Minus button 
+
+const btnMinus = document.getElementById('btn-minus');
+const formDelete = document.getElementById('form-delete');
+
+btnMinus.addEventListener('click', function(event){
+    if(event){
+        formDelete.classList.toggle('hidden');
+        formModifier.classList.add('hidden')
     }
 })
 

@@ -38,7 +38,9 @@ if (!empty($_GET)) {
 <body>
     <header class="header">
         <a href="#"><img class="header__logo" src="img/logo-jot-m.webp" alt="Logo Jot It"></a>
-        <a href="#"><h1 class="ttl">Jot It | Do it</h1></a>
+        <a href="#">
+            <h1 class="ttl">Jot It | Do it</h1>
+        </a>
         <div class="hamburger">
             <a href="#menu" id="hamburger-menu-icon">
                 <img src="img/hamburger.svg" alt="Menu Hamburger">
@@ -76,8 +78,9 @@ if (!empty($_GET)) {
                 ?>
             </form>
 
-            <div class="form">
+            <div class="container--btn">
                 <button id="btn-modifier" class="btn--pen" aria-label="Modifier une tâche"></button>
+                <button id="btn-minus" class="btn--minus" aria-label="Supprimer une tâche"></button>
             </div>
 
             <form id="form-modifier" class="form hidden" action="actions.php" method="post" aria-label="Formulaire de modification d'une tâche existante">
@@ -91,6 +94,17 @@ if (!empty($_GET)) {
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                 <input type="hidden" name="action" value="modify">
             </form>
+
+
+
+            <form id="form-delete" class="form hidden" action="actions.php" method="post" aria-label="Formulaire de modification d'une tâche existante">
+                <label class="form__label" for="numbertask_delete">Numéro de la tâche à supprimer</label>
+                <input class="form__input" name="numbertask_delete" type="text" placeholder="111" required>
+                <input class="btn" type="submit" value="Supprimer">
+                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                <input type="hidden" name="action" value="delete">
+            </form>
+
             <ul>
                 <?php
                 // GET TASKS FROM DATABASE 
