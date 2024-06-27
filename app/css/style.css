@@ -137,6 +137,7 @@ body {
 
 .ttl--small {
   font-size: 1.5rem;
+  margin: 0 1rem;
 }
 
 .ttl--white {
@@ -240,9 +241,9 @@ body {
   color: var(--dark-primary);
 }
 
-.task__number-symbol {
+/* .task__number-symbol {
   margin-right: 1rem;
-}
+} */
 
 .task__content {
   display: flex;

@@ -12,7 +12,7 @@ if (!isset($_REQUEST['action'])) {
 // CSRF
 preventFromCSRF();
 
-if($_REQUEST['action'] === 'create'){
+if($_REQUEST['action'] === 'create' && $_SERVER['REQUEST_METHOD'] === 'POST'){
     createNewTask($dbCo);
 } else if ($_REQUEST['action'] === 'modify' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     modifyTask($dbCo);

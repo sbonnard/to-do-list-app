@@ -123,7 +123,7 @@ function endTask(PDO $dbCo)
 function createNewTask($dbCo)
 {
     if (!empty($_POST)) {
-        
+
         preventFromCSRF('index.php');
 
         $errors = [];
@@ -182,16 +182,17 @@ function createNewTask($dbCo)
  */
 function modifyTask($dbCo)
 {
-    if ($_REQUEST['action'] === 'create') {
+    if (!empty($_POST)) {
         preventFromCSRF('index.php');
+
         $errors = [];
 
         if (!isset($_POST['numbertask']) || strlen($_POST['numbertask']) <= 0) {
             $errors[] = '<p class="error">Merci d\'entrer un numéro de tâche.</p>';
         }
 
-        if (!isset($_POST['name']) || strlen($_POST['newname']) <= 0) {
-            $errors[] = '<p class="error">Merci d\'entrer un nom de tâche.</p>';
+        if (!isset($_POST['newname']) || strlen($_POST['newname']) <= 0) {
+            $errors[] = '<p class="error">Merci d\'entrer un nouveau nom de tâche.</p>';
         }
 
         if (strlen($_POST['newname']) > 50) {
@@ -203,36 +204,29 @@ function modifyTask($dbCo)
         }
 
         if (!is_numeric($_POST['new_emergency_level'])) {
-            $errors[] = '<p class="error">La valeur de priorité doit être numérique.</p>;';
+            $errors[] = '<p class="error">La valeur de priorité doit être numérique.</p>';
         }
 
-        if ($_POST['new_emergency_level'] <= 0) {
-            $errors[] = '<p class="error">La valeur de priorité doit être comprise entre 1 & 5.</p>;';
+        if ($_POST['new_emergency_level'] <= 0 || $_POST['new_emergency_level'] > 5) {
+            $errors[] = '<p class="error">La valeur de priorité doit être comprise entre 1 et 5.</p>';
         }
 
-        if ($_POST['new_emergency_level'] > 5) {
-            $errors[] = '<p class="error">La valeur de priorité doit être comprise entre 1 & 5.</p>;';
+        if (!empty($errors)) {
+            return implode("\n", $errors);
         }
 
-        if (empty($errors)) {
-            $update = $dbCo->prepare("UPDATE task SET `name` = :name, date = CURDATE(), `emergency_level` = :emergency_level WHERE id_task = :id;");
+        $update = $dbCo->prepare(
+            "UPDATE task SET `name` = :name, `date` = CURDATE(), `emergency_level` = :emergency_level WHERE id_task = :id;"
+        );
 
-            $bindValues = [
-                'id' => htmlspecialchars($_POST['numbertask']),
-                'name' => htmlspecialchars($_POST['newname']),
-                'emergency_level' => round($_POST['new_emergency_level'])
-            ];
+        $bindValues = [
+            'id' => htmlspecialchars($_POST['numbertask']),
+            'name' => htmlspecialchars($_POST['newname']),
+            'emergency_level' => round($_POST['new_emergency_level'])
+        ];
 
-            $isUpdateOk = $update->execute($bindValues);
+        $isUpdateOk = $update->execute($bindValues);
 
-            $nb = $update->rowCount();
-
-            $newRefProduct = $dbCo->lastUpdateId();
-
-            var_dump($isUpdateOk, $nb, $newRefProduct);
-            var_dump('Tout roule');
-
-            return $isUpdateOk;
-        }
-    }
+        return $isUpdateOk;
+}
 }
