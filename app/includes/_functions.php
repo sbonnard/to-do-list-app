@@ -101,7 +101,7 @@ function generateDoneTask(array $taskarray): string
             . $task['emergency_level']
             . '</span></p></div><a href="?id='
             . $task['id_task']
-            . '" class="btn">À refaire</a></li>';
+            . '" class="btn">À refaire !</a></li>';
     }
     return $allTasks;
 }

@@ -210,6 +210,10 @@ body {
   /* background-color: var(--primary); */
 }
 
+.btn--minus--active {
+  background-image: url(../img/minus-btn-active.svg);
+}
+
 .btn--pen {
   background-image: url(../img/pen-btn.svg);
   background-repeat: no-repeat;
@@ -218,6 +222,27 @@ body {
   max-width: 2rem;
   max-height: 2rem;
   aspect-ratio: 1/1;
+}
+
+.btn--pen--active {
+  background-image: url(../img/pen-btn-active.svg);
+}
+
+.btn--tool {
+  background-image: url(../img/tool-left.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 2.25rem;
+  max-width: 2rem;
+  max-height: 2rem;
+  aspect-ratio: 1/1;
+  background-color: var(--primary);
+  border-radius: .25rem;
+}
+
+.btn--tool--clicked {
+  background-image: url(../img/tool-right.svg);
+  background-color: var(--error);
 }
 
 .btn--up {
@@ -230,6 +255,10 @@ body {
   aspect-ratio: 1/1;
   border-radius: .5rem;
 }
+
+/* TOOLS  */
+
+
 
 /* TASK  */
 
