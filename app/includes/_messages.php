@@ -17,14 +17,16 @@ function getMessageForNewTask($dbCo)
 
 $messages = [
     'insert_ok' => 'Tâche ajoutée.',
-    'update_ok' => 'Tâche modifiée.'
+    'update_ok' => 'Tâche modifiée.',
+    'delete_ok' => 'Tâche supprimée'
 ];
 
 $errors = [
     'csrf' => 'Votre session est invalide.',
     'referer' => 'D\'où venez vous ?',
     'insert_ko' => 'Erreur lors de la création d\'une tâche.',
-    'update_ko' => 'Erreur lors de la modif d\'une tâche.'
+    'update_ko' => 'Erreur lors de la modif d\'une tâche.',
+    'delete_ko' => 'Erreur lors de la suppression d\'une tâche.'
 ];
 
 /**

@@ -147,7 +147,6 @@ body {
 
 .ttl--small {
   font-size: 1.5rem;
-  margin: 0 1rem;
 }
 
 .ttl--white {
@@ -257,9 +256,15 @@ body {
 
 .task__content {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
   width: 100%;
   margin: 0 0.5rem;
+}
+
+.task__content--date-and-level {
+  justify-content: space-between;
 }
 
 /* NOTIFS  */

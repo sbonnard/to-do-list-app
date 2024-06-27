@@ -51,7 +51,7 @@ function redirectTo(string $url): void
 }
 
 /**
- * Generates content directly from the database.
+ * Generates content directly from the database for tasks that are already done.
  *
  * @param array $taskarray The table from database you want to get the informations from.
  * @return string A string with HTML elements to create content in a webpage.
@@ -65,11 +65,8 @@ function generateTask(array $taskarray): string
             . '<div class="task__content"><p class="task__number-symbol">N°<span class="task__number">'
             . $task["id_task"]
             . '</span><h3 class="ttl ttl--small">'
-            . $task['name'] . '</h3>'
-            . '<a href="?id='
-            . $task['id_task']
-            . '" class="btn--minus"></a></div>'
-            . '<div class="task__content"><p>'
+            . $task['name'] . '</h3></div>'
+            . '<div class="task__content task__content--date-and-level"><p>'
             . $task['date']
             . '</p>'
             . '<p>Niveau <span class="task__number">'
@@ -77,6 +74,34 @@ function generateTask(array $taskarray): string
             . '</span></p></div><a href="?id='
             . $task['id_task']
             . '" class="btn">C’est fait !</a></li>';
+    }
+    return $allTasks;
+}
+
+/**
+ * Generates content directly from the database.
+ *
+ * @param array $taskarray The table from database you want to get the informations from.
+ * @return string A string with HTML elements to create content in a webpage.
+ */
+function generateDoneTask(array $taskarray): string
+{
+    $allTasks = '';
+    foreach ($taskarray as $task) {
+        // var_dump($task['id_task']);
+        $allTasks .=  '<li class="task">'
+            . '<div class="task__content"><p class="task__number-symbol">N°<span class="task__number">'
+            . $task["id_task"]
+            . '</span><h3 class="ttl ttl--small">'
+            . $task['name'] . '</h3></div>'
+            . '<div class="task__content task__content--date-and-level"><p>'
+            . $task['date']
+            . '</p>'
+            . '<p>Niveau <span class="task__number">'
+            . $task['emergency_level']
+            . '</span></p></div><a href="?id='
+            . $task['id_task']
+            . '" class="btn">À refaire</a></li>';
     }
     return $allTasks;
 }
@@ -106,6 +131,29 @@ function endTask(PDO $dbCo)
     return $taskUpdate;
 }
 
+/**
+ * Switches a task to done and delete it from the DOM but not from databse.
+ *
+ * @param PDO $dbCo The connection to database
+ * @return void Erase a task from to do list.
+ */
+function redoTask(PDO $dbCo)
+{
+    $queryUpdateTaskStatus = $dbCo->prepare("UPDATE task SET status = 'TO DO' WHERE id_task = :id;");
+
+    $taskUpdate = $queryUpdateTaskStatus->fetchAll();
+
+    $bindValues = [
+        'id' => htmlspecialchars($_GET['id']),
+    ];
+
+    $isUpdatetOk = $queryUpdateTaskStatus->execute($bindValues);
+
+    redirectTo('done.php');
+
+    return $taskUpdate;
+}
+
 // ----------------------------------------------------------------------------------------
 
 
@@ -115,7 +163,7 @@ function endTask(PDO $dbCo)
  * @param [type] $dbCo The connection to database
  * @return void 
  */
-function createNewTask($dbCo)
+function createNewTask(PDO $dbCo)
 {
     if (!empty($_POST)) {
 
@@ -180,7 +228,7 @@ function createNewTask($dbCo)
  * @param [type] $dbCo
  * @return void
  */
-function modifyTask($dbCo)
+function modifyTask(PDO $dbCo)
 {
     if (!empty($_POST)) {
         preventFromCSRF('index.php');
@@ -234,5 +282,40 @@ function modifyTask($dbCo)
         }
 
         return $isUpdateOk;
+    }
+}
+
+function deleteTask(PDO $dbCo)
+{
+    if (!empty($_POST)) {
+        preventFromCSRF('index.php');
+
+        $errors = [];
+
+        if (!isset($_POST['numbertask_delete']) || strlen($_POST['numbertask_delete']) <= 0) {
+            $errors[] = '<p class="error">Merci d\'entrer un numéro de tâche.</p>';
+        }
+
+        if (!empty($errors)) {
+            return implode("\n", $errors);
+        }
+
+        $delete = $dbCo->prepare(
+            "DELETE FROM task WHERE id_task = :id;"
+        );
+
+        $bindValues = [
+            'id' => htmlspecialchars($_POST['numbertask_delete']),
+        ];
+
+        $isDeleteOk = $delete->execute($bindValues);
+
+        if ($isDeleteOk) {
+            $_SESSION['msg'] = "delete_ok";
+        } else {
+            $_SESSION['msg'] = "delete_ko";
+        }
+
+        return $isDeleteOk;
     }
 }

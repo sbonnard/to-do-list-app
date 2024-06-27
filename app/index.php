@@ -97,7 +97,7 @@ if (!empty($_GET)) {
 
 
 
-            <form id="form-delete" class="form hidden" action="actions.php" method="post" aria-label="Formulaire de modification d'une tâche existante">
+            <form id="form-delete" class="form hidden" action="actions.php" method="post" aria-label="Formulaire de suppression d'une tâche existante">
                 <label class="form__label" for="numbertask_delete">Numéro de la tâche à supprimer</label>
                 <input class="form__input" name="numbertask_delete" type="text" placeholder="111" required>
                 <input class="btn" type="submit" value="Supprimer">

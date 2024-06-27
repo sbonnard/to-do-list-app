@@ -16,7 +16,8 @@ if($_REQUEST['action'] === 'create' && $_SERVER['REQUEST_METHOD'] === 'POST'){
     createNewTask($dbCo);
 } else if ($_REQUEST['action'] === 'modify' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     modifyTask($dbCo);
+} else if ($_REQUEST['action'] === 'delete' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    deleteTask($dbCo);
 }
-
 
 redirectTo('index.php');
