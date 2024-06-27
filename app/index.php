@@ -9,7 +9,7 @@ require_once "./includes/_messages.php";
 
 generateToken();
 
-getMessageForNewTask($dbCo);
+// getMessageForNewTask($dbCo);
 
 $queryGetTasks = $dbCo->query("SELECT id_task, status, name, date, emergency_level FROM task WHERE status = 'TO DO';");
 $tasks = $queryGetTasks->fetchAll();

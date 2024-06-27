@@ -169,6 +169,11 @@ function createNewTask($dbCo)
             $newRefProduct = $dbCo->lastInsertId();
 
             // var_dump($isInsertOk, $nb, $newRefProduct);
+            if ($isInsertOk) {
+                $_SESSION['msg'] = "insert_ok";
+            } else {
+                $_SESSION['msg'] = "insert_ko";
+            }
             return $isInsertOk;
         }
     }
@@ -227,6 +232,12 @@ function modifyTask($dbCo)
 
         $isUpdateOk = $update->execute($bindValues);
 
+        if ($isUpdateOk) {
+            $_SESSION['msg'] = "update_ok";
+        } else {
+            $_SESSION['msg'] = "update_ko";
+        }
+
         return $isUpdateOk;
-}
+    }
 }
