@@ -62,14 +62,14 @@ if (!empty($_GET)) {
         <section aria-label="Mes tâches à faire" aria-labelledby="todo">
 
             <h2 id="todo" class="ttl ttl--bold">À FAIRE</h2>
-            <form class="form" action="" method="post" aria-label="Formulaire d'ajout de tâches">
+            <form class="form" action="actions.php" method="post" aria-label="Formulaire d'ajout de tâches">
                 <label class="form__label" for="task">Ajouter une tâche</label>
                 <input class="form__input" name="name" type="text" placeholder="Faire un truc" required>
                 <label class="form__label" for="emergency_level">Niveau d'urgence (1-5)</label>
                 <input class="form__input" name="emergency_level" type="text" placeholder="1-5" required>
                 <input class="form__submit" type="submit" value="">
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                <input type="hidden" name="create" value="create">
+                <input type="hidden" name="action" value="create">
                 <?php
                 echo getErrorMessage($errors);
                 echo getSuccessMessage($messages);
@@ -89,7 +89,7 @@ if (!empty($_GET)) {
                 <input class="form__input" name="new_emergency_level" type="text" placeholder="1-5" required>
                 <input class="btn" type="submit" value="Modifier">
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                <input type="hidden" name="modify" value="modify">
+                <input type="hidden" name="action" value="modify">
             </form>
             <ul>
                 <?php
