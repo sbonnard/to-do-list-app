@@ -96,6 +96,14 @@ if (!empty($_GET)) {
                 ?>
             </ul>
         </section>
+
+        <div class="up" >
+            <a class="btn--up" href="#" aria-label="Remonter en haut de la page"></a>
+        </div>
+
+        <section class="all-done" aria-label="Il n'y a plus de tâches" aria-labelledby="alldone">
+            <h2 id="alldone" class="ttl ttl--bold ttl--white">Il n'y a plus de tâches !</h2>
+        </section>
     </main>
 
     <footer class="footer">© 2024 | Jot It</footer>

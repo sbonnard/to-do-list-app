@@ -169,7 +169,7 @@ function createNewTask($dbCo)
  */
 function redirectTo(string $url): void
 {
-    var_dump('REDIRECT ' . $url);
+    // var_dump('REDIRECT ' . $url);
     header('Location: ' . $url);
     exit;
 }
