@@ -6,7 +6,7 @@
   --black: #000000;
   --white: #F8F8F8;
   --grey50: rgba(0, 0, 0, 0.05);
-  --error: #CA4F0A;
+  --secondary: #CA4F0A;
 }
 
 @font-face {
@@ -38,6 +38,13 @@ a:visited {
 
 a {
   color: var(--white);
+  cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+  a {
+    color: var(--dark-primary);
+  }
 }
 
 button {
@@ -49,6 +56,7 @@ button {
 input[type=submit] {
   border: none;
   font-size: 1rem;
+  cursor: pointer;
 }
 
 body {
@@ -61,6 +69,7 @@ body {
 /* UTILS  */
 
 .container {
+  max-width: 92.5rem;
   margin: 1.25rem;
 }
 
@@ -132,7 +141,14 @@ body {
 }
 
 .header__separator {
-  color: var(--error);
+  color: var(--secondary);
+}
+
+/* NAV  */
+
+.nav__lnk--current {
+  color: var(--secondary);
+  font-weight: bold;
 }
 
 /* TITLES */
@@ -173,6 +189,14 @@ body {
   padding: 0.5rem;
   border: 2px solid var(--primary);
   background-color: var(--grey50);
+}
+
+.form_input:focus-visible {
+  outline-color: var(--secondary);
+}
+
+.form_input:hover {
+  outline-color: var(--secondary);
 }
 
 .form__submit {
@@ -244,7 +268,7 @@ body {
 
 .btn--tool--clicked {
   background-image: url(../img/tool-right.svg);
-  background-color: var(--error);
+  background-color: var(--secondary);
 }
 
 .btn--up {
@@ -258,9 +282,16 @@ body {
   border-radius: .5rem;
 }
 
-/* TOOLS  */
 
+/* TASKLIST  */
 
+@media screen and (min-width: 768px) {
+  .tasklist {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
 
 /* TASK  */
 
@@ -268,6 +299,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 45.5rem;
   border: 2px solid var(--primary);
   padding: 0.5rem;
   border-radius: 1.25rem;
@@ -278,7 +310,7 @@ body {
 
 .task__number {
   font-weight: bold;
-  color: var(--error);
+  color: var(--secondary);
 }
 
 /* .task__number-symbol {
@@ -305,7 +337,7 @@ body {
 }
 
 .notif--error {
-  color: var(--error);
+  color: var(--secondary);
 }
 
 .notif--success {

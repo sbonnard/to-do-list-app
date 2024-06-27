@@ -49,8 +49,8 @@ if (!empty($_GET)) {
 
         <nav class="hamburger__menu" id="menu" aria-label="Navigation principale du site">
             <ul id="nav-list" class="nav">
-                <li class="nav__itm nav__lnk--current">
-                    <a href="index.php" class="nav__lnk" aria-current="page">Accueil</a>
+                <li class="nav__itm">
+                    <a href="index.php" class="nav__lnk nav__lnk--current" aria-current="page">Accueil</a>
                 </li>
                 <li class="nav__itm">
                     <a href="done.php">Tâches terminées</a>
@@ -99,8 +99,6 @@ if (!empty($_GET)) {
                 <input type="hidden" name="action" value="modify">
             </form>
 
-
-
             <form id="form-delete" class="form hidden" action="actions.php" method="post" aria-label="Formulaire de suppression d'une tâche existante">
                 <h3 class="ttl ttl--small">Supprimer une tâche</h3>
                 <label class="form__label" for="numbertask_delete">Numéro de la tâche à supprimer</label>
@@ -110,7 +108,7 @@ if (!empty($_GET)) {
                 <input type="hidden" name="action" value="delete">
             </form>
 
-            <ul>
+            <ul class="tasklist">
                 <?php
                 // GET TASKS FROM DATABASE 
                 echo generateTask($tasks);

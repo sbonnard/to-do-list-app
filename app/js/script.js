@@ -23,8 +23,8 @@ btnPen.addEventListener('click', function(event){
     if(event){
         formModifier.classList.toggle("hidden");
         formDelete.classList.add('hidden');
-        btnPen.classList.add('.btn--pen--active');
-        btnMinus.classList.remove('.btn--minus--active');
+        btnPen.classList.toggle('btn--pen--active');
+        btnMinus.classList.remove('btn--minus--active');
     }
 })
 
@@ -34,8 +34,8 @@ btnMinus.addEventListener('click', function(event){
     if(event){
         formDelete.classList.toggle('hidden');
         formModifier.classList.add('hidden');
-        btnMinus.classList.add('.btn--minus--active');
-        btnPen.classList.remove('.btn--pen--active');
+        btnMinus.classList.toggle('btn--minus--active');
+        btnPen.classList.remove('btn--pen--active');
     }
 })
 

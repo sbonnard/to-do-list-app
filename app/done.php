@@ -44,7 +44,7 @@ if (!empty($_GET)) {
                     <a href="index.php" class="nav__lnk" aria-current="page">Accueil</a>
                 </li>
                 <li class="nav__itm">
-                    <a href="done.php">Tâches terminées</a>
+                    <a href="done.php" class="nav__lnk--current">Tâches terminées</a>
                 </li>
             </ul>
         </nav>
@@ -55,7 +55,7 @@ if (!empty($_GET)) {
 
         <section aria-label="Mes tâches terminées" aria-labelledby="donestuff">
             <h2 id="donestuff" class="ttl ttl--bold">C'EST FAIT !</h2>
-            <ul>
+            <ul class="tasklist">
                 <?php
                 // GET TASKS FROM DATABASE 
                 echo generateDoneTask($tasks);
