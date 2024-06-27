@@ -174,6 +174,12 @@ function createNewTask($dbCo)
     }
 }
 
+/**
+ * Modifiers a task thanks toi it's ID as numlber task in UX.
+ *
+ * @param [type] $dbCo
+ * @return void
+ */
 function modifyTask($dbCo)
 {
     if ($_REQUEST['action'] === 'create') {
@@ -224,6 +230,8 @@ function modifyTask($dbCo)
             $newRefProduct = $dbCo->lastUpdateId();
 
             var_dump($isUpdateOk, $nb, $newRefProduct);
+            var_dump('Tout roule');
+
             return $isUpdateOk;
         }
     }

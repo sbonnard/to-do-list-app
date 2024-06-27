@@ -14,7 +14,7 @@ preventFromCSRF();
 
 if($_REQUEST['action'] === 'create'){
     createNewTask($dbCo);
-} elseif ($_REQUEST['action'] === 'modify') {
+} else if ($_REQUEST['action'] === 'modify' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     modifyTask($dbCo);
 }
 

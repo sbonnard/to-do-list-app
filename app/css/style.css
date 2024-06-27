@@ -6,7 +6,7 @@
   --black: #000000;
   --white: #F8F8F8;
   --grey50: rgba(0, 0, 0, 0.05);
-  --error : #CA4F0A;
+  --error: #CA4F0A;
 }
 
 @font-face {
@@ -46,7 +46,7 @@ button {
   cursor: pointer;
 }
 
-input[type = submit] {
+input[type=submit] {
   border: none;
   font-size: 1rem;
 }
@@ -203,7 +203,7 @@ body {
 .btn--pen {
   background-image: url(../img/pen-btn.svg);
   background-repeat: no-repeat;
-  background-size:cover;  
+  background-size: cover;
   width: 2.25rem;
   max-width: 2rem;
   max-height: 2rem;
@@ -232,6 +232,7 @@ body {
   border-radius: 1.25rem;
   margin: 1.25rem 0;
   gap: 0.75rem;
+  background-color: var(--white);
 }
 
 .task__number {
@@ -240,7 +241,7 @@ body {
 }
 
 .task__number-symbol {
-margin-right: 1rem;
+  margin-right: 1rem;
 }
 
 .task__content {
@@ -288,6 +289,7 @@ margin-right: 1rem;
 .hidden {
   display: none;
 }
+
 /* 
 .show {
   display: flex;

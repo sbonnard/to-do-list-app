@@ -22,7 +22,6 @@ if (!empty($_GET)) {
 
 // modifyTask($dbCo);
 // deleteTask($dbCo);
-
 ?>
 
 <!DOCTYPE html>
@@ -38,8 +37,8 @@ if (!empty($_GET)) {
 
 <body>
     <header class="header">
-        <img class="header__logo" src="img/logo-jot-m.webp" alt="Logo Jot It">
-        <h1 class="ttl">Jot It | Do it</h1>
+        <a href="#"><img class="header__logo" src="img/logo-jot-m.webp" alt="Logo Jot It"></a>
+        <a href="#"><h1 class="ttl">Jot It | Do it</h1></a>
         <div class="hamburger">
             <a href="#menu" id="hamburger-menu-icon">
                 <img src="img/hamburger.svg" alt="Menu Hamburger">
