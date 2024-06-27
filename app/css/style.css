@@ -220,7 +220,6 @@ body {
   background-size: cover;
   width: 2.25rem;
   max-width: 2rem;
-  max-height: 2rem;
   aspect-ratio: 1/1;
 }
 
@@ -233,8 +232,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   width: 2.25rem;
-  max-width: 2rem;
-  max-height: 2rem;
+  max-width: 2.25rem;
   aspect-ratio: 1/1;
   background-color: var(--primary);
   border-radius: .25rem;
