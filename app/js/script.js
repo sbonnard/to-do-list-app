@@ -16,8 +16,8 @@ const formModifier = document.getElementById('form-modifier');
 
 btnPen.addEventListener('click', function(event){
     if(event){
-        formModifier.classList.toggle("show");
+        formModifier.classList.toggle("hidden");
     }
 })
 
-console.log(btnPen, formModifier);
+// console.log(btnPen, formModifier);

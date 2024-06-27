@@ -97,7 +97,7 @@ if (!empty($_GET)) {
             </ul>
         </section>
 
-        <div class="up" >
+        <div class="up">
             <a class="btn--up" href="#" aria-label="Remonter en haut de la page"></a>
         </div>
 
