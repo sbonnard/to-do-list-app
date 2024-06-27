@@ -38,6 +38,19 @@ function preventFromCSRF(string $redirectURL = 'index.php')
 }
 
 /**
+ * Redirect to the given URL.
+ *
+ * @param string $url
+ * @return void
+ */
+function redirectTo(string $url): void
+{
+    // var_dump('REDIRECT ' . $url);
+    header('Location: ' . $url);
+    exit;
+}
+
+/**
  * Generates content directly from the database.
  *
  * @param array $taskarray The table from database you want to get the informations from.
@@ -110,7 +123,7 @@ function endTask(PDO $dbCo)
 function createNewTask($dbCo)
 {
     if (!empty($_POST)) {
-
+        
         preventFromCSRF('index.php');
 
         $errors = [];
@@ -161,15 +174,57 @@ function createNewTask($dbCo)
     }
 }
 
-/**
- * Redirect to the given URL.
- *
- * @param string $url
- * @return void
- */
-function redirectTo(string $url): void
+function modifyTask($dbCo)
 {
-    // var_dump('REDIRECT ' . $url);
-    header('Location: ' . $url);
-    exit;
+    if (!empty($_POST)) {
+        preventFromCSRF('index.php');
+        $errors = [];
+
+        if (!isset($_POST['numbertask']) || strlen($_POST['numbertask']) <= 0) {
+            $errors[] = '<p class="error">Merci d\'entrer un numéro de tâche.</p>';
+        }
+
+        if (!isset($_POST['name']) || strlen($_POST['newname']) <= 0) {
+            $errors[] = '<p class="error">Merci d\'entrer un nom de tâche.</p>';
+        }
+
+        if (strlen($_POST['newname']) > 50) {
+            $errors[] = '<p class="error">Merci d\'entrer un nom de tâche de 50 caractères maximum.</p>';
+        }
+
+        if (!isset($_POST['new_emergency_level'])) {
+            $errors[] = '<p class="error">Merci d\'entrer un niveau de priorité.</p>';
+        }
+
+        if (!is_numeric($_POST['new_emergency_level'])) {
+            $errors[] = '<p class="error">La valeur de priorité doit être numérique.</p>;';
+        }
+
+        if ($_POST['new_emergency_level'] <= 0) {
+            $errors[] = '<p class="error">La valeur de priorité doit être comprise entre 1 & 5.</p>;';
+        }
+
+        if ($_POST['new_emergency_level'] > 5) {
+            $errors[] = '<p class="error">La valeur de priorité doit être comprise entre 1 & 5.</p>;';
+        }
+
+        if (empty($errors)) {
+            $update = $dbCo->prepare("UPDATE task SET `name` = :name, date = CURDATE(), `emergency_level` = :emergency_level WHERE id_task = :id;");
+
+            $bindValues = [
+                'id' => htmlspecialchars($_POST['numbertask']),
+                'name' => htmlspecialchars($_POST['newname']),
+                'emergency_level' => round($_POST['new_emergency_level'])
+            ];
+
+            $isUpdateOk = $update->execute($bindValues);
+
+            $nb = $update->rowCount();
+
+            $newRefProduct = $dbCo->lastUpdateId();
+
+            var_dump($isUpdateOk, $nb, $newRefProduct);
+            return $isUpdateOk;
+        }
+    }
 }

@@ -6,6 +6,7 @@ require_once "./includes/_database.php";
 require_once "./includes/_functions.php";
 require_once "./includes/_include.php";
 require_once "./includes/_messages.php";
+// require_once "actions.php";
 
 generateToken();
 
@@ -20,6 +21,7 @@ if (!empty($_GET)) {
     endTask($dbCo);
 }
 
+// modifyTask($dbCo);
 // deleteTask($dbCo);
 
 ?>
@@ -76,14 +78,14 @@ if (!empty($_GET)) {
             </form>
 
             <div class="form">
-                <button id="btn-modifier" class="btn--pen"></button>
+                <button id="btn-modifier" class="btn--pen" aria-label="Modifier une tâche"></button>
             </div>
 
             <form id="form-modifier" class="form hidden" action="" method="post" aria-label="Formulaire de modification d'une tâche existante">
                 <label class="form__label" for="numbertask">Numéro de la tâche à modifier</label>
                 <input class="form__input" name="numbertask" type="text" placeholder="111" required>
-                <label class="form__label" for="task">Nouveau nom de la tâche</label>
-                <input class="form__input" name="name" type="text" placeholder="Faire un truc" required>
+                <label class="form__label" for="newname">Nouveau nom de la tâche</label>
+                <input class="form__input" name="newname" type="text" placeholder="Faire un truc" required>
                 <label class="form__label" for="new_emergency_level">Niveau d'urgence (1-5)</label>
                 <input class="form__input" name="new_emergency_level" type="text" placeholder="1-5" required>
                 <input class="btn" type="submit" value="Modifier">
