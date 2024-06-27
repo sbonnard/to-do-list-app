@@ -6,13 +6,12 @@ require_once "./includes/_database.php";
 require_once "./includes/_functions.php";
 require_once "./includes/_include.php";
 require_once "./includes/_messages.php";
-// require_once "actions.php";
 
 generateToken();
 
 getMessageForNewTask($dbCo);
 
-$queryGetTasks = $dbCo->query("SELECT id_task, status, name, date, emergency_level FROM task WHERE status = 'TO DO' ORDER BY date DESC;");
+$queryGetTasks = $dbCo->query("SELECT id_task, status, name, date, emergency_level FROM task WHERE status = 'TO DO';");
 $tasks = $queryGetTasks->fetchAll();
 
 // var_dump($_GET);
@@ -71,6 +70,7 @@ if (!empty($_GET)) {
                 <input class="form__input" name="emergency_level" type="text" placeholder="1-5" required>
                 <input class="form__submit" type="submit" value="">
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                <input type="hidden" name="create" value="create">
                 <?php
                 echo getErrorMessage($errors);
                 echo getSuccessMessage($messages);
@@ -81,7 +81,7 @@ if (!empty($_GET)) {
                 <button id="btn-modifier" class="btn--pen" aria-label="Modifier une tâche"></button>
             </div>
 
-            <form id="form-modifier" class="form hidden" action="" method="post" aria-label="Formulaire de modification d'une tâche existante">
+            <form id="form-modifier" class="form hidden" action="actions.php" method="post" aria-label="Formulaire de modification d'une tâche existante">
                 <label class="form__label" for="numbertask">Numéro de la tâche à modifier</label>
                 <input class="form__input" name="numbertask" type="text" placeholder="111" required>
                 <label class="form__label" for="newname">Nouveau nom de la tâche</label>
@@ -90,6 +90,7 @@ if (!empty($_GET)) {
                 <input class="form__input" name="new_emergency_level" type="text" placeholder="1-5" required>
                 <input class="btn" type="submit" value="Modifier">
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                <input type="hidden" name="modify" value="modify">
             </form>
             <ul>
                 <?php

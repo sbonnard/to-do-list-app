@@ -176,7 +176,7 @@ function createNewTask($dbCo)
 
 function modifyTask($dbCo)
 {
-    if (!empty($_POST)) {
+    if ($_REQUEST['action'] === 'create') {
         preventFromCSRF('index.php');
         $errors = [];
 
