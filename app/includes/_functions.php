@@ -191,8 +191,8 @@ function createNewTask(PDO $dbCo)
             $errors[] = '<p class="error">La valeur de priorité doit être comprise entre 1 & 5.</p>;';
         }
 
-        if ($_POST['emergency_level'] > 5) {
-            $errors[] = '<p class="error">La valeur de priorité doit être comprise entre 1 & 5.</p>;';
+        if ($_POST['emergency_level'] > 255) {
+            $errors[] = '<p class="error">La valeur de priorité doit être comprise entre 1 & 255.</p>;';
         }
 
         // var_dump($errors);
@@ -255,8 +255,8 @@ function modifyTask(PDO $dbCo)
             $errors[] = '<p class="error">La valeur de priorité doit être numérique.</p>';
         }
 
-        if ($_POST['new_emergency_level'] <= 0 || $_POST['new_emergency_level'] > 5) {
-            $errors[] = '<p class="error">La valeur de priorité doit être comprise entre 1 et 5.</p>';
+        if ($_POST['new_emergency_level'] <= 0 || $_POST['new_emergency_level'] > 255) {
+            $errors[] = '<p class="error">La valeur de priorité doit être comprise entre 1 et 255.</p>';
         }
 
         if (!empty($errors)) {

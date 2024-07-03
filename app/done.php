@@ -53,6 +53,8 @@ if (!empty($_GET)) {
 
     <main class="container">
 
+    <input type="color" name="" id="" value="#A72E47">
+
         <section aria-label="Mes tâches terminées" aria-labelledby="donestuff">
             <h2 id="donestuff" class="ttl ttl--bold">C'EST FAIT !</h2>
             <ul class="tasklist">

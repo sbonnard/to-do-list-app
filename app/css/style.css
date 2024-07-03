@@ -44,6 +44,11 @@ a {
 @media screen and (min-width: 768px) {
   a {
     color: var(--dark-primary);
+    transition: 0.25s ease-in-out;
+  }
+
+  a:hover {
+    color: var(--secondary);
   }
 }
 
@@ -64,6 +69,17 @@ body {
   background-color: var(--white);
   font-family: "jura";
   font-size: 1rem;
+}
+
+input[type=color] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  width: 100px;
+  height: 100px;
+  border: none;
+  cursor: pointer;
 }
 
 /* UTILS  */
@@ -89,6 +105,12 @@ body {
   justify-content: center;
   align-items: center;
   padding: 1rem;
+}
+
+@media screen and (min-width: 764px) {
+  .container {
+    margin: auto;
+  }
 }
 
 /* Hamburger */
@@ -145,6 +167,8 @@ body {
 }
 
 /* NAV  */
+
+
 
 .nav__lnk--current {
   color: var(--secondary);
@@ -221,6 +245,11 @@ body {
   width: 8.625rem;
   padding: 0.5rem;
   text-align: center;
+  transition: 0.25s ease-in-out;
+}
+
+.btn:hover {
+  background-color: var(--secondary);
 }
 
 .btn--minus {
@@ -235,6 +264,7 @@ body {
   width: 2rem;
   height: 2rem;
   border-radius: 0.25rem;
+  transition: 0.25s ease-in-out;
   /* background-color: var(--primary); */
 }
 
@@ -249,6 +279,7 @@ body {
   width: 2.25rem;
   max-width: 2rem;
   aspect-ratio: 1/1;
+  transition: 0.25s ease-in-out;
 }
 
 .btn--pen--active {
@@ -281,7 +312,6 @@ body {
   aspect-ratio: 1/1;
   border-radius: .5rem;
 }
-
 
 /* TASKLIST  */
 
@@ -353,6 +383,12 @@ body {
   align-items: center;
   background-color: var(--primary);
   border-radius: 1.25rem;
+}
+
+@media screen and (min-width: 764px) {
+  .all-done {
+    margin-bottom: 1.5rem;
+  }
 }
 
 /* FOOTER  */
