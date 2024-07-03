@@ -74,5 +74,8 @@ btnTool.addEventListener('click', function(event){
         formModifier.classList.add('hidden');
         formPriority.classList.add('hidden');
         formDelete.classList.add('hidden');
+        btnMinus.classList.remove('btn--minus--active');
+        btnPen.classList.remove('btn--pen--active');
+        btnPriority.classList.remove('btn--priority--active');
     }
 })

@@ -96,7 +96,7 @@ input[type=color] {
   justify-content: center;
   align-items: center;
   gap: 2.5rem;
-  padding: 2.5rem;
+  padding: 2.5rem 0;
 }
 
 .up {
@@ -167,8 +167,6 @@ input[type=color] {
 }
 
 /* NAV  */
-
-
 
 .nav__lnk--current {
   color: var(--secondary);
@@ -362,10 +360,6 @@ input[type=color] {
   color: var(--secondary);
 }
 
-/* .task__number-symbol {
-  margin-right: 1rem;
-} */
-
 .task__content {
   display: flex;
   align-items: center;
@@ -423,12 +417,3 @@ input[type=color] {
 .hidden {
   display: none;
 }
-
-/* 
-.show {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  padding-top: 1rem;
-} */
