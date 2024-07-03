@@ -272,6 +272,25 @@ input[type=color] {
   background-image: url(../img/minus-btn-active.svg);
 }
 
+.btn--priority {
+  background-image: url(../img/priority-btn.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.25rem;
+  transition: 0.25s ease-in-out;
+}
+
+.btn--priority--active {
+  background-image: url(../img/priority-btn-active.svg);
+}
+
 .btn--pen {
   background-image: url(../img/pen-btn.svg);
   background-repeat: no-repeat;

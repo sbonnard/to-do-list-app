@@ -18,7 +18,8 @@ function getMessageForNewTask($dbCo)
 $messages = [
     'insert_ok' => 'Tâche ajoutée.',
     'update_ok' => 'Tâche modifiée.',
-    'delete_ok' => 'Tâche supprimée'
+    'delete_ok' => 'Tâche supprimée',
+    'update_emergency_ok' => 'Niveau de priorité modifié'
 ];
 
 $errors = [
@@ -26,7 +27,8 @@ $errors = [
     'referer' => 'D\'où venez vous ?',
     'insert_ko' => 'Erreur lors de la création d\'une tâche.',
     'update_ko' => 'Erreur lors de la modif d\'une tâche.',
-    'delete_ko' => 'Erreur lors de la suppression d\'une tâche.'
+    'delete_ko' => 'Erreur lors de la suppression d\'une tâche.',
+    'update_emergency_ko' => 'Erreur lors de la modif du niveau de priorité'
 ];
 
 /**

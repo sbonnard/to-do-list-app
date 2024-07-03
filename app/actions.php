@@ -18,6 +18,8 @@ if($_REQUEST['action'] === 'create' && $_SERVER['REQUEST_METHOD'] === 'POST'){
     modifyTask($dbCo);
 } else if ($_REQUEST['action'] === 'delete' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     deleteTask($dbCo);
+} else if ($_REQUEST['action'] === 'modify_emergency' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    modifyTaskPriority($dbCo);
 }
 
 redirectTo('index.php');

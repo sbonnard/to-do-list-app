@@ -247,6 +247,48 @@ function modifyTask(PDO $dbCo)
             $errors[] = '<p class="error">Merci d\'entrer un nom de tâche de 50 caractères maximum.</p>';
         }
 
+        if (!empty($errors)) {
+            return implode("\n", $errors);
+        }
+
+        $update = $dbCo->prepare(
+            "UPDATE task SET `name` = :name, `date` = CURDATE() WHERE id_task = :id;"
+        );
+
+        $bindValues = [
+            'id' => htmlspecialchars($_POST['numbertask']),
+            'name' => htmlspecialchars($_POST['newname']),
+        ];
+
+        $isUpdateOk = $update->execute($bindValues);
+
+        if ($isUpdateOk) {
+            $_SESSION['msg'] = "update_ok";
+        } else {
+            $_SESSION['msg'] = "update_ko";
+        }
+
+        return $isUpdateOk;
+    }
+}
+
+/**
+ * Modifies task's priority level to reorder the to do list.
+ *
+ * @param PDO $dbCo
+ * @return void
+ */
+function modifyTaskPriority(PDO $dbCo)
+{
+    if (!empty($_POST)) {
+        preventFromCSRF('index.php');
+
+        $errors = [];
+
+        if (!isset($_POST['numbertask_emergency']) || strlen($_POST['numbertask_emergency']) <= 0) {
+            $errors[] = '<p class="error">Merci d\'entrer un numéro de tâche.</p>';
+        }
+
         if (!isset($_POST['new_emergency_level'])) {
             $errors[] = '<p class="error">Merci d\'entrer un niveau de priorité.</p>';
         }
@@ -264,27 +306,32 @@ function modifyTask(PDO $dbCo)
         }
 
         $update = $dbCo->prepare(
-            "UPDATE task SET `name` = :name, `date` = CURDATE(), `emergency_level` = :emergency_level WHERE id_task = :id;"
+            "UPDATE task SET `emergency_level` = :emergency_level WHERE id_task = :id;"
         );
 
         $bindValues = [
-            'id' => htmlspecialchars($_POST['numbertask']),
-            'name' => htmlspecialchars($_POST['newname']),
+            'id' => htmlspecialchars($_POST['numbertask_emergency']),
             'emergency_level' => round($_POST['new_emergency_level'])
         ];
 
         $isUpdateOk = $update->execute($bindValues);
 
         if ($isUpdateOk) {
-            $_SESSION['msg'] = "update_ok";
+            $_SESSION['msg'] = "update_emergency_ok";
         } else {
-            $_SESSION['msg'] = "update_ko";
+            $_SESSION['msg'] = "update_emergency_ko";
         }
 
         return $isUpdateOk;
     }
 }
 
+/**
+ * Deletes a task from To Do List.
+ *
+ * @param   $dbCo
+ * @return void
+ */
 function deleteTask(PDO $dbCo)
 {
     if (!empty($_POST)) {

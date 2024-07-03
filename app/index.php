@@ -3,6 +3,7 @@ session_start();
 
 require_once "./includes/_config.php";
 require_once "./includes/_database.php";
+require_once "./includes/_queries.php";
 require_once "./includes/_functions.php";
 require_once "./includes/_include.php";
 require_once "./includes/_messages.php";
@@ -11,8 +12,7 @@ generateToken();
 
 // getMessageForNewTask($dbCo);
 
-$queryGetTasks = $dbCo->query("SELECT id_task, status, name, date, emergency_level FROM task WHERE status = 'TO DO';");
-$tasks = $queryGetTasks->fetchAll();
+
 
 // var_dump($_GET);
 
@@ -68,7 +68,7 @@ if (!empty($_GET)) {
                 <label class="form__label" for="task">Ajouter une tâche</label>
                 <input class="form__input" name="name" type="text" placeholder="Faire un truc" required>
                 <label class="form__label" for="emergency_level">Niveau d'urgence</label>
-                <input class="form__input" name="emergency_level" type="text" placeholder="42">
+                <input class="form__input" name="emergency_level" type="text" placeholder="111">
                 <input class="form__submit" type="submit" value="">
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                 <input type="hidden" name="action" value="create">
@@ -82,6 +82,7 @@ if (!empty($_GET)) {
                 <div id="toolbox" class="container--btn">
                     <button id="btn-tool" class="btn--tool" aria-label="Ouvrir les outils de modification des tâches"></button>
                     <button id="btn-modifier" class="btn--pen hidden" aria-label="Modifier une tâche"></button>
+                    <button id="btn-priority" class="btn--priority hidden" aria-label="Modifier une tâche"></button>
                     <button id="btn-minus" class="btn--minus hidden" aria-label="Supprimer une tâche"></button>
                 </div>
             </section>
@@ -92,11 +93,22 @@ if (!empty($_GET)) {
                 <input class="form__input" name="numbertask" type="text" placeholder="111" required>
                 <label class="form__label" for="newname">Nouveau nom de la tâche</label>
                 <input class="form__input" name="newname" type="text" placeholder="Faire un truc" required>
-                <label class="form__label" for="new_emergency_level">Niveau d'urgence (1-5)</label>
-                <input class="form__input" name="new_emergency_level" type="text" placeholder="1-5" required>
+                <!-- <label class="form__label" for="new_emergency_level">Niveau d'urgence (1-5)</label>
+                <input class="form__input" name="new_emergency_level" type="text" placeholder="1-255" required> -->
                 <input class="btn" type="submit" value="Modifier">
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                 <input type="hidden" name="action" value="modify">
+            </form>
+
+            <form id="form-emergency" class="form hidden" action="actions.php" method="post" aria-label="Formulaire de modification de priorité d'une tâche">
+                <h3 class="ttl ttl--small">Modifier l'ordre de priorité</h3>
+                <label class="form__label" for="numbertask_emergency">Numéro de la tâche à modifier</label>
+                <input class="form__input" name="numbertask_emergency" type="text" placeholder="111" required>
+                <label class="form__label" for="new_emergency_level">Niveau d'urgence</label>
+                <input class="form__input" name="new_emergency_level" type="text" placeholder="1-255" required>
+                <input class="btn" type="submit" value="Modifier">
+                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                <input type="hidden" name="action" value="modify_emergency">
             </form>
 
             <form id="form-delete" class="form hidden" action="actions.php" method="post" aria-label="Formulaire de suppression d'une tâche existante">
