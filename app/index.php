@@ -93,8 +93,6 @@ if (!empty($_GET)) {
                 <input class="form__input" name="numbertask" type="text" placeholder="111" required>
                 <label class="form__label" for="newname">Nouveau nom de la tâche</label>
                 <input class="form__input" name="newname" type="text" placeholder="Faire un truc" required>
-                <!-- <label class="form__label" for="new_emergency_level">Niveau d'urgence (1-5)</label>
-                <input class="form__input" name="new_emergency_level" type="text" placeholder="1-255" required> -->
                 <input class="btn" type="submit" value="Modifier">
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                 <input type="hidden" name="action" value="modify">
