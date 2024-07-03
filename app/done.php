@@ -4,7 +4,6 @@ session_start();
 require_once "./includes/_config.php";
 require_once "./includes/_database.php";
 require_once "./includes/_functions.php";
-require_once "./includes/_include.php";
 require_once "./includes/_messages.php";
 
 $queryGetTasks = $dbCo->query("SELECT id_task, status, name, date, emergency_level FROM task WHERE status = 'DONE';");

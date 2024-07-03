@@ -50,9 +50,20 @@ CREATE TABLE colours (
 
 INSERT INTO colours (name, hexa_code)
 VALUES ('dark_green', '#1B7F79'), ('orange', '#CA4F0A'), ('zinzolin', '#A72E47');
- 
 
 ALTER TABLE task
-ADD id_colours VARCHAR(255)
+ADD deadline DATE NOT NULL DEFAULT '';
 
-, `date` = CURDATE(), `emergency_level` = :emergency_level
+
+-- Query to update priority when an emergency_level already exists
+-- // ------------------------------------------------------------------------------------------------------------------------------
+
+--         $updateDatabase = $dbCo->prepare("UPDATE task SET emergency_level - 1 WHERE id_task != :id AND emergency_level > 0;");
+        
+--         $updateBindValues = [
+--             'id' => intval($_POST['numbertask_emergency'])
+--         ];
+
+--         $updateDatabase->execute($updateBindValues);
+
+-- // ------------------------------------------------------------------------------------------------------------------------------

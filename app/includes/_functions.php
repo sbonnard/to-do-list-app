@@ -50,6 +50,15 @@ function redirectTo(string $url): void
     exit;
 }
 
+function displayIfDeadline (array $task) {
+
+    if ($task['deadline'] != NULL) {
+        return '<div class="task-content task-content--deadline"><p>Deadline: ' . $task['deadline']. '</p></div>';
+    } else {
+       return '<div class="task-content task-content--deadline"><p>Deadline: <a class="deadline" href="?set=deadline&id=' . $task['id_task']. '">Ajouter une deadline</a></p></div>';
+    }
+}
+
 /**
  * Generates content directly from the database for tasks that are already done.
  *
@@ -71,7 +80,9 @@ function generateTask(array $taskarray): string
             . '</p>'
             . '<p>Niveau <span class="task__number">'
             . $task['emergency_level']
-            . '</span></p></div><a href="?id='
+            . '</span></p></div>'
+            . displayIfDeadline($task)
+            .'<a href="?id='
             . $task['id_task']
             . '" class="btn">C’est fait !</a></li>';
     }
@@ -310,7 +321,7 @@ function modifyTaskPriority(PDO $dbCo)
         );
 
         $bindValues = [
-            'id' => htmlspecialchars($_POST['numbertask_emergency']),
+            'id' => intval($_POST['numbertask_emergency']),
             'emergency_level' => round($_POST['new_emergency_level'])
         ];
 
@@ -366,3 +377,4 @@ function deleteTask(PDO $dbCo)
         return $isDeleteOk;
     }
 }
+

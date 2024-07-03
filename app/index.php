@@ -5,7 +5,6 @@ require_once "./includes/_config.php";
 require_once "./includes/_database.php";
 require_once "./includes/_queries.php";
 require_once "./includes/_functions.php";
-require_once "./includes/_include.php";
 require_once "./includes/_messages.php";
 
 generateToken();

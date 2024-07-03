@@ -46,10 +46,6 @@ a {
     color: var(--dark-primary);
     transition: 0.25s ease-in-out;
   }
-
-  a:hover {
-    color: var(--secondary);
-  }
 }
 
 button {
@@ -371,6 +367,17 @@ input[type=color] {
 
 .task__content--date-and-level {
   justify-content: space-between;
+}
+
+.task-content--deadline {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+/* DEADLINE */
+
+.deadline {
+  color: var(--secondary);
 }
 
 /* NOTIFS  */
