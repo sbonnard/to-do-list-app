@@ -18,10 +18,10 @@ function getMessageForNewTask($dbCo)
 $messages = [
     'insert_ok' => 'Tâche ajoutée.',
     'update_ok' => 'Tâche modifiée.',
-    'delete_ok' => 'Tâche supprimée',
-    'update_emergency_ok' => 'Niveau de priorité modifié',
+    'delete_ok' => 'Tâche supprimée.',
+    'update_emergency_ok' => 'Niveau de priorité modifié.',
     'deadline_ok' => 'La deadline a bien été modifiée.',
-    'insert_theme_ok' => 'Le nouveau thème a été créé'
+    'insert_theme_ok' => 'Le nouveau thème a été créé.'
 ];
 
 $errors = [
@@ -30,9 +30,9 @@ $errors = [
     'insert_ko' => 'Erreur lors de la création d\'une tâche.',
     'update_ko' => 'Erreur lors de la modif d\'une tâche.',
     'delete_ko' => 'Erreur lors de la suppression d\'une tâche.',
-    'update_emergency_ko' => 'Erreur lors de la modif du niveau de priorité',
+    'update_emergency_ko' => 'Erreur lors de la modif du niveau de priorité.',
     'deadline_ko' => 'Erreur lors de la modif de la deadline.',
-    'insert_theme_ko' => 'Erreur lors de la création d\'un nouveau thème'
+    'insert_theme_ko' => 'Erreur lors de la création d\'un nouveau thème.'
 ];
 
 $notifs = [

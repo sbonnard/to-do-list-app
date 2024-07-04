@@ -143,6 +143,41 @@ function updateOrSetDeadline(PDO $dbCo)
     }
 }
 
+/**
+ * Changes sentence if themes are defined
+ *
+ * @param array $tasks The main array 
+ * @param array $task A single task in main array to loop on?
+ * @return void
+ */
+function displayIfThemeSet(array $tasks, array $task) {
+    $themesSentence = ' :';
+    if ($task['id_task'] != 0) {
+        foreach($tasks as $task) {
+            $themesSentence .= $task['theme_name'] . ' | ';
+        }
+        return $themesSentence;
+}
+}
+
+function getAddThemeForm(array $arrayGet, array $arraySession) {
+    if(!empty($_GET) && isset($_GET['action']) && $_GET['action'] === 'set-theme' && is_numeric($_GET['id'])) {
+        return 
+        '<form class="form" action="actions.php" method="post" aria-label="Formulaire pour définir un thème à une tâche.">
+        <label class="form__label" for="theme" required>Définir un thème pour la tâche n° <span class="task__number">' . $arrayGet['id'] . '</span></label>
+        <input class="form__input" type="select" name="theme" id="theme" aria-label="Choisis un thème à ajouter à une tâche">'
+        // Créer une boucle foreach pour générer toutes les options depuis la base de données.
+        .'<option value=""></option>
+        </select>' .
+        // -----------------------------------------------------
+        '<input class="form__submit" type="submit" value="">
+
+        <input type="hidden" name="token" value="' . $arraySession['token'] . '">
+        <input type="hidden" name="action" value="deadline">
+        <input type="hidden" name="id" value="' . $arrayGet['id'] . '">
+        </form>';
+    }
+}
 
 /**
  * Generates content directly from the database for tasks that are already done.
@@ -155,7 +190,6 @@ function generateTask(array $taskarray): string
     $allTasks = '';
     $today = date('Y-m-d');
     $notification = false; 
-    $tooLateNotification = false;
     
     foreach ($taskarray as $task) {
         // var_dump($task['id_task']);
@@ -164,6 +198,9 @@ function generateTask(array $taskarray): string
             . $task["id_task"]
             . '</span><h3 class="ttl ttl--small">'
             . $task['name'] . '</h3></div>'
+            . '<div class="task__content"><a class="lnk--theme" href="?action=set-theme&id='
+            . $task['id_task'].
+            '"></a></div>'
             . '<div class="task__content task__content--date-and-level"><p>'
             . $task['date']
             . '</p>'
@@ -202,7 +239,7 @@ function generateDoneTask(array $taskarray): string
             . '<div class="task__content"><p class="task__number-symbol">N°<span class="task__number">'
             . $task["id_task"]
             . '</span><h3 class="ttl ttl--small">'
-            . $task['name'] . '</h3></div>'
+            . $task['name'] . '</h3><span class="check">✔</span></div>'
             . '<div class="task__content task__content--date-and-level"><p>'
             . $task['date']
             . '</p>'
