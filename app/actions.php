@@ -20,6 +20,8 @@ if($_REQUEST['action'] === 'create' && $_SERVER['REQUEST_METHOD'] === 'POST'){
     deleteTask($dbCo);
 } else if ($_REQUEST['action'] === 'modify_emergency' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     modifyTaskPriority($dbCo);
+} else if ($_REQUEST['action'] === 'deadline' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    updateOrSetDeadline($dbCo);
 }
 
 redirectTo('index.php');

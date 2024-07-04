@@ -57,7 +57,8 @@ function redirectTo(string $url): void
  * @param array $arraySession The array to secure the session from CSRF containing the token.
  * @return void
  */
-function getAddTaskForm(array $arrayGet, array $arraySession) {
+function getAddTaskForm(array $arrayGet, array $arraySession)
+{
     if (empty($arrayGet)) {
         return '<form class="form" action="actions.php" method="post" aria-label="Formulaire d\'ajout de tâches">
         <label class="form__label" for="task">Ajouter une tâche</label>
@@ -77,11 +78,12 @@ function getAddTaskForm(array $arrayGet, array $arraySession) {
  * @param array $task The array you want the deadline date from.
  * @return void
  */
-function displayIfDeadline (array $task) {
+function displayIfDeadline(array $task)
+{
     if ($task['deadline'] != NULL) {
-        return '<div class="task-content task-content--deadline"><p>Deadline: <a class="deadline" href="?action=deadline&id=' . $task['id_task']. '">' . $task['deadline']. ' 📆</a></p></div>';
+        return '<div class="task-content task-content--deadline"><p>Deadline: <a class="deadline" href="?action=deadline&id=' . $task['id_task'] . '">' . $task['deadline'] . ' 📆</a></p></div>';
     } else {
-       return '<div class="task-content task-content--deadline"><p>Deadline: <a class="deadline" href="?action=deadline&id=' . $task['id_task']. '">Ajouter une deadline 📆</a></p></div>';
+        return '<div class="task-content task-content--deadline"><p>Deadline: <a class="deadline" href="?action=deadline&id=' . $task['id_task'] . '">Ajouter une deadline 📆</a></p></div>';
     }
 }
 
@@ -91,16 +93,51 @@ function displayIfDeadline (array $task) {
  * @param array $array The $_GET array.
  * @return void
  */
-function setDeadlineForm (array $array) {
+function setDeadlineForm(array $array)
+{
     if (!empty($array) && isset($array['action']) && $array['action'] === 'deadline' && is_numeric($array['id'])) {
-        return 
-    '<form class="form" action="actions.php" method="post" aria-label="Formulaire pour définir une deadline">
-    <label class="form__label" for="date" required>Définir une deadline pour la tâche n° ' . $array['id'] . '</label>
+        return
+            '<form class="form" action="actions.php" method="post" aria-label="Formulaire pour définir une deadline">
+    <label class="form__label" for="date" required>Définir une deadline pour la tâche n° <span class="task__number">' . $array['id'] . '</span></label>
     <input class="form__input" type="date" name="date" id="date" aria-label="Choisis une deadline dans le calendrier" pattern="\d{4}-\d{2}-\d{2}">
     <input class="form__submit" type="submit" value="">
 
     <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
-    <input type="hidden" name="action" value="deadline"></form>';
+    <input type="hidden" name="action" value="deadline">
+    <input type="hidden" name="action" value="' . $array['id'] . '">
+    </form>';
+    }
+}
+
+
+function updateOrSetDeadline(PDO $dbCo)
+{
+
+    $errors = [];
+
+    if (!isset($_REQUEST['date'])) {
+        $errors[] = '<p class="error">Merci d\'entrer une date.</p>';
+
+        // var_dump($errors);
+
+        if (empty($errors)) {
+            $setDeadline = $dbCo->prepare("UPDATE task SET deadline = :deadline WHERE id_task = :id;");
+
+            $bindValues = [
+                'dealine' => htmlspecialchars(date_create_from_format("Y-m-d", $_REQUEST['deadline'])),
+                'id' => intval($_REQUEST['id'])
+            ];
+
+            $isDeadlineOk = $setDeadline->execute($bindValues);
+
+            if ($isDeadlineOk) {
+                $_SESSION['msg'] = "deadline_ok";
+            } else {
+                $_SESSION['msg'] = "deadline_ko";
+                var_dump('Erreur');
+            }
+            return $isDeadlineOk;
+        }
     }
 }
 
@@ -126,8 +163,8 @@ function generateTask(array $taskarray): string
             . '<p>Niveau <span class="task__number">'
             . $task['emergency_level']
             . '</span></p></div>'
-            . displayIfDeadline($task) 
-            .'<a href="?action=end_task&id='
+            . displayIfDeadline($task)
+            . '<a href="?action=end_task&id='
             . $task['id_task']
             . '" class="btn">C’est fait !</a></li>';
     }
@@ -422,4 +459,3 @@ function deleteTask(PDO $dbCo)
         return $isDeleteOk;
     }
 }
-
