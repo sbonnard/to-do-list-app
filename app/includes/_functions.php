@@ -50,12 +50,38 @@ function redirectTo(string $url): void
     exit;
 }
 
-function displayIfDeadline (array $task) {
+function getAddTaskForm(array $arrayGet, array $arraySession) {
+    if (empty($arrayGet)) {
+        return '<form class="form" action="actions.php" method="post" aria-label="Formulaire d\'ajout de tâches">
+        <label class="form__label" for="task">Ajouter une tâche</label>
+        <input class="form__input" name="name" type="text" placeholder="Faire un truc" required>
+        <label class="form__label" for="emergency_level">Niveau d\'urgence</label>
+        <input class="form__input" name="emergency_level" type="text" placeholder="111">
+        <input class="form__submit" type="submit" value="">
+        <input type="hidden" name="token" value="' . $arraySession['token'] . '">
+        <input type="hidden" name="action" value="create">
+    </form>';
+    }
+}
 
+function displayIfDeadline (array $task) {
     if ($task['deadline'] != NULL) {
         return '<div class="task-content task-content--deadline"><p>Deadline: ' . $task['deadline']. '</p></div>';
     } else {
-       return '<div class="task-content task-content--deadline"><p>Deadline: <a class="deadline" href="?set=deadline&id=' . $task['id_task']. '">Ajouter une deadline</a></p></div>';
+       return '<div class="task-content task-content--deadline"><p>Deadline: <a class="deadline" href="?action=deadline&id=' . $task['id_task']. '">Ajouter une deadline</a></p></div>';
+    }
+}
+
+function setDeadlineForm (array $array) {
+    if (!empty($array) && isset($array['action']) && $array['action'] === 'deadline' && is_numeric($array['id'])) {
+        return 
+    '<form class="form" action="actions.php" method="post" aria-label="Formulaire pour définir une deadline">
+    <label class="form__label" for="date">Définir une deadline pour la tâche n° ' . $array['id'] . '</label>
+    <input type="date" name="date" id="date">
+    <input class="form__submit" type="submit" value="">
+
+    <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
+    <input type="hidden" name="action" value="deadline"></form>';
     }
 }
 
@@ -81,7 +107,7 @@ function generateTask(array $taskarray): string
             . '<p>Niveau <span class="task__number">'
             . $task['emergency_level']
             . '</span></p></div>'
-            . displayIfDeadline($task)
+            . displayIfDeadline($task) 
             .'<a href="?action=end_task&id='
             . $task['id_task']
             . '" class="btn">C’est fait !</a></li>';

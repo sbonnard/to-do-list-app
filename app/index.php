@@ -15,7 +15,7 @@ generateToken();
 
 // var_dump($_GET);
 
-if (!empty($_GET) && isset($_GET['action']) && $_GET['action'] === 'end_task') {
+if (!empty($_GET) && isset($_GET['action']) && $_GET['action'] === 'end_task' && is_numeric($_GET['id'])) {
     endTask($dbCo);
 }
 
@@ -60,23 +60,15 @@ if (!empty($_GET) && isset($_GET['action']) && $_GET['action'] === 'end_task') {
     </header>
 
     <main class="container">
-        <section aria-label="Mes tâches à faire" aria-labelledby="todo">
+        <section aria-label="Mes tâches à faire " aria-labelledby="todo">
 
             <h2 id="todo" class="ttl ttl--bold">À FAIRE</h2>
-            <form class="form" action="actions.php" method="post" aria-label="Formulaire d'ajout de tâches">
-                <label class="form__label" for="task">Ajouter une tâche</label>
-                <input class="form__input" name="name" type="text" placeholder="Faire un truc" required>
-                <label class="form__label" for="emergency_level">Niveau d'urgence</label>
-                <input class="form__input" name="emergency_level" type="text" placeholder="111">
-                <input class="form__submit" type="submit" value="">
-                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                <input type="hidden" name="action" value="create">
-                <?php
-                echo getErrorMessage($errors);
-                echo getSuccessMessage($messages);
-                ?>
-            </form>
-
+            <?php
+            echo getAddTaskForm($_GET, $_SESSION);
+            echo getErrorMessage($errors);
+            echo getSuccessMessage($messages);
+            echo setDeadlineForm($_GET);
+            ?>
             <section aria-label="Boite à outils">
                 <div id="toolbox" class="container--btn">
                     <button id="btn-tool" class="btn--tool" aria-label="Ouvrir les outils de modification des tâches"></button>
