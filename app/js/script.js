@@ -20,6 +20,9 @@ const btnTool = document.getElementById('btn-tool');
 const toolBox = document.getElementById('toolbox');
 const btnPriority = document.getElementById('btn-priority');
 const formPriority = document.getElementById('form-emergency');
+const btnTheme = document.getElementById('btn-theme');
+
+console.log(btnTheme);
 
 
 // Pen button
@@ -32,6 +35,7 @@ btnPen.addEventListener('click', function(event){
         btnPen.classList.toggle('btn--pen--active');
         btnMinus.classList.remove('btn--minus--active');
         btnPriority.classList.remove('btn--priority--active');
+        btnTheme.classList.remove('btn--theme--active');
     }
 })
 
@@ -45,6 +49,8 @@ btnPriority.addEventListener('click', function(event){
         btnPriority.classList.toggle('btn--priority--active');
         btnMinus.classList.remove('btn--minus--active');
         btnPen.classList.remove('btn--pen--active');
+        btnTheme.classList.remove('btn--theme--active');
+
     }
 })
 
@@ -58,10 +64,26 @@ btnMinus.addEventListener('click', function(event){
         btnMinus.classList.toggle('btn--minus--active');
         btnPen.classList.remove('btn--pen--active');
         btnPriority.classList.remove('btn--priority--active');
+        btnTheme.classList.remove('btn--theme--active');
     }
 })
 
 // console.log(btnPen, formModifier);
+
+// Theme Button
+
+btnTheme.addEventListener('click', function(event){
+    if(event){
+        // formTheme.classList.toggle('hidden');
+        formModifier.classList.add('hidden');
+        formPriority.classList.add('hidden');
+        formDelete.classList.add('hidden');
+        btnTheme.classList.toggle('btn--theme--active');
+        btnMinus.classList.remove('btn--minus--active');
+        btnPen.classList.remove('btn--pen--active');
+        btnPriority.classList.remove('btn--priority--active');
+    }
+})
 
 // Tool button
 
@@ -70,6 +92,7 @@ btnTool.addEventListener('click', function(event){
         btnTool.classList.toggle("btn--tool--clicked")
         btnPen.classList.toggle("hidden");
         btnMinus.classList.toggle("hidden");
+        btnTheme.classList.toggle("hidden");
         btnPriority.classList.toggle("hidden");
         formModifier.classList.add('hidden');
         formPriority.classList.add('hidden');
@@ -77,5 +100,6 @@ btnTool.addEventListener('click', function(event){
         btnMinus.classList.remove('btn--minus--active');
         btnPen.classList.remove('btn--pen--active');
         btnPriority.classList.remove('btn--priority--active');
+        btnTheme.classList.remove('btn--theme--active');
     }
 })

@@ -326,6 +326,22 @@ input[type=color] {
   border-radius: .5rem;
 }
 
+.btn--theme {
+  background-image: url(../img/theme-btn.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  transition: 0.25s ease-in-out;
+}
+
+.btn--theme--active {
+  background-image: url(../img/theme-btn-active.svg);
+}
+
 /* TASKLIST  */
 
 @media screen and (min-width: 768px) {

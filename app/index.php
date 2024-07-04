@@ -76,6 +76,7 @@ if (!empty($_GET) && isset($_GET['action']) && $_GET['action'] === 'end_task' &&
                     <button id="btn-modifier" class="btn--pen hidden" aria-label="Modifier une tâche"></button>
                     <button id="btn-priority" class="btn--priority hidden" aria-label="Modifier une tâche"></button>
                     <button id="btn-minus" class="btn--minus hidden" aria-label="Supprimer une tâche"></button>
+                    <button id="btn-theme" class="btn--theme hidden" aria-label="Créer un thème de tâche"></button>
                 </div>
             </section>
 
