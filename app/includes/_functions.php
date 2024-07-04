@@ -99,12 +99,12 @@ function setDeadlineForm(array $array)
         return
             '<form class="form" action="actions.php" method="post" aria-label="Formulaire pour définir une deadline">
     <label class="form__label" for="date" required>Définir une deadline pour la tâche n° <span class="task__number">' . $array['id'] . '</span></label>
-    <input class="form__input" type="date" name="date" id="date" aria-label="Choisis une deadline dans le calendrier" pattern="\d{4}-\d{2}-\d{2}">
+    <input class="form__input" type="date" name="date" id="date" aria-label="Choisis une deadline dans le calendrier">
     <input class="form__submit" type="submit" value="">
 
     <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
     <input type="hidden" name="action" value="deadline">
-    <input type="hidden" name="action" value="' . $array['id'] . '">
+    <input type="hidden" name="id" value="' . $array['id'] . '">
     </form>';
     }
 }
@@ -115,31 +115,34 @@ function updateOrSetDeadline(PDO $dbCo)
 
     $errors = [];
 
-    if (!isset($_REQUEST['date'])) {
+    if (!isset($_REQUEST['date']) || empty($_REQUEST['date'])) {
         $errors[] = '<p class="error">Merci d\'entrer une date.</p>';
+    }
 
-        // var_dump($errors);
+    if (!isset($_REQUEST['id']) || !is_numeric($_REQUEST['id'])) {
+        $errors[] = '<p class="error">ID de la tâche non valide.</p>';
+    }
+    // var_dump($errors);
 
-        if (empty($errors)) {
-            $setDeadline = $dbCo->prepare("UPDATE task SET deadline = :deadline WHERE id_task = :id;");
+    if (empty($errors)) {
+        $setDeadline = $dbCo->prepare("UPDATE task SET deadline = :deadline WHERE id_task = :id;");
 
-            $bindValues = [
-                'dealine' => htmlspecialchars(date_create_from_format("Y-m-d", $_REQUEST['deadline'])),
-                'id' => intval($_REQUEST['id'])
-            ];
+        $bindValues = [
+            'deadline' => date("Y-m-d", strtotime($_REQUEST['date'])),
+            'id' => intval($_REQUEST['id'])
+        ];
 
-            $isDeadlineOk = $setDeadline->execute($bindValues);
+        $isDeadlineOk = $setDeadline->execute($bindValues);
 
-            if ($isDeadlineOk) {
-                $_SESSION['msg'] = "deadline_ok";
-            } else {
-                $_SESSION['msg'] = "deadline_ko";
-                var_dump('Erreur');
-            }
-            return $isDeadlineOk;
+        if ($isDeadlineOk) {
+            $_SESSION['msg'] = "deadline_ok";
+        } else {
+            $_SESSION['msg'] = "deadline_ko";
         }
+        return $isDeadlineOk;
     }
 }
+
 
 /**
  * Generates content directly from the database for tasks that are already done.
