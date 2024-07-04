@@ -65,9 +65,9 @@ if (!empty($_GET) && isset($_GET['action']) && $_GET['action'] === 'end_task' &&
             <h2 id="todo" class="ttl ttl--bold">À FAIRE</h2>
             <?php
             echo getAddTaskForm($_GET, $_SESSION);
+            echo setDeadlineForm($_GET);
             echo getErrorMessage($errors);
             echo getSuccessMessage($messages);
-            echo setDeadlineForm($_GET);
             ?>
             <section aria-label="Boite à outils">
                 <div id="toolbox" class="container--btn">

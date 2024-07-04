@@ -153,6 +153,9 @@ function updateOrSetDeadline(PDO $dbCo)
 function generateTask(array $taskarray): string
 {
     $allTasks = '';
+    $today = date('Y-m-d');
+    $notification = false; 
+    
     foreach ($taskarray as $task) {
         // var_dump($task['id_task']);
         $allTasks .=  '<li class="task">'
@@ -170,7 +173,16 @@ function generateTask(array $taskarray): string
             . '<a href="?action=end_task&id='
             . $task['id_task']
             . '" class="btn">C’est fait !</a></li>';
+
+            if ($task['deadline'] === $today) {
+                $notification = true;
+            }
     }
+
+    if ($notification) {
+        $_SESSION['msg'] = "deadline_urgent";
+    }
+
     return $allTasks;
 }
 

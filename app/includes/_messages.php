@@ -20,7 +20,8 @@ $messages = [
     'update_ok' => 'Tâche modifiée.',
     'delete_ok' => 'Tâche supprimée',
     'update_emergency_ok' => 'Niveau de priorité modifié',
-    'deadline_ok' => 'La deadline a bien été modifiée.'
+    'deadline_ok' => 'La deadline a bien été modifiée.',
+    "deadline_urgent" => 'Attention ! Ces tâches sont à effectuer aujourd\'hui :'
 ];
 
 $errors = [
