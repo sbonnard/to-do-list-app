@@ -14,6 +14,7 @@ L’application web a vocation à être utilisée en priorité sur mobile. Elle 
 Veuillez confirmer à l’utilisateur la prise en compte de ses actions via des notifications appropriées.
 Si une user story nécessite une modification structurelle de la base de données, commencez par mettre à jour la modélisation avant de toucher à la base de données.
 
+
 # LAMP ENVIRONMENT
 
 ## BUILD AND RUN

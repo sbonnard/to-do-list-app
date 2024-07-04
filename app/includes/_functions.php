@@ -81,7 +81,7 @@ function getAddTaskForm(array $arrayGet, array $arraySession)
 function displayIfDeadline(array $task)
 {
     if ($task['deadline'] != NULL) {
-        return '<div class="task-content task-content--deadline"><p>Deadline: <a class="deadline" href="?action=deadline&id=' . $task['id_task'] . '">' . $task['deadline'] . ' 📆</a></p></div>';
+        return '<div class="task-content task-content--deadline"><p>Deadline: <a class="deadline" href="?action=deadline&id=' . $task['id_task'] . '">' . date("d-m-Y", strtotime($task['deadline'])) . ' 📆</a></p></div>';
     } else {
         return '<div class="task-content task-content--deadline"><p>Deadline: <a class="deadline" href="?action=deadline&id=' . $task['id_task'] . '">Ajouter une deadline 📆</a></p></div>';
     }
