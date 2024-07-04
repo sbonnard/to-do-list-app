@@ -82,7 +82,7 @@ function generateTask(array $taskarray): string
             . $task['emergency_level']
             . '</span></p></div>'
             . displayIfDeadline($task)
-            .'<a href="?id='
+            .'<a href="?action=end_task&id='
             . $task['id_task']
             . '" class="btn">C’est fait !</a></li>';
     }

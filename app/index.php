@@ -15,7 +15,7 @@ generateToken();
 
 // var_dump($_GET);
 
-if (!empty($_GET)) {
+if (!empty($_GET) && isset($_GET['action']) && $_GET['action'] === 'end_task') {
     endTask($dbCo);
 }
 
