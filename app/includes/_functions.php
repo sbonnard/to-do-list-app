@@ -438,12 +438,12 @@ function modifyTaskPriority(PDO $dbCo)
  */
 function deleteTask(PDO $dbCo)
 {
-    if (!empty($_POST)) {
+    if (!empty($_REQUEST)) {
         preventFromCSRF('index.php');
 
         $errors = [];
 
-        if (!isset($_POST['numbertask_delete']) || strlen($_POST['numbertask_delete']) <= 0) {
+        if (!isset($_REQUEST['numbertask_delete']) || strlen($_REQUEST['numbertask_delete']) <= 0) {
             $errors[] = '<p class="error">Merci d\'entrer un numéro de tâche.</p>';
         }
 
@@ -456,7 +456,7 @@ function deleteTask(PDO $dbCo)
         );
 
         $bindValues = [
-            'id' => htmlspecialchars($_POST['numbertask_delete']),
+            'id' => htmlspecialchars($_REQUEST['numbertask_delete']),
         ];
 
         $isDeleteOk = $delete->execute($bindValues);

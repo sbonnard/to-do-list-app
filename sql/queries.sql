@@ -6,8 +6,11 @@ CREATE TABLE task (
     date DATE NOT NULL,
     emergency_level TINYINT UNSIGNED NOT NULL DEFAULT 2,
     status VARCHAR(20) NOT NULL DEFAULT 'TO DO',
+    deadline DATE,
+    id_theme SMALLINT UNSIGNED NOT NULL DEFAULT 1,
     id_colours SMALLINT UNSIGNED NOT NULL DEFAULT 1,
     PRIMARY KEY (id_task),
+    FOREIGN KEY (id_theme) REFERENCES themes(id_theme),
     FOREIGN KEY (id_colours) REFERENCES colours(id_colours)
 );
 
@@ -40,7 +43,19 @@ VALUES ('Acheter une Epiphone ES335 Cherry', CURDATE(), 1);
 
 UPDATE task SET status = 'DONE' WHERE id_task = $task['id_task'];
 
+--------------------------------------------------------------------------------------------
+CREATE TABLE themes (
+    id_theme SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    theme_name VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id_theme)
+);
 
+INSERT INTO themes (theme_name)
+VALUES ('travail'), ('nourriture'), ('recherche de stage');
+--------------------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------------------
 CREATE TABLE colours (
     id_colours SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
@@ -50,6 +65,8 @@ CREATE TABLE colours (
 
 INSERT INTO colours (name, hexa_code)
 VALUES ('dark_green', '#1B7F79'), ('orange', '#CA4F0A'), ('zinzolin', '#A72E47');
+--------------------------------------------------------------------------------------------
+
 
 ALTER TABLE task
 ADD deadline DATE NOT NULL DEFAULT '';
