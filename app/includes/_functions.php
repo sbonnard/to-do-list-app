@@ -155,6 +155,7 @@ function generateTask(array $taskarray): string
     $allTasks = '';
     $today = date('Y-m-d');
     $notification = false; 
+    $tooLateNotification = false;
     
     foreach ($taskarray as $task) {
         // var_dump($task['id_task']);
@@ -179,8 +180,8 @@ function generateTask(array $taskarray): string
             }
     }
 
-    if ($notification) {
-        $_SESSION['msg'] = "deadline_urgent";
+    if ($notification === true) {
+        $_SESSION['notifs'] = "deadline_urgent";
     }
 
     return $allTasks;
@@ -315,11 +316,6 @@ function createNewTask(PDO $dbCo)
 
             $isInsertOk = $insert->execute($bindValues);
 
-            $nb = $insert->rowCount();
-
-            $newRefProduct = $dbCo->lastInsertId();
-
-            // var_dump($isInsertOk, $nb, $newRefProduct);
             if ($isInsertOk) {
                 $_SESSION['msg'] = "insert_ok";
             } else {

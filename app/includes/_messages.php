@@ -20,8 +20,7 @@ $messages = [
     'update_ok' => 'Tâche modifiée.',
     'delete_ok' => 'Tâche supprimée',
     'update_emergency_ok' => 'Niveau de priorité modifié',
-    'deadline_ok' => 'La deadline a bien été modifiée.',
-    "deadline_urgent" => 'Attention ! Ces tâches sont à effectuer aujourd\'hui :'
+    'deadline_ok' => 'La deadline a bien été modifiée.'
 ];
 
 $errors = [
@@ -31,7 +30,11 @@ $errors = [
     'update_ko' => 'Erreur lors de la modif d\'une tâche.',
     'delete_ko' => 'Erreur lors de la suppression d\'une tâche.',
     'update_emergency_ko' => 'Erreur lors de la modif du niveau de priorité',
-    'deadline_ok' => 'Erreur lors de la modif de la deadline.'
+    'deadline_ko' => 'Erreur lors de la modif de la deadline.'
+];
+
+$notifs = [
+    'deadline_urgent' => '📢 Attention ! Une ou plusieurs tâches en retard ou à effectuer aujourd\'hui !'
 ];
 
 /**
@@ -60,6 +63,16 @@ function getSuccessMessage(array $messages) :string
         $m = ($_SESSION['msg']);
         unset($_SESSION['msg']);
         return '<p class="notif notif--success">' . $messages[$m] . '</p>';
+    }
+    return '';
+}
+
+function getNotif(array $notifs) :string
+{
+    if (isset($_SESSION['notifs'])) {
+        $n = ($_SESSION['notifs']);
+        unset($_SESSION['notifs']);
+        return '<p class="notif notif--error">' . $notifs[$n] . '</p>';
     }
     return '';
 }

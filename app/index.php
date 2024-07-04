@@ -66,6 +66,7 @@ if (!empty($_GET) && isset($_GET['action']) && $_GET['action'] === 'end_task' &&
             <?php
             echo getAddTaskForm($_GET, $_SESSION);
             echo setDeadlineForm($_GET);
+            echo getNotif($notifs);
             echo getErrorMessage($errors);
             echo getSuccessMessage($messages);
             ?>
