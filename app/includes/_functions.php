@@ -470,3 +470,43 @@ function deleteTask(PDO $dbCo)
         return $isDeleteOk;
     }
 }
+
+/**
+ * Creates a new theme to database that can be used to thematize a task.
+ *
+ * @param PDO $dbCo The connection to database
+ * @param array $arrayPost The array you get your datas from
+ * @return void
+ */
+function createNewTheme(PDO $dbCo, array $arrayPost)
+{
+    if (!empty($arrayPost)) {
+
+        $errors = [];
+
+        if (!isset($arrayPost['new-theme']) || strlen($arrayPost['new-theme']) <= 0) {
+            $errors[] = '<p class="error">Merci d\'entrer un nom de thème.</p>';
+        }
+
+        if (strlen($arrayPost['new-theme']) > 50) {
+            $errors[] = '<p class="error">Merci d\'entrer un nom de tâche de 50 caractères maximum.</p>';
+        }
+
+        if (empty($errors)) {
+            $insert = $dbCo->prepare("INSERT INTO themes (`theme_name`) VALUES (:name);");
+
+            $bindValues = [
+                'name' => htmlspecialchars($arrayPost['new-theme'])
+            ];
+
+            $isInsertOk = $insert->execute($bindValues);
+
+            if ($isInsertOk) {
+                $_SESSION['msg'] = "insert_theme_ok";
+            } else {
+                $_SESSION['msg'] = "insert_theme_ko";
+            }
+            return $isInsertOk;
+        }
+    }
+}

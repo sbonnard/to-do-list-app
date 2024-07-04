@@ -20,7 +20,8 @@ $messages = [
     'update_ok' => 'Tâche modifiée.',
     'delete_ok' => 'Tâche supprimée',
     'update_emergency_ok' => 'Niveau de priorité modifié',
-    'deadline_ok' => 'La deadline a bien été modifiée.'
+    'deadline_ok' => 'La deadline a bien été modifiée.',
+    'insert_theme_ok' => 'Le nouveau thème a été créé'
 ];
 
 $errors = [
@@ -30,7 +31,8 @@ $errors = [
     'update_ko' => 'Erreur lors de la modif d\'une tâche.',
     'delete_ko' => 'Erreur lors de la suppression d\'une tâche.',
     'update_emergency_ko' => 'Erreur lors de la modif du niveau de priorité',
-    'deadline_ko' => 'Erreur lors de la modif de la deadline.'
+    'deadline_ko' => 'Erreur lors de la modif de la deadline.',
+    'insert_theme_ko' => 'Erreur lors de la création d\'un nouveau thème'
 ];
 
 $notifs = [
@@ -72,7 +74,7 @@ function getNotif(array $notifs) :string
     if (isset($_SESSION['notifs'])) {
         $n = ($_SESSION['notifs']);
         unset($_SESSION['notifs']);
-        return '<p class="notif notif--error">' . $notifs[$n] . '</p>';
+        return '<p class="notif notif--error notif--error--big">' . $notifs[$n] . '</p>';
     }
     return '';
 }
