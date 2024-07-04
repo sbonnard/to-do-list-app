@@ -21,8 +21,7 @@ const toolBox = document.getElementById('toolbox');
 const btnPriority = document.getElementById('btn-priority');
 const formPriority = document.getElementById('form-emergency');
 const btnTheme = document.getElementById('btn-theme');
-
-console.log(btnTheme);
+const formTheme = document.getElementById('form-new-theme');
 
 
 // Pen button
@@ -46,6 +45,7 @@ btnPriority.addEventListener('click', function(event){
         formPriority.classList.toggle("hidden");
         formDelete.classList.add('hidden');
         formModifier.classList.add('hidden');
+        formTheme.classList.add('hidden');
         btnPriority.classList.toggle('btn--priority--active');
         btnMinus.classList.remove('btn--minus--active');
         btnPen.classList.remove('btn--pen--active');
@@ -61,6 +61,7 @@ btnMinus.addEventListener('click', function(event){
         formDelete.classList.toggle('hidden');
         formModifier.classList.add('hidden');
         formPriority.classList.add('hidden');
+        formTheme.classList.add('hidden');
         btnMinus.classList.toggle('btn--minus--active');
         btnPen.classList.remove('btn--pen--active');
         btnPriority.classList.remove('btn--priority--active');
@@ -74,7 +75,7 @@ btnMinus.addEventListener('click', function(event){
 
 btnTheme.addEventListener('click', function(event){
     if(event){
-        // formTheme.classList.toggle('hidden');
+        formTheme.classList.toggle('hidden');
         formModifier.classList.add('hidden');
         formPriority.classList.add('hidden');
         formDelete.classList.add('hidden');
@@ -97,6 +98,7 @@ btnTool.addEventListener('click', function(event){
         formModifier.classList.add('hidden');
         formPriority.classList.add('hidden');
         formDelete.classList.add('hidden');
+        formTheme.classList.add('hidden');
         btnMinus.classList.remove('btn--minus--active');
         btnPen.classList.remove('btn--pen--active');
         btnPriority.classList.remove('btn--priority--active');

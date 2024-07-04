@@ -111,6 +111,15 @@ if (!empty($_GET) && isset($_GET['action']) && $_GET['action'] === 'end_task' &&
                 <input type="hidden" name="action" value="delete">
             </form>
 
+            <form id="form-new-theme" class="form hidden" action="actions.php" method="post" aria-label="Formulaire de suppression d'une tâche existante">
+                <h3 class="ttl ttl--small">Créer un nouveau thème</h3>
+                <label class="form__label" for="new-theme">Nom du thème</label>
+                <input class="form__input" name="new-theme" type="text" placeholder="Voyage, travail..." required>
+                <input class="btn" type="submit" value="Ajouter">
+                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                <input type="hidden" name="action" value="new-theme">
+            </form>
+
             <ul class="tasklist">
                 <?php
                 // GET TASKS FROM DATABASE 
