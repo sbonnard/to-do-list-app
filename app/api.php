@@ -12,8 +12,21 @@ if (!isset($_REQUEST['action'])) {
     exit;
 }
 
-if ($_REQUEST['action'] === 'end_task' && isset($_REQUEST['id']) && is_numeric($_REQUEST['id'])) {
+if ($_REQUEST['action'] === 'end_task' && isset($_REQUEST['id']) && intval($_REQUEST['id'])) {
    if(endTask($dbCo)){
+       $response = [
+           'isOk' => true,
+           'id' => intval($_REQUEST['id'])
+       ];
+    
+       echo json_encode($response);
+   }
+
+}
+
+
+if ($_REQUEST['action'] === 'redo_task' && isset($_REQUEST['id']) && intval($_REQUEST['id'])) {
+   if(redoTask($dbCo)){
        $response = [
            'isOk' => true,
            'id' => intval($_REQUEST['id'])

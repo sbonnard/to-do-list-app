@@ -9,9 +9,6 @@ require_once "./includes/_messages.php";
 $queryGetTasks = $dbCo->query("SELECT id_task, status, name, date, emergency_level FROM task WHERE status = 'DONE';");
 $tasks = $queryGetTasks->fetchAll();
 
-if (!empty($_GET)) {
-    redoTask($dbCo);
-}
 ?>
 
 <!DOCTYPE html>
@@ -71,11 +68,16 @@ if (!empty($_GET)) {
         <section class="all-done" aria-label="Il n'y a plus de tâches" aria-labelledby="alldone">
             <h2 id="alldone" class="ttl ttl--bold ttl--white">Vous avez bien travaillé !</h2>
         </section>
+        <form action="actions.php" method="post" aria-hidden="true">
+            <input id="token" type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+        </form>
     </main>
 
     <footer class="footer">© 2024 | Jot It</footer>
 
     <script type="module" src="js/script.js"></script>
+    <script type="module" src="js/async-done.js"></script>
+
 </body>
 
 </html>

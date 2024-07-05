@@ -1,3 +1,5 @@
+// END TASK 
+
 async function callAPIEndTask(params) {
     try {
         const response = await fetch("api.php?" + params);

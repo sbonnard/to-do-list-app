@@ -253,7 +253,7 @@ function generateDoneTask(array $taskarray): string
     $allTasks = '';
     foreach ($taskarray as $task) {
         // var_dump($task['id_task']);
-        $allTasks .=  '<li class="task">'
+        $allTasks .=  '<li class="task" data-redo-task-content-id="' . $task['id_task'] . '">'
             . '<div class="task__content"><p class="task__number-symbol">N°<span class="task__number">'
             . $task["id_task"]
             . '</span><h3 class="ttl ttl--small">'
@@ -263,9 +263,8 @@ function generateDoneTask(array $taskarray): string
             . '</p>'
             . '<p>Niveau <span class="task__number">'
             . $task['emergency_level']
-            . '</span></p></div><a href="?id='
-            . $task['id_task']
-            . '" class="btn">À refaire !</a></li>';
+            . '</span></p></div><button type"button" data-redo-task-id="' . $task['id_task']
+            . '" class="btn js-redo-task-btn">À refaire !</button></li>';
     }
     return $allTasks;
 }
@@ -299,17 +298,11 @@ function redoTask(PDO $dbCo)
 {
     $queryUpdateTaskStatus = $dbCo->prepare("UPDATE task SET status = 'TO DO' WHERE id_task = :id;");
 
-    $taskUpdate = $queryUpdateTaskStatus->fetchAll();
-
     $bindValues = [
-        'id' => htmlspecialchars($_GET['id']),
+        'id' => htmlspecialchars($_GET['id'])
     ];
 
-    $isUpdatetOk = $queryUpdateTaskStatus->execute($bindValues);
-
-    redirectTo('done.php');
-
-    return $taskUpdate;
+    return $queryUpdateTaskStatus->execute($bindValues);
 }
 
 // ----------------------------------------------------------------------------------------

@@ -132,8 +132,9 @@ generateToken();
     </main>
 
     <footer class="footer">© 2024 | Jot It</footer>
+    <script type="module" src="js/index.js"></script>
     <script type="module" src="js/script.js"></script>
-    <script type="module" src="js/async.js"></script>
+    <script type="module" src="js/async-index.js"></script>
 </body>
 
 </html>
