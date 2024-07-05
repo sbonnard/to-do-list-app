@@ -155,7 +155,7 @@ function updateOrSetDeadline(PDO $dbCo)
  */
 function displayIfThemeSet(array $task, PDO $dbCo)
 {
-    $queryGetThemes = $dbCo->prepare("SELECT id_theme, theme_name FROM themes JOIN task USING (id_theme) WHERE id_task = :id_task;");
+    $queryGetThemes = $dbCo->prepare("SELECT id_theme, theme_name FROM themes JOIN task_theme USING (id_theme) JOIN task USING (id_task) WHERE id_task = :id_task;");
     $queryGetThemes->execute(['id_task' => intval($task['id_task'])]);
     $themes = $queryGetThemes->fetchAll(PDO::FETCH_COLUMN, 1);
 
