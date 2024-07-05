@@ -29,15 +29,15 @@ if (!empty($_GET) && isset($_GET['action']) && $_GET['action'] === 'end_task' &&
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do List</title>
+    <title>Jot It | Do it</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
     <header class="header">
-        <a href="#"><img class="header__logo" src="img/logo-jot-m.webp" alt="Logo Jot It"></a>
-        <a href="#">
+        <a href="index.php"><img class="header__logo" src="img/logo-jot-m.webp" alt="Logo Jot It"></a>
+        <a href="index.php">
             <h1 class="ttl">Jot It <span class="header__separator">|</span> Do it</h1>
         </a>
         <div class="hamburger">
