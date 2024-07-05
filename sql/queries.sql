@@ -7,7 +7,7 @@ CREATE TABLE task (
     emergency_level TINYINT UNSIGNED NOT NULL DEFAULT 2,
     status VARCHAR(20) NOT NULL DEFAULT 'TO DO',
     deadline DATE,
-    id_theme SMALLINT UNSIGNED NOT NULL DEFAULT 1,
+    id_theme SMALLINT UNSIGNED DEFAULT NULL,
     id_colours SMALLINT UNSIGNED NOT NULL DEFAULT 1,
     PRIMARY KEY (id_task),
     FOREIGN KEY (id_theme) REFERENCES themes(id_theme),
