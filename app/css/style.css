@@ -228,6 +228,10 @@ input[type=color] {
   border-radius: .5rem;
 }
 
+.form__input__placeholder {
+  color: var(--secondary);
+}
+
 /* BUTTONS  */
 
 .btn {

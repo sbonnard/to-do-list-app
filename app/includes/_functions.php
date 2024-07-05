@@ -1,4 +1,7 @@
 <?php
+
+
+
 // PREVENT FROM CSRF 
 
 /**
@@ -150,28 +153,41 @@ function updateOrSetDeadline(PDO $dbCo)
  * @param array $task A single task in main array to loop on?
  * @return void
  */
-function displayIfThemeSet(array $tasks, array $task) {
+function displayIfThemeSet(array $tasks, array $task)
+{
     $themesSentence = ' :';
     if ($task['id_task'] != 0) {
-        foreach($tasks as $task) {
+        foreach ($tasks as $task) {
             $themesSentence .= $task['theme_name'] . ' | ';
         }
         return $themesSentence;
-}
+    }
 }
 
-function getAddThemeForm(array $arrayGet, array $arraySession) {
-    if(!empty($_GET) && isset($_GET['action']) && $_GET['action'] === 'set-theme' && is_numeric($_GET['id'])) {
-        return 
-        '<form class="form" action="actions.php" method="post" aria-label="Formulaire pour définir un thème à une tâche.">
+function getOptionsThemeForm(PDO $dbCo, array $arrayTheme)
+{
+    $queryGetThemes = $dbCo->query("SELECT id_theme, theme_name FROM themes;");
+    $themes = $queryGetThemes->fetchAll(PDO::FETCH_COLUMN, 1);
+
+    $optionList = '';
+    foreach ($arrayTheme as $theme) {
+        $optionList .= '<option value="' . $theme['id_theme'] . '">' . $theme['theme_name'];
+    }
+    return $optionList;
+}
+
+function getAddThemeForm(array $arrayGet, array $arraySession, array $tasksArray, PDO $dbCo)
+{
+    if (!empty($_GET) && isset($_GET['action']) && $_GET['action'] === 'set-theme' && is_numeric($_GET['id'])) {
+        return
+            '<form class="form" action="actions.php" method="post" aria-label="Formulaire pour définir un thème à une tâche.">
         <label class="form__label" for="theme" required>Définir un thème pour la tâche n° <span class="task__number">' . $arrayGet['id'] . '</span></label>
-        <input class="form__input" type="select" name="theme" id="theme" aria-label="Choisis un thème à ajouter à une tâche">'
-        // Créer une boucle foreach pour générer toutes les options depuis la base de données.
-        .'<option value=""></option>
-        </select>' .
-        // -----------------------------------------------------
-        '<input class="form__submit" type="submit" value="">
-
+        <select class="form__input" type="select" name="theme" id="theme" aria-label="Choisis un thème à ajouter à une tâche">'
+            // Créer une boucle foreach pour générer toutes les options depuis la base de données.
+            . '<option class="form__input__placeholder" value="">- Sélectionner un thème -</option>'
+            . getOptionsThemeForm($dbCo, $tasksArray)
+            . '</select>
+            <input class="form__submit" type="submit" value="">
         <input type="hidden" name="token" value="' . $arraySession['token'] . '">
         <input type="hidden" name="action" value="deadline">
         <input type="hidden" name="id" value="' . $arrayGet['id'] . '">
@@ -189,8 +205,8 @@ function generateTask(array $taskarray): string
 {
     $allTasks = '';
     $today = date('Y-m-d');
-    $notification = false; 
-    
+    $notification = false;
+
     foreach ($taskarray as $task) {
         // var_dump($task['id_task']);
         $allTasks .=  '<li class="task">'
@@ -199,7 +215,7 @@ function generateTask(array $taskarray): string
             . '</span><h3 class="ttl ttl--small">'
             . $task['name'] . '</h3></div>'
             . '<div class="task__content"><a class="lnk--theme" href="?action=set-theme&id='
-            . $task['id_task'].
+            . $task['id_task'] .
             '"></a></div>'
             . '<div class="task__content task__content--date-and-level"><p>'
             . $task['date']
@@ -212,9 +228,9 @@ function generateTask(array $taskarray): string
             . $task['id_task']
             . '" class="btn">C’est fait !</a></li>';
 
-            if ($task['deadline'] === $today) {
-                $notification = true;
-            }
+        if ($task['deadline'] === $today) {
+            $notification = true;
+        }
     }
 
     if ($notification === true) {
