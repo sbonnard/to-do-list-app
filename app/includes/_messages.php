@@ -36,7 +36,7 @@ $errors = [
 ];
 
 $notifs = [
-    'deadline_urgent' => '📢 Attention ! Une ou plusieurs tâches en retard ou à effectuer aujourd\'hui !'
+    'deadline_urgent' => '📢 Attention ! Une ou plusieurs tâches sont à effectuer aujourd\'hui !'
 ];
 
 /**
