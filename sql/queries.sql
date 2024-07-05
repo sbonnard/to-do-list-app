@@ -7,10 +7,8 @@ CREATE TABLE task (
     emergency_level TINYINT UNSIGNED NOT NULL DEFAULT 2,
     status VARCHAR(20) NOT NULL DEFAULT 'TO DO',
     deadline DATE,
-    id_theme SMALLINT UNSIGNED DEFAULT NULL,
     id_colours SMALLINT UNSIGNED NOT NULL DEFAULT 1,
     PRIMARY KEY (id_task),
-    FOREIGN KEY (id_theme) REFERENCES themes(id_theme),
     FOREIGN KEY (id_colours) REFERENCES colours(id_colours)
 );
 
@@ -54,6 +52,12 @@ INSERT INTO themes (theme_name)
 VALUES ('travail'), ('nourriture'), ('recherche de stage');
 --------------------------------------------------------------------------------------------
 
+CREATE TABLE task_theme (
+    id_theme SMALLINT UNSIGNED NOT NULL,
+    id_task SMALLINT UNSIGNED NOT NULL,
+    FOREIGN KEY (id_theme) REFERENCES themes(id_theme),
+    FOREIGN KEY (id_task) REFERENCES task(id_task)
+);
 
 --------------------------------------------------------------------------------------------
 CREATE TABLE colours (
@@ -84,3 +88,10 @@ ADD deadline DATE NOT NULL DEFAULT '';
 --         $updateDatabase->execute($updateBindValues);
 
 -- // ------------------------------------------------------------------------------------------------------------------------------
+
+
+SELECT id_theme, theme_name 
+FROM themes 
+JOIN task_theme USING (id_theme) 
+JOIN task USING (task) 
+WHERE id_task = :id_task;
