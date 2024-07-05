@@ -124,7 +124,7 @@ if (!empty($_GET) && isset($_GET['action']) && $_GET['action'] === 'end_task' &&
             <ul class="tasklist">
                 <?php
                 // GET TASKS FROM DATABASE 
-                echo generateTask($tasks);
+                echo generateTask($tasks, $dbCo);
                 ?>
             </ul>
         </section>

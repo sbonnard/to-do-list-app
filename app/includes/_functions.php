@@ -153,14 +153,14 @@ function updateOrSetDeadline(PDO $dbCo)
  * @param array $task A single task in main array to loop on?
  * @return void
  */
-function displayIfThemeSet(array $tasks, array $task)
+function displayIfThemeSet(array $task, PDO $dbCo)
 {
-    $themesSentence = ' :';
-    if ($task['id_task'] != 0) {
-        foreach ($tasks as $task) {
-            $themesSentence .= $task['theme_name'] . ' | ';
-        }
-        return $themesSentence;
+    $queryGetThemes = $dbCo->prepare("SELECT id_theme, theme_name FROM themes JOIN task USING (id_theme) WHERE id_task = :id_task;");
+    $queryGetThemes->execute(['id_task' => intval($task['id_task'])]);
+    $themes = $queryGetThemes->fetchAll(PDO::FETCH_COLUMN, 1);
+
+    if (!empty($themes)) {
+        return implode(' | ', $themes);
     }
 }
 
@@ -201,13 +201,16 @@ function getAddThemeForm(array $arrayGet, array $arraySession, array $tasksArray
  * @param array $taskarray The table from database you want to get the informations from.
  * @return string A string with HTML elements to create content in a webpage.
  */
-function generateTask(array $taskarray): string
+function generateTask(array $taskArray, PDO $dbCo): string
 {
+
+    $queryGetThemes = $dbCo->query("SELECT id_theme, theme_name FROM themes;");
+    $themes = $queryGetThemes->fetchAll(PDO::FETCH_COLUMN, 1);
     $allTasks = '';
     $today = date('Y-m-d');
     $notification = false;
 
-    foreach ($taskarray as $task) {
+    foreach ($taskArray as $task) {
         // var_dump($task['id_task']);
         $allTasks .=  '<li class="task">'
             . '<div class="task__content"><p class="task__number-symbol">N°<span class="task__number">'
@@ -216,7 +219,7 @@ function generateTask(array $taskarray): string
             . $task['name'] . '</h3></div>'
             . '<div class="task__content"><a class="lnk--theme" href="?action=set-theme&id='
             . $task['id_task'] .
-            '"></a></div>'
+            '"></a><p>' . displayIfThemeSet($task, $dbCo) . '</p></div>' //ATTENTION GROS PROBLEME ICI
             . '<div class="task__content task__content--date-and-level"><p>'
             . $task['date']
             . '</p>'
