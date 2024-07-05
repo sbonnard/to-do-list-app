@@ -212,7 +212,7 @@ function generateTask(array $taskArray, PDO $dbCo): string
 
     foreach ($taskArray as $task) {
         // var_dump($task['id_task']);
-        $allTasks .=  '<li class="task">'
+        $allTasks .=  '<li class="task" data-end-task-content-id="' . $task['id_task'] . '">'
             . '<div class="task__content"><p class="task__number-symbol">N°<span class="task__number">'
             . $task["id_task"]
             . '</span><h3 class="ttl ttl--small">'
@@ -227,9 +227,8 @@ function generateTask(array $taskArray, PDO $dbCo): string
             . $task['emergency_level']
             . '</span></p></div>'
             . displayIfDeadline($task)
-            . '<a href="?action=end_task&id='
-            . $task['id_task']
-            . '" class="btn">C’est fait !</a></li>';
+            . '<button type="button" data-end-task-id="' . $task['id_task']
+            . '" class="btn js-end-task-btn">C’est fait !</button></li>';
 
         if ($task['deadline'] === $today) {
             $notification = true;
@@ -279,21 +278,15 @@ function generateDoneTask(array $taskarray): string
  * @param PDO $dbCo The connection to database
  * @return void Erase a task from to do list.
  */
-function endTask(PDO $dbCo)
+function endTask(PDO $dbCo): bool
 {
     $queryUpdateTaskStatus = $dbCo->prepare("UPDATE task SET status = 'DONE' WHERE id_task = :id;");
-
-    $taskUpdate = $queryUpdateTaskStatus->fetchAll();
 
     $bindValues = [
         'id' => htmlspecialchars($_GET['id']),
     ];
 
-    $isUpdatetOk = $queryUpdateTaskStatus->execute($bindValues);
-
-    redirectTo('index.php');
-
-    return $taskUpdate;
+    return $queryUpdateTaskStatus->execute($bindValues);
 }
 
 /**

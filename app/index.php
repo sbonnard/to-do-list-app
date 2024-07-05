@@ -9,18 +9,8 @@ require_once "./includes/_messages.php";
 
 generateToken();
 
-// getMessageForNewTask($dbCo);
-
-
-
 // var_dump($_GET);
 
-if (!empty($_GET) && isset($_GET['action']) && $_GET['action'] === 'end_task' && is_numeric($_GET['id'])) {
-    endTask($dbCo);
-}
-
-// modifyTask($dbCo);
-// deleteTask($dbCo);
 ?>
 
 <!DOCTYPE html>
@@ -136,11 +126,14 @@ if (!empty($_GET) && isset($_GET['action']) && $_GET['action'] === 'end_task' &&
         <section class="all-done" aria-label="Il n'y a plus de tâches" aria-labelledby="alldone">
             <h2 id="alldone" class="ttl ttl--bold ttl--white">Il n'y a plus de tâches !</h2>
         </section>
+        <form action="actions.php" method="post" aria-hidden="true">
+            <input id="token" type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+        </form>
     </main>
 
     <footer class="footer">© 2024 | Jot It</footer>
-
     <script type="module" src="js/script.js"></script>
+    <script type="module" src="js/async.js"></script>
 </body>
 
 </html>
