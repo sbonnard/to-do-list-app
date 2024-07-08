@@ -66,7 +66,8 @@ function preventFromCSRFAPI(): void
  * @param string $error The name of the error from errors array.
  * @return void
  */
-function triggerError(string $error):void {
+function triggerError(string $error): void
+{
     global $errors;
 
     $response = [
@@ -517,8 +518,9 @@ function modifyTaskPriority(PDO $dbCo)
  */
 function deleteTask(PDO $dbCo)
 {
+    global $errors;
     if (!empty($_REQUEST)) {
-        preventFromCSRF('index.php');
+        // preventFromCSRF('index.php');
 
         $errors = [];
 
@@ -527,26 +529,38 @@ function deleteTask(PDO $dbCo)
         }
 
         if (!empty($errors)) {
-            return implode("\n", $errors);
+            $_SESSION['errors'] = $errors;
+            return false;
         }
+        try {
+            $dbCo->beginTransaction();
 
-        $delete = $dbCo->prepare(
-            "DELETE FROM task WHERE id_task = :id;"
-        );
+            // DELETE FROM THEME
+            $deleteFromTheme = $dbCo->prepare("DELETE FROM task_theme WHERE id_task = :id;");
 
-        $bindValues = [
-            'id' => htmlspecialchars($_REQUEST['numbertask_delete']),
-        ];
+            // DELETE FROM TASK
+            $deleteFromTask = $dbCo->prepare("DELETE FROM task WHERE id_task = :id;");
 
-        $isDeleteOk = $delete->execute($bindValues);
+            $bindValues = [
+                'id' => htmlspecialchars($_REQUEST['numbertask_delete']),
+            ];
 
-        if ($isDeleteOk) {
-            $_SESSION['msg'] = "delete_ok";
-        } else {
-            $_SESSION['msg'] = "delete_ko";
+            $isDeleteOk = $deleteFromTheme->execute($bindValues) && $deleteFromTask->execute($bindValues);
+
+            if ($isDeleteOk) {
+                $_SESSION['msg'] = "delete_ok";
+            } else {
+                $errors[] = '<p class="error">Échec de la suppression de la tâche.</p>';
+                $_SESSION['errors'] = $errors;
+            }
+
+            $dbCo->commit();
+            return $isDeleteOk;
+        } catch (Exception $error) {
+            $_SESSION['errors'] = "delete_ko" . $error->getMessage();
+            $dbCo->rollBack();
+            return false;
         }
-
-        return $isDeleteOk;
     }
 }
 
