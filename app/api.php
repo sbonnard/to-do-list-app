@@ -8,8 +8,7 @@ include 'includes/_database.php';
 header('Content-type:application/json');
 
 if (!isset($_REQUEST['action'])) {
-    var_dump('NO ACTION');
-    exit;
+    triggerError('no_action');
 }
 
 if ($_REQUEST['action'] === 'end_task' && isset($_REQUEST['id']) && intval($_REQUEST['id'])) {

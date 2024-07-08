@@ -41,6 +41,43 @@ function preventFromCSRF(string $redirectURL = 'index.php')
 }
 
 /**
+ * Prevents from CSRF by checking HTTP_REFERER in $_SERVER and checks if the random token from generateToken() matches in form.
+ *
+ * @return void
+ */
+function preventFromCSRFAPI(): void
+{
+    global $globalURL;
+    if (!isset($_SERVER['HTTP_REFERER']) || !str_contains($_SERVER['HTTP_REFERER'], $globalURL)) {
+        $error = 'referer';
+    }
+
+    if (!isset($_SESSION['token']) || !isset($_REQUEST['token']) || $_SESSION['token'] !== $_REQUEST['token']) {
+        $error = 'csrf';
+    }
+
+    if (isset($error)) triggerError($error);
+}
+
+
+/**
+ * Triggers if an error occurs and exits script.
+ *
+ * @param string $error The name of the error from errors array.
+ * @return void
+ */
+function triggerError(string $error):void {
+    global $errors;
+
+    $response = [
+        'isOk' => false,
+        'errorMessage' => $errors[$error]
+    ];
+    echo json_encode($response);
+    exit;
+}
+
+/**
  * Redirect to the given URL.
  *
  * @param string $url
@@ -219,7 +256,7 @@ function generateTask(array $taskArray, PDO $dbCo): string
             . $task['name'] . '</h3></div>'
             . '<div class="task__content"><a class="lnk--theme" href="?action=set-theme&id='
             . $task['id_task'] .
-            '"></a><p>' . displayIfThemeSet($task, $dbCo) . '</p></div>' //ATTENTION GROS PROBLEME ICI
+            '"></a><p>' . displayIfThemeSet($task, $dbCo) . '</p></div>'
             . '<div class="task__content task__content--date-and-level"><p>'
             . $task['date']
             . '</p>'
