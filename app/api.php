@@ -23,7 +23,6 @@ if ($_REQUEST['action'] === 'end_task' && isset($_REQUEST['id']) && intval($_REQ
 
 }
 
-
 if ($_REQUEST['action'] === 'redo_task' && isset($_REQUEST['id']) && intval($_REQUEST['id'])) {
    if(redoTask($dbCo)){
        $response = [

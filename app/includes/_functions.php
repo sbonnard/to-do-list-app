@@ -254,7 +254,9 @@ function generateTask(array $taskArray, PDO $dbCo): string
             . '<div class="task__content"><p class="task__number-symbol">N°<span class="task__number">'
             . $task["id_task"]
             . '</span><h3 class="ttl ttl--small">'
-            . $task['name'] . '</h3></div>'
+            . $task['name'] . '</h3>
+            <button type="button" data-delete-task-id="' 
+            . $task['id_task'] . '" class="btn--square btn--minus"></button></div>'
             . '<div class="task__content"><a class="lnk--theme" href="?action=set-theme&id='
             . $task['id_task'] .
             '"></a><p>' . displayIfThemeSet($task, $dbCo) . '</p></div>'
