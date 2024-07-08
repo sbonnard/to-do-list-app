@@ -48,12 +48,15 @@ function preventFromCSRF(string $redirectURL = 'index.php')
 function preventFromCSRFAPI(): void
 {
     global $globalURL;
+    // echo ("HTTP_REFERER: " . ($_SERVER['HTTP_REFERER']));
+    // exit;
+    // var_dump("globalURL: " . $globalURL);
     if (!isset($_SERVER['HTTP_REFERER']) || !str_contains($_SERVER['HTTP_REFERER'], $globalURL)) {
-        $error = 'referer';
+        triggerError('referer');
     }
 
     if (!isset($_SESSION['token']) || !isset($_REQUEST['token']) || $_SESSION['token'] !== $_REQUEST['token']) {
-        $error = 'csrf';
+        triggerError('csrf');
     }
 
     if (isset($error)) triggerError($error);
@@ -69,7 +72,7 @@ function preventFromCSRFAPI(): void
 function triggerError(string $error): void
 {
     global $errors;
-
+    var_dump($error);
     $response = [
         'isOk' => false,
         'errorMessage' => $errors[$error]
@@ -249,13 +252,12 @@ function generateTask(array $taskArray, PDO $dbCo): string
     $notification = false;
 
     foreach ($taskArray as $task) {
-        // var_dump($task['id_task']);
         $allTasks .=  '<li class="task" data-end-task-content-id="' . $task['id_task'] . '">'
             . '<div class="task__content"><p class="task__number-symbol">N°<span class="task__number">'
             . $task["id_task"]
             . '</span><h3 class="ttl ttl--small">'
             . $task['name'] . '</h3>
-            <button type="button" data-delete-task-id="' 
+            <button type="button" data-delete-task-id="'
             . $task['id_task'] . '" class="btn--square btn--minus"></button></div>'
             . '<div class="task__content"><a class="lnk--theme" href="?action=set-theme&id='
             . $task['id_task'] .
@@ -522,13 +524,8 @@ function deleteTask(PDO $dbCo)
 {
     global $errors;
     if (!empty($_REQUEST)) {
-        // preventFromCSRF('index.php');
 
         $errors = [];
-
-        if (!isset($_REQUEST['numbertask_delete']) || strlen($_REQUEST['numbertask_delete']) <= 0) {
-            $errors[] = '<p class="error">Merci d\'entrer un numéro de tâche.</p>';
-        }
 
         if (!empty($errors)) {
             $_SESSION['errors'] = $errors;
@@ -544,7 +541,7 @@ function deleteTask(PDO $dbCo)
             $deleteFromTask = $dbCo->prepare("DELETE FROM task WHERE id_task = :id;");
 
             $bindValues = [
-                'id' => htmlspecialchars($_REQUEST['numbertask_delete']),
+                'id' => htmlspecialchars($_REQUEST['id']),
             ];
 
             $isDeleteOk = $deleteFromTheme->execute($bindValues) && $deleteFromTask->execute($bindValues);

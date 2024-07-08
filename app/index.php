@@ -66,7 +66,7 @@ generateToken();
                     <button id="btn-tool" class="btn--square btn--tool" aria-label="Ouvrir les outils de modification des tâches"></button>
                     <button id="btn-modifier" class="btn--pen hidden" aria-label="Modifier une tâche"></button>
                     <button id="btn-priority" class="btn--square btn--priority hidden" aria-label="Modifier une tâche"></button>
-                    <button id="btn-minus" class="btn--square btn--minus hidden" aria-label="Supprimer une tâche"></button>
+                    <!-- <button id="btn-minus" class="btn--square btn--minus hidden" aria-label="Supprimer une tâche"></button> -->
                     <button id="btn-theme" class="btn--square btn--theme hidden" aria-label="Créer un thème de tâche"></button>
                 </div>
             </section>
