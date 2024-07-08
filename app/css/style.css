@@ -383,8 +383,14 @@ input[type=color] {
   margin: 0 0.5rem;
 }
 
+.task__content--done {
+  justify-content: flex-start;
+  align-items: center;
+}
+
 .task__content--date-and-level {
   justify-content: space-between;
+  align-items: center;
 }
 
 .task-content--deadline {
@@ -449,7 +455,7 @@ input[type=color] {
 
 .check {
   color: var(--secondary);
-  font-size: 2rem;
+  font-size: 3rem;
 }
 
 /* FOOTER  */

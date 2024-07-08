@@ -296,16 +296,14 @@ function generateDoneTask(array $taskarray): string
     foreach ($taskarray as $task) {
         // var_dump($task['id_task']);
         $allTasks .=  '<li class="task" data-redo-task-content-id="' . $task['id_task'] . '">'
-            . '<div class="task__content"><p class="task__number-symbol">N°<span class="task__number">'
+            . '<div class="task__content task__content--done"><p class="task__number-symbol">N°<span class="task__number">'
             . $task["id_task"]
             . '</span><h3 class="ttl ttl--small">'
-            . $task['name'] . '</h3><span class="check">✔</span></div>'
+            . $task['name'] . '</h3></div>'
             . '<div class="task__content task__content--date-and-level"><p>'
             . $task['date']
-            . '</p>'
-            . '<p>Niveau <span class="task__number">'
-            . $task['emergency_level']
-            . '</span></p></div><button type"button" data-redo-task-id="' . $task['id_task']
+            . '</p><span class="check">✔</span></div><button type"button" data-redo-task-id="' 
+            . $task['id_task']
             . '" class="btn js-redo-task-btn">À refaire !</button></li>';
     }
     return $allTasks;
