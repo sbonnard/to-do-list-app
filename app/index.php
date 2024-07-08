@@ -93,15 +93,6 @@ generateToken();
                 <input type="hidden" name="action" value="modify_emergency">
             </form>
 
-            <form id="form-delete" class="form hidden" action="actions.php" method="post" aria-label="Formulaire de suppression d'une tâche existante">
-                <h3 class="ttl ttl--small">Supprimer une tâche</h3>
-                <label class="form__label" for="numbertask_delete">Numéro de la tâche à supprimer</label>
-                <input class="form__input" name="numbertask_delete" type="text" placeholder="111" required>
-                <input class="btn" type="submit" value="Supprimer">
-                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                <input type="hidden" name="action" value="delete">
-            </form>
-
             <form id="form-new-theme" class="form hidden" action="actions.php" method="post" aria-label="Formulaire de suppression d'une tâche existante">
                 <h3 class="ttl ttl--small">Créer un nouveau thème</h3>
                 <label class="form__label" for="new-theme">Nom du thème</label>
