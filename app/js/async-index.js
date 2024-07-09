@@ -23,25 +23,40 @@ deleteTaskButtons
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ADD TASK
-// const addTaskForm = document.getElementById('addTaskForm');
-// const templateCreate = document.getElementById('templateGenerateTask');
-// const liTemplate = document.querySelectorAll('[data-template-create]');
+const addTaskForm = document.getElementById('addTaskForm');
+const templateCreate = document.getElementById('templateGenerateTask');
+const liTemplate = document.querySelectorAll('[data-template-create]');
 
-// console.log(liTemplate);
+const taskNumberTemplate = document.querySelectorAll('[data-template-task-id]');
+const taskNameTemplate = document.querySelectorAll('[data-template-task-name]');
+const taskPriorityTemplate = document.querySelectorAll('[data-template-task-priority]');
 
-// console.log(addTaskForm);
+forEach.taskNumberTemplate(function (){
+    templateCreate.content.taskNumberTemplate.innerHTML = 8;
+    templateCreate.content.taskNameTemplate.innerHTML = "Bidule";
+    templateCreate.content.taskPriorityTemplate.innerHTML = 48;
+})
+console.log(taskNumberTemplate);
+console.log(taskNameTemplate);
+console.log(taskPriorityTemplate);
 
-// async function callAPIAddTask(params) {
-//     try {
-//         const response = await fetch("api.php?" + params);
-//         const json = await response.json();
-//         templateCreate.appendChild(liTemplate);
-//     }
-//     catch (error) {
-//         console.error("Unable to add a task to do list : " + error);
-//     }
-// }
 
-// addTaskForm.addEventListener('submit', function (e) {
-//     callAPIAddTask('action=create&token=' + document.getElementById('token').value);
-// });
+async function callAPIAddTask(params) {
+    try {
+        const response = await fetch("api.php?" + params);
+        const json = await response.json();
+        templateCreate.appendChild(liTemplate);
+    }
+    catch (error) {
+        console.error("Unable to add a task to do list : " + error);
+    }
+}
+
+addTaskForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    
+    Task.createTask({
+        nameTask: this.querySelector('[name]'),
+        priorityTask: this.querySelector('[priority]')
+    })
+});

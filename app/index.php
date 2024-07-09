@@ -124,26 +124,6 @@ generateToken();
             <input id="token" type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
         </form>
 
-        <li class="task" data-end-task-content-id=" {{ $task['id_task'] }} " data-template-create="">
-            <div class="task__content">
-                <p class="task__number-symbol">N°<span class="task__number" data-template-task-id="">{{ $task['id_task'] }}</span></p>
-                <h3 class="ttl ttl--small" data-template-task-name="">{{ $task['name'] }}</h3>
-                <button type="button" data-delete-task-id=" {{ $task['id_task'] }} " class="btn--square btn--minus"></button>
-            </div>
-            <div class="task__content task__themes">
-                <a class="lnk--theme" href="?action=set-theme&id={{$task['id_task']}}"></a>
-                <!-- <p> FUNCTION HERE {{displayIfThemeSet($task, $dbCo)}} </p> -->
-            </div>
-            <div class="task__content task__content--date-and-level">
-                <div class="task-content task-content--deadline">
-                    <p>Deadline:
-                        <a class="deadline" href="?action=deadline&id={{$task['id_task']}}">Ajouter une deadline 📆</a>
-                    </p>
-                </div>
-                <p>Niveau <span class="task__number" data-template-task-priority="{{ $task['emergency_level'] }}">51</span></p>
-            </div>
-            <button type="button" data-end-task-id=" {{$task['id_task']}} " class="btn js-end-task-btn">C’est fait !</button>
-        </li>
     </main>
 
     <footer class="footer">© 2024 | Jot It</footer>
@@ -157,11 +137,11 @@ generateToken();
         <li data-message="" class="notif notif--success">Ici vient le message</li>
     </template>
 
-    <template id="templateGenerateTask">
-        <li class="task" data-end-task-content-id=" {{ $task['id_task'] }} " data-template-create="">
+    <!-- <template id="templateGenerateTask">
+    <li class="task" data-end-task-content-id=" {{ $task['id_task'] }} " data-template-create="">
             <div class="task__content">
-                <p class="task__number-symbol">N°<span class="task__number">{{ $task['id_task'] }}</span></p>
-                <h3 class="ttl ttl--small">{{ $task['name'] }}</h3>
+                <p class="task__number-symbol">N°<span class="task__number" data-template-task-id="">{{ $task['id_task'] }}</span></p>
+                <h3 class="ttl ttl--small" data-template-task-name="">{{ $task['name'] }}</h3>
                 <button type="button" data-delete-task-id=" {{ $task['id_task'] }} " class="btn--square btn--minus"></button>
             </div>
             <div class="task__content task__themes">
@@ -169,13 +149,16 @@ generateToken();
                 <p> FUNCTION HERE {{displayIfThemeSet($task, $dbCo)}} </p>
             </div>
             <div class="task__content task__content--date-and-level">
-                <p> {{$task['date']}} </p>
-                <p>Niveau <span class="task__number"> {{ $task['emergency_level'] }} </span></p>
+                <div class="task-content task-content--deadline">
+                    <p>Deadline:
+                        <a class="deadline" href="?action=deadline&id={{$task['id_task']}}">Ajouter une deadline 📆</a>
+                    </p>
+                </div>
+                <p>Niveau <span class="task__number" data-template-task-priority="">{{ $task['emergency_level'] }}</span></p>
             </div>
-            FUNCTION HERE displayIfDeadline($task)
             <button type="button" data-end-task-id=" {{$task['id_task']}} " class="btn js-end-task-btn">C’est fait !</button>
         </li>
-    </template>
+    </template> -->
 
     <script type="module" src="js/index.js"></script>
     <script type="module" src="js/script.js"></script>
