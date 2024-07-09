@@ -23,21 +23,25 @@ deleteTaskButtons
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ADD TASK
-const addTaskForm = document.getElementById('addTaskForm');
+// const addTaskForm = document.getElementById('addTaskForm');
+// const templateCreate = document.getElementById('templateGenerateTask');
+// const liTemplate = document.querySelectorAll('[data-template-create]');
 
-console.log(addTaskForm);
+// console.log(liTemplate);
 
-async function callAPIAddTask(params) {
-    try {
-        const response = await fetch("api.php?" + params);
-        const json = await response.json();
-        document.querySelector("[data-task-list]").appendChild();
-    }
-    catch (error) {
-        console.error("Unable to add a task to do list : " + error);
-    }
-}
+// console.log(addTaskForm);
 
-addTaskForm.addEventListener('submit', function (e) {
-    callAPIAddTask('action=create&token=' + document.getElementById('token').value);
-});
+// async function callAPIAddTask(params) {
+//     try {
+//         const response = await fetch("api.php?" + params);
+//         const json = await response.json();
+//         templateCreate.appendChild(liTemplate);
+//     }
+//     catch (error) {
+//         console.error("Unable to add a task to do list : " + error);
+//     }
+// }
+
+// addTaskForm.addEventListener('submit', function (e) {
+//     callAPIAddTask('action=create&token=' + document.getElementById('token').value);
+// });

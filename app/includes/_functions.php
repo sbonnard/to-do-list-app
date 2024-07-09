@@ -310,8 +310,6 @@ function createNewTask(PDO $dbCo)
 {
     if (!empty($_POST)) {
 
-        preventFromCSRF('index.php');
-
         $errors = [];
 
         if (!isset($_POST['name']) || strlen($_POST['name']) <= 0) {
@@ -337,8 +335,6 @@ function createNewTask(PDO $dbCo)
         if ($_POST['emergency_level'] > 255) {
             $errors[] = '<p class="error">La valeur de priorité doit être comprise entre 1 & 255.</p>;';
         }
-
-        // var_dump($errors);
 
         if (empty($errors)) {
             $insert = $dbCo->prepare("INSERT INTO task (`name`, `date`, `emergency_level`) VALUES (:name, CURDATE(), :emergency_level);");
@@ -496,12 +492,14 @@ function deleteTask(PDO $dbCo, $inputData)
 
             $isDeleteOk = $deleteFromTheme->execute($bindValues) && $deleteFromTask->execute($bindValues);
 
-            if ($isDeleteOk) {
-                $_SESSION['msg'] = "delete_ok";
-            } else {
-                $errors[] = '<p class="error">Échec de la suppression de la tâche.</p>';
-                $_SESSION['errors'] = $errors;
-            }
+            // OBSOLETE WITH AJAX
+            //
+            // if ($isDeleteOk) {
+            //     $_SESSION['msg'] = "delete_ok";
+            // } else {
+            //     $errors[] = '<p class="error">Échec de la suppression de la tâche.</p>';
+            //     $_SESSION['errors'] = $errors;
+            // }
 
             $dbCo->commit();
             return $isDeleteOk;

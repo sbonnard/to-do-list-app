@@ -32,6 +32,43 @@ async function callAPI(method, params) {
 
 
 /**
+ * Create a new task
+ * @param {int} id - Task id 'id_task'
+ */
+export function createTask(id) {
+    if (!Number.isInteger(id)) {
+        displayError("Impossible de déterminer l'identifiant du produit.");
+        return;
+    }
+
+    const token = getToken();
+    if (!token.length) {
+        displayError("Jeton invalide.");
+        return;
+    }
+
+    callAPI('PUT', {
+        action: 'end_task',
+        id: id,
+        token: token
+    })
+        .then(data => {
+            if (!data.isOk) {
+                displayError(data.errorMessage);
+                return;
+            }
+
+            data.id = parseInt(data.id);
+            if (!Number.isInteger(data.id)) {
+                displayError("Données reçues incohérentes");
+                return;
+            }
+            document.querySelector("[data-end-task-content-id='" + data.id + "']").remove();
+        });
+}
+
+
+/**
  * Ends a task for the given id.
  * @param {int} id - Task id 'id_task'
  */
@@ -151,4 +188,18 @@ function displayError(errorMessage) {
     li.querySelector('[data-error-message]').innerText = errorMessage;
 
     document.getElementById('errorsList').appendChild(li);
+    setTimeout(() => m.remove(), 4000);
+}
+
+
+/**
+ * Display message with template
+ * @param {string} message 
+ */
+function displayMessage(message) {
+    const li = document.importNode(document.getElementById('templateMessage').content, true);
+    const m = li.querySelector('[data-message]')
+    m.innerText = message;
+    document.getElementById('messagesList').appendChild(li);
+    setTimeout(() => m.remove(), 4000);
 }
