@@ -6,21 +6,23 @@ include 'includes/_functions.php';
 include 'includes/_database.php';
 include 'includes/_messages.php';
 
-// header('Content-type:application/json');
+header('Content-type:application/json');
 
-if (!isset($_REQUEST['action'])) {
+$inputData = json_decode(file_get_contents('php://input'), true);
+
+
+if (!isset($inputData['action'])) {
     triggerError('no_action');
 }
 
-// var_dump($_SESSION['token'], $_REQUEST['token']);
 // Check CSRF
-preventFromCSRFAPI();
+preventFromCSRFAPI($inputData);
 
-if ($_REQUEST['action'] === 'end_task' && isset($_REQUEST['id']) && intval($_REQUEST['id'])) {
-   if(endTask($dbCo)){
+if ($_SERVER['REQUEST_METHOD'] === 'PUT' && $inputData['action'] === 'end_task' && isset($inputData['id']) && is_numeric($inputData['id'])) {
+   if(endTask($dbCo, $inputData)){
        $response = [
            'isOk' => true,
-           'id' => intval($_REQUEST['id'])
+           'id' => intval($inputData['id'])
        ];
     
        echo json_encode($response);
@@ -29,11 +31,11 @@ if ($_REQUEST['action'] === 'end_task' && isset($_REQUEST['id']) && intval($_REQ
 }
 
 
-if ($_REQUEST['action'] === 'redo_task' && isset($_REQUEST['id']) && intval($_REQUEST['id'])) {
-   if(redoTask($dbCo)){
+if ($_SERVER['REQUEST_METHOD'] === 'PUT' && $inputData['action'] === 'redo_task' && isset($inputData['id']) && is_numeric($inputData['id'])) {
+   if(redoTask($dbCo, $inputData)){
        $response = [
            'isOk' => true,
-           'id' => intval($_REQUEST['id'])
+           'id' => intval($inputData['id'])
        ];
     
        echo json_encode($response);
@@ -42,11 +44,11 @@ if ($_REQUEST['action'] === 'redo_task' && isset($_REQUEST['id']) && intval($_RE
 }
 
 
-if ($_REQUEST['action'] === 'delete' && isset($_REQUEST['id']) && intval($_REQUEST['id'])) {
-    if(deleteTask($dbCo)){
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE' && $inputData['action'] === 'delete' && isset($inputData['id']) && is_numeric($inputData['id'])) {
+    if(deleteTask($dbCo, $inputData)){
         $response = [
             'isOk' => true,
-            'id' => intval($_REQUEST['id'])
+            'id' => intval($inputData['id'])
         ];
      
         echo json_encode($response);
