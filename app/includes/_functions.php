@@ -628,21 +628,41 @@ function addThemeToTask(PDO $dbCo)
     if (!empty($_REQUEST)) {
         $errors = [];
 
-        if (!isset($_REQUEST['id']) || !isset($_REQUEST['id_theme']) || !intval($_REQUEST['id'] || ($_REQUEST['id_theme']))) {
+        if (!isset($_REQUEST['id']) || !isset($_REQUEST['id_theme']) || !intval($_REQUEST['id']) || !intval($_REQUEST['id_theme'])) {
             $errors[] = '<p class="error">Les données envoyées sont invalides</p>';
         }
 
         if (empty($errors)) {
-            $insertThemeQuery = $dbCo->prepare("INSERT INTO task_theme (id_task, id_theme) VALUES (:id, :id_theme);");
-
-            $bindValues = [
+            // Checks if the theme was not already set before.
+            $checkQuery = $dbCo->prepare("SELECT COUNT(*) FROM task_theme WHERE id_task = :id AND id_theme = :id_theme");
+            $checkQuery->execute([
                 "id" => intval($_REQUEST['id']),
                 "id_theme" => intval($_REQUEST['id_theme'])
-            ];
+            ]);
 
-            $isInsertOk = $insertThemeQuery->execute($bindValues);
+            $exists = $checkQuery->fetchColumn();
 
-            return $isInsertOk;
+            if ($exists) {
+                $errors[] = '<p class="error">Ce thème a déjà été attribué à cette tâche</p>';
+            } else {
+                $insertThemeQuery = $dbCo->prepare("INSERT INTO task_theme (id_task, id_theme) VALUES (:id, :id_theme);");
+
+                $bindValues = [
+                    "id" => intval($_REQUEST['id']),
+                    "id_theme" => intval($_REQUEST['id_theme'])
+                ];
+
+                $isInsertOk = $insertThemeQuery->execute($bindValues);
+
+                if ($isInsertOk) {
+                    $_SESSION['msg'] = "set_theme_ok";
+                } else {
+                    $_SESSION['errors'] = "set_theme_ko";
+                }
+
+                return $isInsertOk;
+            }
         }
+        return false;
     }
 }

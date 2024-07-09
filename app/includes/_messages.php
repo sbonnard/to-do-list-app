@@ -21,7 +21,8 @@ $messages = [
     'delete_ok' => 'Tâche supprimée.',
     'update_emergency_ok' => 'Niveau de priorité modifié.',
     'deadline_ok' => 'La deadline a bien été modifiée.',
-    'insert_theme_ok' => 'Le nouveau thème a été créé.'
+    'insert_theme_ok' => 'Le nouveau thème a été créé.',
+    'set_theme_ok' => 'Le thème a été ajouté à la tâche'
 ];
 
 $errors = [
@@ -32,7 +33,8 @@ $errors = [
     'delete_ko' => 'Erreur lors de la suppression d\'une tâche.',
     'update_emergency_ko' => 'Erreur lors de la modif du niveau de priorité.',
     'deadline_ko' => 'Erreur lors de la modif de la deadline.',
-    'insert_theme_ko' => 'Erreur lors de la création d\'un nouveau thème.'
+    'insert_theme_ko' => 'Erreur lors de la création d\'un nouveau thème.',
+    'set_theme_ko' => 'Erreur lors de l\'ajout du thème à la tâche.'
 ];
 
 $notifs = [
