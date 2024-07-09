@@ -1,8 +1,7 @@
 import * as Task from "./_functions.js";
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 // END TASK 
 let endTaskButtons = document.querySelectorAll('.js-end-task-btn');
-// console.log(endTaskButtons);
 
 endTaskButtons
     .forEach(function (endTaskButton) {
@@ -11,6 +10,7 @@ endTaskButtons
         });
     });
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 // DELETE TASK
 let deleteTaskButtons = document.querySelectorAll('[data-delete-task-id]');
 
@@ -21,9 +21,10 @@ deleteTaskButtons
         });
     });
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ADD TASK
 const addTaskForm = document.getElementById('addTaskForm');
+
 console.log(addTaskForm);
 
 async function callAPIAddTask(params) {

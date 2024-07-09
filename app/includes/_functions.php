@@ -207,7 +207,7 @@ function generateTask(array $taskArray, PDO $dbCo): string
             '<li class="task" data-end-task-content-id="' . $task['id_task'] . '">'
             . '<div class="task__content"><p class="task__number-symbol">N°<span class="task__number">'
             . $task["id_task"]
-            . '</span><h3 class="ttl ttl--small">'
+            . '</span></p><h3 class="ttl ttl--small">'
             . $task['name'] . '</h3>
             <button type="button" data-delete-task-id="'
             . $task['id_task'] . '" class="btn--square btn--minus"></button></div>'

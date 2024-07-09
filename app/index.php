@@ -130,6 +130,26 @@ generateToken();
         <li data-error-message="" class="notif notif--error">Ici vient le message d'erreur</li>
     </template>
 
+    <template>
+        <li class="task" data-end-task-content-id=" {{ $task['id_task'] }} ">
+            <div class="task__content">
+                <p class="task__number-symbol">N°<span class="task__number">{{ $task['id_task'] }}</span></p>
+                <h3 class="ttl ttl--small">{{ $task['name'] }}</h3>
+                <button type="button" data-delete-task-id=" {{ $task['id_task'] }} " class="btn--square btn--minus"></button>
+            </div>
+            <div class="task__content task__themes">
+                <a class="lnk--theme" href="?action=set-theme&id={{$task['id_task']}}"></a>
+                <p> FUNCTION HERE {{displayIfThemeSet($task, $dbCo)}} </p>
+            </div>
+            <div class="task__content task__content--date-and-level">
+                <p> {{$task['date']}} </p>
+                <p>Niveau <span class="task__number"> {{ $task['emergency_level'] }} </span></p>
+            </div>
+            FUNCTION HERE displayIfDeadline($task)
+            <button type="button" data-end-task-id=" {{$task['id_task']}} " class="btn js-end-task-btn">C’est fait !</button>
+        </li>
+    </template>
+
     <script type="module" src="js/index.js"></script>
     <script type="module" src="js/script.js"></script>
     <script type="module" src="js/async-index.js"></script>
