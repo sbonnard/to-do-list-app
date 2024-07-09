@@ -32,10 +32,10 @@ async function callAPI(method, params) {
 
 
 /**
- * Increase product price for the given id.
- * @param {int} id - Product id 'ref_product'
+ * Ends a task for the given id.
+ * @param {int} id - Task id 'id_task'
  */
-export function increasePrice(id) {
+export function endTask(id) {
     if (!Number.isInteger(id)) {
         displayError("Impossible de déterminer l'identifiant du produit.");
         return;
@@ -59,12 +59,11 @@ export function increasePrice(id) {
             }
 
             data.id = parseInt(data.id);
-            data.price = parseFloat(data.price);
-            if (!Number.isInteger(data.id) || data.price <= 0) {
+            if (!Number.isInteger(data.id)) {
                 displayError("Données reçues incohérentes");
                 return;
             }
-            document.querySelector("[data-price-id='" + data.id + "']").innerText = data.price;
+            document.querySelector("[data-end-task-content-id='" + data.id + "']").remove();
         });
 }
 

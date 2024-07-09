@@ -269,12 +269,12 @@ function generateDoneTask(array $taskarray): string
  * @param PDO $dbCo The connection to database
  * @return void Erase a task from to do list.
  */
-function endTask(PDO $dbCo): bool
+function endTask(PDO $dbCo, $inputData): bool
 {
     $queryUpdateTaskStatus = $dbCo->prepare("UPDATE task SET status = 'DONE' WHERE id_task = :id;");
 
     $bindValues = [
-        'id' => htmlspecialchars($_GET['id']),
+        'id' => htmlspecialchars($inputData['id']),
     ];
 
     return $queryUpdateTaskStatus->execute($bindValues);
