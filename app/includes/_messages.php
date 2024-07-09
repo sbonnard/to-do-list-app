@@ -33,8 +33,10 @@ $errors = [
     'delete_ko' => 'Erreur lors de la suppression d\'une tâche.',
     'update_emergency_ko' => 'Erreur lors de la modif du niveau de priorité.',
     'deadline_ko' => 'Erreur lors de la modif de la deadline.',
+    'no_action' => 'Aucune action détectée.',
     'insert_theme_ko' => 'Erreur lors de la création d\'un nouveau thème.',
-    'set_theme_ko' => 'Erreur lors de l\'ajout du thème à la tâche.'
+    'set_theme_ko' => 'Erreur lors de l\'ajout du thème à la tâche.',
+    'set_theme_ko_empty' => 'Merci de sélectionner un thème existant'
 ];
 
 $notifs = [

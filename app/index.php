@@ -61,6 +61,7 @@ generateToken();
             echo getErrorMessage($errors);
             echo getSuccessMessage($messages);
             ?>
+            <ul id="errorsList" class="errors"></ul>
             <section aria-label="Boite à outils">
                 <div id="toolbox" class="container--btn">
                     <button id="btn-tool" class="btn--square btn--tool" aria-label="Ouvrir les outils de modification des tâches"></button>
@@ -102,7 +103,7 @@ generateToken();
                 <input type="hidden" name="action" value="new-theme">
             </form>
 
-            <ul class="tasklist">
+            <ul class="tasklist" data-task-list="">
                 <?php
                 // GET TASKS FROM DATABASE 
                 echo generateTask($tasks, $dbCo);
@@ -123,6 +124,12 @@ generateToken();
     </main>
 
     <footer class="footer">© 2024 | Jot It</footer>
+
+    <!-- Template for errors in JS  -->
+    <template id="templateError">
+        <li data-error-message="" class="notif notif--error">Ici vient le message d'erreur</li>
+    </template>
+
     <script type="module" src="js/index.js"></script>
     <script type="module" src="js/script.js"></script>
     <script type="module" src="js/async-index.js"></script>

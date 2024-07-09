@@ -45,17 +45,15 @@ function preventFromCSRF(string $redirectURL = 'index.php')
  *
  * @return void
  */
-function preventFromCSRFAPI(): void
+function preventFromCSRFAPI($inputData): void
 {
     global $globalURL;
-    // echo ("HTTP_REFERER: " . ($_SERVER['HTTP_REFERER']));
-    // exit;
-    // var_dump("globalURL: " . $globalURL);
+
     if (!isset($_SERVER['HTTP_REFERER']) || !str_contains($_SERVER['HTTP_REFERER'], $globalURL)) {
         triggerError('referer');
     }
 
-    if (!isset($_SESSION['token']) || !isset($_REQUEST['token']) || $_SESSION['token'] !== $_REQUEST['token']) {
+    if (!isset($_SESSION['token']) || !isset($inputData['token']) || $_SESSION['token'] !== $inputData['token']) {
         triggerError('csrf');
     }
 
@@ -72,7 +70,7 @@ function preventFromCSRFAPI(): void
 function triggerError(string $error): void
 {
     global $errors;
-    var_dump($error);
+    // var_dump($error);
     $response = [
         'isOk' => false,
         'errorMessage' => $errors[$error]
@@ -104,7 +102,7 @@ function redirectTo(string $url): void
 function getAddTaskForm(array $arrayGet, array $arraySession)
 {
     if (empty($arrayGet)) {
-        return '<form class="form" action="actions.php" method="post" aria-label="Formulaire d\'ajout de tâches">
+        return '<form id="addTaskForm" class="form" action="actions.php" method="post" aria-label="Formulaire d\'ajout de tâches">
         <label class="form__label" for="task">Ajouter une tâche</label>
         <input class="form__input" name="name" type="text" placeholder="Faire un truc" required>
         <label class="form__label" for="emergency_level">Niveau d\'urgence</label>
@@ -205,7 +203,8 @@ function generateTask(array $taskArray, PDO $dbCo): string
     $notification = false;
 
     foreach ($taskArray as $task) {
-        $allTasks .=  '<li class="task" data-end-task-content-id="' . $task['id_task'] . '">'
+        $allTasks .=
+            '<li class="task" data-end-task-content-id="' . $task['id_task'] . '">'
             . '<div class="task__content"><p class="task__number-symbol">N°<span class="task__number">'
             . $task["id_task"]
             . '</span><h3 class="ttl ttl--small">'
@@ -471,7 +470,7 @@ function modifyTaskPriority(PDO $dbCo)
  * @param   $dbCo
  * @return void
  */
-function deleteTask(PDO $dbCo)
+function deleteTask(PDO $dbCo, $inputData)
 {
     global $errors;
     if (!empty($_REQUEST)) {
@@ -492,7 +491,7 @@ function deleteTask(PDO $dbCo)
             $deleteFromTask = $dbCo->prepare("DELETE FROM task WHERE id_task = :id;");
 
             $bindValues = [
-                'id' => htmlspecialchars($_REQUEST['id']),
+                'id' => htmlspecialchars($inputData['id']),
             ];
 
             $isDeleteOk = $deleteFromTheme->execute($bindValues) && $deleteFromTask->execute($bindValues);
@@ -656,6 +655,8 @@ function addThemeToTask(PDO $dbCo)
 
                 if ($isInsertOk) {
                     $_SESSION['msg'] = "set_theme_ok";
+                } else if (empty($_REQUEST['id_theme'])) {
+                    $_SESSION['errors'] = "set_theme_ko_empty";
                 } else {
                     $_SESSION['errors'] = "set_theme_ko";
                 }
