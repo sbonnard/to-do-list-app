@@ -68,6 +68,42 @@ export function endTask(id) {
 }
 
 /**
+ * Ends a task for the given id.
+ * @param {int} id - Task id 'id_task'
+ */
+export function redoTask(id) {
+    if (!Number.isInteger(id)) {
+        displayError("Impossible de déterminer l'identifiant du produit.");
+        return;
+    }
+
+    const token = getToken();
+    if (!token.length) {
+        displayError("Jeton invalide.");
+        return;
+    }
+
+    callAPI('PUT', {
+        action: 'redo_task',
+        id: id,
+        token: token
+    })
+        .then(data => {
+            if (!data.isOk) {
+                displayError(data.errorMessage);
+                return;
+            }
+
+            data.id = parseInt(data.id);
+            if (!Number.isInteger(data.id)) {
+                displayError("Données reçues incohérentes");
+                return;
+            }
+            document.querySelector("[data-redo-task-content-id='" + data.id + "']").remove();
+        });
+}
+
+/**
  * Delete task defined by th egiven id.
  * @param {*} id - task id 'id_task'
  */

@@ -31,17 +31,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT' && $inputData['action'] === 'end_task' 
 }
 
 
-// if ($_REQUEST['action'] === 'redo_task' && isset($_REQUEST['id']) && intval($_REQUEST['id'])) {
-//    if(redoTask($dbCo)){
-//        $response = [
-//            'isOk' => true,
-//            'id' => intval($_REQUEST['id'])
-//        ];
+if ($_SERVER['REQUEST_METHOD'] === 'PUT' && $inputData['action'] === 'redo_task' && isset($inputData['id']) && is_numeric($inputData['id'])) {
+   if(redoTask($dbCo, $inputData)){
+       $response = [
+           'isOk' => true,
+           'id' => intval($inputData['id'])
+       ];
     
-//        echo json_encode($response);
-//    }
+       echo json_encode($response);
+   }
 
-// }
+}
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE' && $inputData['action'] === 'delete' && isset($inputData['id']) && is_numeric($inputData['id'])) {
