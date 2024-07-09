@@ -18,7 +18,7 @@ Si une user story nécessite une modification structurelle de la base de donnée
 
 Ce projet étant un projet d'exercice en formation, j'ai répondu aux user stories avec les outils qui m'ont été fournis au fur et à mesure de leur complétion.
 
-Afin de construire facilement du contenu à la todolist, le fichier quesries.sql permet de créer les tables nécessaire et à générer des données de base pour faire fonctionner l'application à 100%.
+Afin de construire facilement du contenu à injecter dans la todolist, le fichier queries.sql permet de créer les tables nécessaires et à générer des données de base pour faire fonctionner l'application à 100%.
 
 # LAMP ENVIRONMENT
 

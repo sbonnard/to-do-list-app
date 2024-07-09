@@ -398,6 +398,10 @@ input[type=color] {
   width: 100%;
 }
 
+.task__themes {
+  justify-content: flex-start;
+}
+
 /* DEADLINE */
 
 .deadline {

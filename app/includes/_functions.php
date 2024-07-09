@@ -187,54 +187,7 @@ function updateOrSetDeadline(PDO $dbCo)
     }
 }
 
-/**
- * Changes sentence if themes are defined
- *
- * @param array $tasks The main array 
- * @param array $task A single task in main array to loop on?
- * @return void
- */
-function displayIfThemeSet(array $task, PDO $dbCo)
-{
-    $queryGetThemes = $dbCo->prepare("SELECT id_theme, theme_name FROM themes JOIN task_theme USING (id_theme) JOIN task USING (id_task) WHERE id_task = :id_task;");
-    $queryGetThemes->execute(['id_task' => intval($task['id_task'])]);
-    $themes = $queryGetThemes->fetchAll(PDO::FETCH_COLUMN, 1);
 
-    if (!empty($themes)) {
-        return implode(' | ', $themes);
-    }
-}
-
-function getOptionsThemeForm(PDO $dbCo, array $arrayTheme)
-{
-    $queryGetThemes = $dbCo->query("SELECT id_theme, theme_name FROM themes;");
-    $themes = $queryGetThemes->fetchAll(PDO::FETCH_COLUMN, 1);
-
-    $optionList = '';
-    foreach ($arrayTheme as $theme) {
-        $optionList .= '<option value="' . $theme['id_theme'] . '">' . $theme['theme_name'];
-    }
-    return $optionList;
-}
-
-function getAddThemeForm(array $arrayGet, array $arraySession, array $tasksArray, PDO $dbCo)
-{
-    if (!empty($_GET) && isset($_GET['action']) && $_GET['action'] === 'set-theme' && is_numeric($_GET['id'])) {
-        return
-            '<form class="form" action="actions.php" method="post" aria-label="Formulaire pour définir un thème à une tâche.">
-        <label class="form__label" for="theme" required>Définir un thème pour la tâche n° <span class="task__number">' . $arrayGet['id'] . '</span></label>
-        <select class="form__input" type="select" name="theme" id="theme" aria-label="Choisis un thème à ajouter à une tâche">'
-            // Créer une boucle foreach pour générer toutes les options depuis la base de données.
-            . '<option class="form__input__placeholder" value="">- Sélectionner un thème -</option>'
-            . getOptionsThemeForm($dbCo, $tasksArray)
-            . '</select>
-            <input class="form__submit" type="submit" value="">
-        <input type="hidden" name="token" value="' . $arraySession['token'] . '">
-        <input type="hidden" name="action" value="deadline">
-        <input type="hidden" name="id" value="' . $arrayGet['id'] . '">
-        </form>';
-    }
-}
 
 /**
  * Generates content directly from the database for tasks that are already done.
@@ -259,7 +212,7 @@ function generateTask(array $taskArray, PDO $dbCo): string
             . $task['name'] . '</h3>
             <button type="button" data-delete-task-id="'
             . $task['id_task'] . '" class="btn--square btn--minus"></button></div>'
-            . '<div class="task__content"><a class="lnk--theme" href="?action=set-theme&id='
+            . '<div class="task__content task__themes"><a class="lnk--theme" href="?action=set-theme&id='
             . $task['id_task'] .
             '"></a><p>' . displayIfThemeSet($task, $dbCo) . '</p></div>'
             . '<div class="task__content task__content--date-and-level"><p>'
@@ -302,7 +255,7 @@ function generateDoneTask(array $taskarray): string
             . $task['name'] . '</h3></div>'
             . '<div class="task__content task__content--date-and-level"><p>'
             . $task['date']
-            . '</p><span class="check">✔</span></div><button type"button" data-redo-task-id="' 
+            . '</p><span class="check">✔</span></div><button type"button" data-redo-task-id="'
             . $task['id_task']
             . '" class="btn js-redo-task-btn">À refaire !</button></li>';
     }
@@ -596,6 +549,99 @@ function createNewTheme(PDO $dbCo, array $arrayPost)
             } else {
                 $_SESSION['msg'] = "insert_theme_ko";
             }
+            return $isInsertOk;
+        }
+    }
+}
+
+/**
+ * Changes sentence if themes are defined
+ *
+ * @param array $tasks The main array 
+ * @param array $task A single task in main array to loop on?
+ * @return void
+ */
+function displayIfThemeSet(array $task, PDO $dbCo)
+{
+    $queryGetThemes = $dbCo->prepare("SELECT id_theme, theme_name FROM themes JOIN task_theme USING (id_theme) JOIN task USING (id_task) WHERE id_task = :id_task;");
+    $queryGetThemes->execute(['id_task' => intval($task['id_task'])]);
+    $themes = $queryGetThemes->fetchAll(PDO::FETCH_COLUMN, 1);
+
+    if (!empty($themes)) {
+        return implode(' | ', $themes);
+    }
+}
+
+/**
+ * Get all options of created themes in select input.
+ *
+ * @param PDO $dbCo Connection to database.
+ * @return string
+ */
+function getOptionsThemeForm(PDO $dbCo): string
+{
+    $queryGetThemes = $dbCo->query("SELECT id_theme, theme_name FROM themes;");
+    $themes = $queryGetThemes->fetchAll(PDO::FETCH_ASSOC);
+
+    $optionList = '';
+    foreach ($themes as $theme) {
+        $optionList .= '<option value="' . $theme['id_theme'] . '">' . $theme['theme_name'] . '</option>';
+    }
+    return $optionList;
+}
+
+/**
+ * Get the form to add a theme to a task.
+ *
+ * @param array $arrayGet - Super global $_GET.
+ * @param array $arraySession - Super global $_SESSION.
+ * @param array $tasksArray - Task table from database
+ * @param PDO $dbCo - Connection to database.
+ * @return void
+ */
+function getAddThemeForm(array $arrayGet, array $arraySession, array $tasksArray, PDO $dbCo)
+{
+    if (!empty($_GET) && isset($_GET['action']) && $_GET['action'] === 'set-theme' && is_numeric($_GET['id'])) {
+        return
+            '<form class="form" action="actions.php" method="post" aria-label="Formulaire pour définir un thème à une tâche.">
+        <label class="form__label" for="theme" required>Définir un thème pour la tâche n° <span class="task__number">' . $arrayGet['id'] . '</span></label>
+        <select class="form__input" type="select" name="id_theme" id="theme" aria-label="Choisis un thème à ajouter à une tâche">'
+            . '<option class="form__input__placeholder" value="">- Sélectionner un thème -</option>'
+            . getOptionsThemeForm($dbCo)
+            . '</select>
+            <input class="form__submit" type="submit" value="">
+        <input type="hidden" name="token" value="' . $arraySession['token'] . '">
+        <input type="hidden" name="action" value="set-theme">
+        <input type="hidden" name="id" value="' . $arrayGet['id'] . '">
+        </form>';
+    }
+}
+
+/**
+ * Manages the query to insert a theme into database and link it to a task.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @return void
+ */
+function addThemeToTask(PDO $dbCo)
+{
+    if (!empty($_REQUEST)) {
+        $errors = [];
+
+        if (!isset($_REQUEST['id']) || !isset($_REQUEST['id_theme']) || !intval($_REQUEST['id'] || ($_REQUEST['id_theme']))) {
+            $errors[] = '<p class="error">Les données envoyées sont invalides</p>';
+        }
+
+        if (empty($errors)) {
+            $insertThemeQuery = $dbCo->prepare("INSERT INTO task_theme (id_task, id_theme) VALUES (:id, :id_theme);");
+
+            $bindValues = [
+                "id" => intval($_REQUEST['id']),
+                "id_theme" => intval($_REQUEST['id_theme'])
+            ];
+
+            $isInsertOk = $insertThemeQuery->execute($bindValues);
+
             return $isInsertOk;
         }
     }

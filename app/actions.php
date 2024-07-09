@@ -22,6 +22,8 @@ if($_REQUEST['action'] === 'create' && $_SERVER['REQUEST_METHOD'] === 'POST'){
     updateOrSetDeadline($dbCo);
 } else if ($_REQUEST['action'] === 'new-theme' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     createNewTheme($dbCo, $_POST);
+} else if ($_REQUEST['action'] === 'set-theme' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    addThemeToTask($dbCo);
 }
 
 redirectTo('index.php');
