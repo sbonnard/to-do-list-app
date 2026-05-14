@@ -53,9 +53,9 @@ generateToken();
             <form action="login.php" method="post" aria-label="Formulaire de connexion">
                 <ul class="form__container">
                     <li class="form__itm">
-                        <label class="input__label" for="username">Email</label>
-                        <input class="input" type="text" name="email" id="email" placeholder="rôliste@rolist-mingle.fr"
-                            required aria-label="Entrez votre email">
+                        <label class="input__label" for="username">Nom utilisateur</label>
+                        <input class="input" type="text" name="username" id="username" placeholder="rôliste@rolist-mingle.fr"
+                            required aria-label="Entrez votre nom utilisateur">
                     </li>
                     <li class="form__itm">
                         <label class="input__label" for="password">Mot de passe</label>

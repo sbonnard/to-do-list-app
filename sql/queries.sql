@@ -1,5 +1,13 @@
 CREATE DATABASE jotit_doit;
 
+--------------------------------------------------------------------------------------------
+CREATE TABLE colours (
+    id_colours SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    hexa_code VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id_colours)
+);
+
 CREATE TABLE task (
     id_task SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
@@ -49,7 +57,7 @@ CREATE TABLE themes (
 );
 
 INSERT INTO themes (theme_name)
-VALUES ('travail'), ('nourriture'), ('recherche de stage');
+VALUES ('Travaux maison'), ('Achats');
 --------------------------------------------------------------------------------------------
 
 CREATE TABLE task_theme (
@@ -59,13 +67,6 @@ CREATE TABLE task_theme (
     FOREIGN KEY (id_task) REFERENCES task(id_task)
 );
 
---------------------------------------------------------------------------------------------
-CREATE TABLE colours (
-    id_colours SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL,
-    hexa_code VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id_colours)
-);
 
 INSERT INTO colours (name, hexa_code)
 VALUES ('dark_green', '#1B7F79'), ('orange', '#CA4F0A'), ('zinzolin', '#A72E47');

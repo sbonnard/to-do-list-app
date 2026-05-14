@@ -8,7 +8,7 @@ services:
     volumes:
       - ./app:/var/www/html
     ports:
-      - "8282:80"
+      - "8484:80"
     depends_on:
       - db
     environment:
@@ -38,7 +38,7 @@ services:
     image: phpmyadmin/phpmyadmin
     restart: always
     ports:
-      - "8181:80"
+      - "8585:80"
     depends_on:
       - db
     environment:
