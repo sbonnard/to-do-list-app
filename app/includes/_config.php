@@ -1,3 +1,3 @@
 <?php
 
-$globalURL = 'http://localhost:8282';
+$globalURL = 'http://localhost:8484';
