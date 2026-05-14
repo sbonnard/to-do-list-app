@@ -9,7 +9,10 @@ require_once "./includes/_messages.php";
 
 generateToken();
 
-// var_dump($_GET);
+if(!isset($_SESSION['id_user'])) {
+    redirectTo('connection.php');
+    exit;
+}
 
 ?>
 

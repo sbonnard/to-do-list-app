@@ -6,6 +6,11 @@ require_once "./includes/_database.php";
 require_once "./includes/_functions.php";
 require_once "./includes/_messages.php";
 
+if(!isset($_SESSION['id_user'])) {
+    redirectTo('connection.php');
+    exit;
+}
+
 $queryGetTasks = $dbCo->query("SELECT id_task, status, name, date, emergency_level FROM task WHERE status = 'DONE';");
 $tasks = $queryGetTasks->fetchAll();
 

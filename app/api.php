@@ -8,6 +8,11 @@ include 'includes/_messages.php';
 
 header('Content-type:application/json');
 
+if(!isset($_SESSION['id_user'])) {
+    redirectTo('connection.php');
+    exit;
+}
+
 $inputData = json_decode(file_get_contents('php://input'), true);
 
 

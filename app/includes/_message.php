@@ -1,47 +1,19 @@
 <?php
 
-/**
- * Get a message, error or success whenever the user is trying to add a new task.
- *
- * @param [type] $dbCo The connection to database.
- * @return void
- */
-function getMessageForNewTask($dbCo)
-{
-    if (createNewTask($dbCo)) {
-        $_SESSION['msg'] = "insert_ok";
-        // var_dump($_SESSION['msg']);
-    }
-}
-
-
 $messages = [
-    'insert_ok' => 'Tâche ajoutée.',
-    'update_ok' => 'Tâche modifiée.',
-    'delete_ok' => 'Tâche supprimée.',
-    'update_emergency_ok' => 'Niveau de priorité modifié.',
-    'deadline_ok' => 'La deadline a bien été modifiée.',
-    'insert_theme_ok' => 'Le nouveau thème a été créé.',
-    'set_theme_ok' => 'Le thème a été ajouté à la tâche',
+    'insert_ok' => 'JDR ajoutée.',
     'create_ok' => 'Réussite critique lors de la création de compte !',
     'update_ok_bio' => 'Réussite critique lors de la mise à jour de la bio !',
     'update_ok_pwd' => 'Réussite critique lors de la mise à jour du mot de passe !',
     'update_ok_favourites' => 'Réussite critique lors de la modification d\'univers favoris !',
+    'delete_ok' => 'L\'univers a été supprimé.',
     'create_character_ok' => 'Votre personnage a bien été créé.'
 ];
 
 $errors = [
     'csrf' => 'Votre session est invalide.',
     'referer' => 'D\'où venez vous ?',
-    'insert_ko' => 'Erreur lors de la création d\'une tâche.',
-    'update_ko' => 'Erreur lors de la modif d\'une tâche.',
-    'delete_ko' => 'Erreur lors de la suppression d\'une tâche.',
-    'update_emergency_ko' => 'Erreur lors de la modif du niveau de priorité.',
-    'deadline_ko' => 'Erreur lors de la modif de la deadline.',
     'no_action' => 'Aucune action détectée.',
-    'insert_theme_ko' => 'Erreur lors de la création d\'un nouveau thème.',
-    'set_theme_ko' => 'Erreur lors de l\'ajout du thème à la tâche.',
-    'set_theme_ko_empty' => 'Merci de sélectionner un thème existant',
     'no_search' => 'La recherche n\'a rien donné.',
     'create_ko' => 'Échec critique lors de la création de compte !',
     'update_ko_bio' => 'Échec critique lors de la mise à jour de la bio !',
@@ -60,9 +32,23 @@ $errors = [
     'create_character_ko' => 'Erreur lors de la création de votre personnage.'
 ];
 
-$notifs = [
-    'deadline_urgent' => '📢 Attention ! Une ou plusieurs tâches sont à effectuer aujourd\'hui !'
-];
+
+/**
+ * Triggers if an error occurs and exits script.
+ *
+ * @param string $error The name of the error from errors array.
+ * @return void
+ */
+function triggerError(string $error): void
+{
+    global $errors;
+    $response = [
+        'isOk' => false,
+        'errorMessage' => $errors[$error]
+    ];
+    echo json_encode($response);
+    exit;
+}
 
 /**
  * Add a new error message to display on next page. 
@@ -87,18 +73,21 @@ function addMessage(string $message): void
     $_SESSION['msg'] = $message;
 }
 
-
 /**
  * Get error messages if the user fails to add a task.
  *
  * @return string The error message.
  */
-function getErrorMessage(array $errors) :string
+function getErrorMessage(array $errors): string
 {
     if (isset($_SESSION['error'])) {
         $e = ($_SESSION['error']);
         unset($_SESSION['error']);
-        return '<p class="notif notif--error">' . $errors[$e] . '</p>';
+        return '
+        <div class="notif notif--error notif__container" id="error-message">
+            <p class="">' . $errors[$e] . '</p>
+            <button class="notif__close" id="message-close">X</button>
+        </div>';
     }
     return '';
 }
@@ -108,22 +97,16 @@ function getErrorMessage(array $errors) :string
  *
  * @return string The success message.
  */
-function getSuccessMessage(array $messages) :string
+function getSuccessMessage(array $messages): string
 {
     if (isset($_SESSION['msg'])) {
-        $m = ($_SESSION['msg']);
+        $m = $_SESSION['msg'];
         unset($_SESSION['msg']);
-        return '<p class="notif notif--success">' . $messages[$m] . '</p>';
-    }
-    return '';
-}
-
-function getNotif(array $notifs) :string
-{
-    if (isset($_SESSION['notifs'])) {
-        $n = ($_SESSION['notifs']);
-        unset($_SESSION['notifs']);
-        return '<p class="notif notif--error notif--error--big">' . $notifs[$n] . '</p>';
+        return '
+        <div class="notif notif--success notif__container" id="success-message">
+            <p>' . $messages[$m] . '</p>
+            <button class="notif__close" id="message-close">X</button>
+        </div>';
     }
     return '';
 }

@@ -5,6 +5,11 @@ include 'includes/_config.php';
 include 'includes/_functions.php';
 include 'includes/_database.php';
 
+if(!isset($_SESSION['id_user'])) {
+    redirectTo('connection.php');
+    exit;
+}
+
 if (!isset($_REQUEST['action'])) {
     redirectTo('index.php');
 }
